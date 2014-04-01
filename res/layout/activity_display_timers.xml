@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vbh.virtualboathouse.DisplayTimersActivity"
+    tools:ignore="MergeRootFrame"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+
+    <TextView
+        android:id="@+id/field"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/start_button"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="31dp"
+        android:ems="10" />
+
+    <com.example.rowingmanager.MilliChrono
+        android:id="@+id/millichrono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/field"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/blank"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/stop_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/start_button"
+        android:layout_alignBottom="@+id/start_button"
+        android:layout_toRightOf="@+id/start_button"
+        android:text="@string/button_stop" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/millichrono"
+        android:layout_below="@+id/millichrono"
+        android:layout_marginTop="8dp"
+        android:text="@string/button_start" />
+
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stop_button"
+        android:layout_alignBottom="@+id/stop_button"
+        android:layout_toRightOf="@+id/stop_button"
+        android:text="@string/button_clear" />
+
+</RelativeLayout>

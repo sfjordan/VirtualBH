@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.DisplayTimersActivity"
+            android:label="@string/title_activity_display_timers"
+            android:parentActivityName="com.vbh.virtualboathouse.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vbh.virtualboathouse.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
