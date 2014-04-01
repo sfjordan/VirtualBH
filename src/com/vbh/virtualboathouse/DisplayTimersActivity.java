@@ -1,11 +1,8 @@
 package com.vbh.virtualboathouse;
 
-import com.vbh.virtualboathouse.MilliChrono;
-import com.vbh.virtualboathouse.TimerHandler;
-
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.os.Build;
 
 public class DisplayTimersActivity extends Activity {
 
@@ -30,6 +26,8 @@ public class DisplayTimersActivity extends Activity {
 		setContentView(R.layout.activity_display_timers);
 		
 		field = (TextView)findViewById(R.id.field);
+		Intent intent = getIntent();
+		field.setText(intent.getStringExtra(MainActivity.NUM_TIMERS));
 		milli_chrono = (MilliChrono)findViewById(R.id.millichrono);
 		stop_button=(Button)findViewById(R.id.stop_button);
 		start_button=(Button)findViewById(R.id.start_button);

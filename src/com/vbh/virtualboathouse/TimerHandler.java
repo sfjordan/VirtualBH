@@ -8,20 +8,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import com.vbh.virtualboathouse.MilliChrono;
 
 
 public class TimerHandler extends Activity implements OnClickListener {
 	
-	private boolean stopped = false;
+	private boolean stopped = true;
 	private long lastStop;
 	
 	@Override
     public void onClick(View v) {
         if(DisplayTimersActivity.start_button == v)
         {
-        	stopped = false;
-		    DisplayTimersActivity.milli_chrono.setBase(SystemClock.elapsedRealtime());
-		    DisplayTimersActivity.milli_chrono.start();
+        	if (stopped) {
+        		stopped = false;
+		    	DisplayTimersActivity.milli_chrono.setBase(SystemClock.elapsedRealtime());
+		    	DisplayTimersActivity.milli_chrono.start();
+        	}
         }
         else if(DisplayTimersActivity.stop_button == v){
 		    if (!stopped) {

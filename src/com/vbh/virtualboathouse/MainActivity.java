@@ -1,18 +1,27 @@
 package com.vbh.virtualboathouse;
 
+import com.vbh.virtualboathouse.DisplayTimersActivity;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.os.Build;
 
 public class MainActivity extends Activity {
 
+	public final static String NUM_TIMERS = "com.vbh.virtualboathouse.NUM_TIMERS";
+	private EditText numBoatsEdit;	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,8 +31,25 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		Button goButton = (Button) findViewById(R.id.go_button);		
+
+		numBoatsEdit = (EditText)findViewById(R.id.enter_num_field);
+		goButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(v == findViewById(R.id.go_button)) 
+					if(numBoatsEdit.getText() != null) 
+						displayTimers(); }
+			});
 	}
 
+	private void displayTimers() {
+		Intent displayTimersIntent = new Intent(this, DisplayTimersActivity.class);
+		String message = numBoatsEdit.getText().toString();
+		displayTimersIntent.putExtra(NUM_TIMERS, message); 
+		startActivity(displayTimersIntent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
