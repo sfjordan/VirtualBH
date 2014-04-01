@@ -1,7 +1,7 @@
 package com.vbh.virtualboathouse;
 
-import com.example.rowingmanager.MilliChrono;
-import com.example.rowingmanager.TimerHandler;
+import com.vbh.virtualboathouse.MilliChrono;
+import com.vbh.virtualboathouse.TimerHandler;
 
 import android.app.Activity;
 import android.app.ActionBar;
