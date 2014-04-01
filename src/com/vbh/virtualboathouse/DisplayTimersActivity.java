@@ -14,12 +14,11 @@ import android.widget.TextView;
 
 public class DisplayTimersActivity extends Activity {
 
-	static long startTime;
-	static MilliChrono milli_chrono;
+	public static TextView field;
+	public static MilliChrono milli_chrono;
 	public static Button stop_button;
 	public static Button start_button;
 	public static Button clear_button;
-	public static TextView field;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +27,8 @@ public class DisplayTimersActivity extends Activity {
 		field = (TextView)findViewById(R.id.field);
 		Intent intent = getIntent();
 		field.setText(intent.getStringExtra(MainActivity.NUM_TIMERS));
+		//int numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
+		//Timer[] timers = new Timer[numTimers];
 		milli_chrono = (MilliChrono)findViewById(R.id.millichrono);
 		stop_button=(Button)findViewById(R.id.stop_button);
 		start_button=(Button)findViewById(R.id.start_button);

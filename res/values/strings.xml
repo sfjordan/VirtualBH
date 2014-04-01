@@ -14,5 +14,6 @@
     <string name="enter_num_timers">Enter a number of timers (boats):</string>
     <string name="button_go">Go!</string>
     <string name="blank"></string>
+    <string name="timer_name_text">" Boat"</string>
     
 </resources>
