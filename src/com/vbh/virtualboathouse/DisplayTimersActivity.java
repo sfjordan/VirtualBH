@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DisplayTimersActivity extends Activity {
@@ -24,19 +25,25 @@ public class DisplayTimersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_timers);
 		
-		field = (TextView)findViewById(R.id.field);
+		//field = (TextView)findViewById(R.id.field);
 		Intent intent = getIntent();
-		field.setText(intent.getStringExtra(MainActivity.NUM_TIMERS));
-		//int numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
-		//Timer[] timers = new Timer[numTimers];
-		milli_chrono = (MilliChrono)findViewById(R.id.millichrono);
-		stop_button=(Button)findViewById(R.id.stop_button);
-		start_button=(Button)findViewById(R.id.start_button);
-		clear_button=(Button)findViewById(R.id.clear_button);
-		TimerHandler th = new TimerHandler();
-		start_button.setOnClickListener(th);
-		stop_button.setOnClickListener(th);
-		clear_button.setOnClickListener(th);
+		//field.setText(intent.getStringExtra(MainActivity.NUM_TIMERS));
+		int numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
+		Timer[] timers = new Timer[numTimers];
+		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
+		for (int i = 0; i < 40; i++) {
+			TextView hello = new TextView(this);
+			hello.setText("This is row " + i);
+			timer_list.addView(hello);
+		}
+//		milli_chrono = (MilliChrono)findViewById(R.id.millichrono);
+//		stop_button=(Button)findViewById(R.id.stop_button);
+//		start_button=(Button)findViewById(R.id.start_button);
+//		clear_button=(Button)findViewById(R.id.clear_button);
+//		TimerHandler th = new TimerHandler();
+//		start_button.setOnClickListener(th);
+//		stop_button.setOnClickListener(th);
+//		clear_button.setOnClickListener(th);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();

@@ -17,5 +17,9 @@
     <string name="timer_name_text">" Boat"</string>
     <string name="title_activity_splashscreenactivity">Splashscreenactivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="save_times">Save Times</string>
+    <string name="stop_all">Stop All</string>
+    <string name="start_all">Start All</string>
+    <string name="clear_all">Clear All</string>
 
 </resources>
