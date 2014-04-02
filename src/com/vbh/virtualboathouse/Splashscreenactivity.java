@@ -3,12 +3,15 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.os.Build;
 
 public class Splashscreenactivity extends Activity {
@@ -21,7 +24,19 @@ public class Splashscreenactivity extends Activity {
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+			}
+		Button recordTimes = (Button) findViewById(R.id.record_times_button);
+		Button changeLinups = (Button) findViewById(R.id.change_lineups_button);
+		// adding a comment to check if github is working
+		recordTimes.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.record_times_button)){
+					Intent displayBoatPickersIntent = new Intent(getBaseContext(), MainActivity.class);
+					startActivity(displayBoatPickersIntent);
+				}
+			}
+		});
 	}
 
 	@Override
