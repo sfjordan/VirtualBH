@@ -12,7 +12,7 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/record_times_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/button2"
@@ -20,7 +20,7 @@
             android:text="Record Times" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/change_lineups_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
