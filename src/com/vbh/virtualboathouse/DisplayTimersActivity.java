@@ -1,6 +1,7 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,10 @@ import android.widget.TextView;
 
 public class DisplayTimersActivity extends Activity {
 
+	public static Button start_all;
+	public static Button stop_all;
+	public static Button save_times;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,12 +31,15 @@ public class DisplayTimersActivity extends Activity {
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 		for (int i = 0; i < numTimers; i++) {
 			timers[i] = new Timer(this, timer_list, "Boat Number " + (i+1));
-//			if (i+1 < numTimers) {
-//				View hLine = new View(this);
-//				timer_list.addView(hLine)
-//			}
 		}
-
+		
+		TimerControlsHandler tch = new TimerControlsHandler(timers, this);
+		start_all = (Button)findViewById(R.id.start_all_button);
+		stop_all = (Button)findViewById(R.id.stop_all_button);
+		save_times = (Button)findViewById(R.id.save_times_button);
+		start_all.setOnClickListener(tch);
+		stop_all.setOnClickListener(tch);
+		save_times.setOnClickListener(tch);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();

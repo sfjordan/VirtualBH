@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 public class Timer {
 
-	public static MilliChrono milli_chrono;
-	public static Button stop_button;
-	public static Button start_button;
-	public static Button clear_button;
-	public static TextView boat_name;
+	public MilliChrono milli_chrono;
+	public Button stop_button;
+	public Button start_button;
+	public Button clear_button;
+	public TextView boat_name;
 	private Context context;
 	private String name;
 	private TimerHandler th;
@@ -26,6 +26,18 @@ public class Timer {
 		this.name = name;
 		addComponents();
 		setHandlers();
+	}
+	
+	public void start() {
+		th.onClick(start_button);
+	}
+	
+	public void stop() {
+		th.onClick(stop_button);
+	}
+	
+	public void clear() {
+		th.onClick(clear_button);
 	}
 	
 	private void setHandlers() {

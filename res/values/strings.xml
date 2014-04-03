@@ -23,6 +23,7 @@
     <string name="clear_all">Clear All</string>
     <string name="button_record_times">Record Times</string>
     <string name="button_change_lineups">Change Lineups</string>
+    <string name="dialog_message">Saved!</string>
     
 
 </resources>

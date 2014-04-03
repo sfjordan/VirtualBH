@@ -65,6 +65,7 @@ public final class R {
         public static final int button_start=0x7f050008;
         public static final int button_stop=0x7f050007;
         public static final int clear_all=0x7f050013;
+        public static final int dialog_message=0x7f050016;
         public static final int edit_message=0x7f050003;
         public static final int enter_num_timers=0x7f05000a;
         public static final int hello_text=0x7f050006;
