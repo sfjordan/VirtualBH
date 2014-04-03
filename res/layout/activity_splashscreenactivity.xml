@@ -17,6 +17,7 @@
         android:layout_weight="1"
 		android:padding="25dp"
         android:text="@string/button_record_times"
+        android:drawableLeft="@drawable/ic_timer"
         android:textSize="20sp" />
     <View
   		android:layout_width="0dp"
@@ -30,6 +31,7 @@
         android:layout_weight="1"
         android:padding="25dp"
         android:text="@string/button_change_lineups"
+        android:drawableLeft="@drawable/ic_row"
         android:textSize="20sp" />
 
 </LinearLayout>
