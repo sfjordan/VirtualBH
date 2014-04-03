@@ -15,12 +15,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.vbh.virtualboathouse.MainActivity"
-<<<<<<< HEAD
+
             android:label="@string/app_name" 
             android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity">
-=======
-            android:label="@string/title_activity_main" >
->>>>>>> 224b752bd46a81ce067bc9538be1431a78679885
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />

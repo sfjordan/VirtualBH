@@ -15,35 +15,18 @@ import android.widget.TextView;
 
 public class DisplayTimersActivity extends Activity {
 
-	public static TextView field;
-	public static MilliChrono milli_chrono;
-	public static Button stop_button;
-	public static Button start_button;
-	public static Button clear_button;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_timers);
-		
-		//field = (TextView)findViewById(R.id.field);
 		Intent intent = getIntent();
-		//field.setText(intent.getStringExtra(MainActivity.NUM_TIMERS));
 		int numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
 		Timer[] timers = new Timer[numTimers];
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
-		for (int i = 0; i < 40; i++) {
-			TextView hello = new TextView(this);
-			hello.setText("This is row " + i);
-			timer_list.addView(hello);
+		for (int i = 0; i < numTimers; i++) {
+			timers[i] = new Timer(this, timer_list, "Boat" + (i+1));
 		}
-//		milli_chrono = (MilliChrono)findViewById(R.id.millichrono);
-//		stop_button=(Button)findViewById(R.id.stop_button);
-//		start_button=(Button)findViewById(R.id.start_button);
-//		clear_button=(Button)findViewById(R.id.clear_button);
-//		TimerHandler th = new TimerHandler();
-//		start_button.setOnClickListener(th);
-//		stop_button.setOnClickListener(th);
-//		clear_button.setOnClickListener(th);
+
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();

@@ -15,29 +15,39 @@ public class TimerHandler extends Activity implements OnClickListener {
 	
 	private boolean stopped = true;
 	private long lastStop;
+	private Button start;
+	private Button stop;
+	private Button clear;
+	private MilliChrono clock;
+	
+	public TimerHandler(Button start, Button stop, Button clear, MilliChrono clock) {
+		this.start = start;
+		this.stop  = stop;
+		this.clear = clear;
+		this.clock = clock;
+	}
 	
 	@Override
     public void onClick(View v) {
-        if(DisplayTimersActivity.start_button == v)
+        if(start == v)
         {
         	if (stopped) {
         		stopped = false;
-		    	DisplayTimersActivity.milli_chrono.setBase(SystemClock.elapsedRealtime());
-		    	DisplayTimersActivity.milli_chrono.start();
+		    	clock.setBase(SystemClock.elapsedRealtime());
+		    	clock.start();
         	}
         }
-        else if(DisplayTimersActivity.stop_button == v){
+        else if(stop == v){
 		    if (!stopped) {
 		    	lastStop = SystemClock.elapsedRealtime();
-		    	
-			    DisplayTimersActivity.milli_chrono.updateText(lastStop);
-			    DisplayTimersActivity.milli_chrono.stop();
+		    	clock.updateText(lastStop);
+			    clock.stop();
 		    	stopped = true;
 		    }
         }
-        else if(DisplayTimersActivity.clear_button == v){
+        else if(clear == v){
         	if (stopped) {
-        		DisplayTimersActivity.milli_chrono.updateText(DisplayTimersActivity.milli_chrono.getBase());
+        		clock.updateText(clock.getBase());
         	}
         }
     }
