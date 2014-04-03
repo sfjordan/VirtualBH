@@ -1,32 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="100dp"
     tools:context="com.vbh.virtualboathouse.Splashscreenactivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
 
-    <RelativeLayout
+    <Button
+        android:id="@+id/record_times_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/change_lineups_button"
+        android:layout_alignParentTop="true"
+        android:text="@string/button_record_times"
+        android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/record_times_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button2"
-            android:layout_alignParentTop="true"
-            android:text="Record Times" />
+    <Button
+        android:id="@+id/change_lineups_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/record_times_button"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_change_lineups"
+        android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/change_lineups_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="Change Lineups" />
-
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

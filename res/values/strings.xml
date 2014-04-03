@@ -21,5 +21,8 @@
     <string name="stop_all">Stop All</string>
     <string name="start_all">Start All</string>
     <string name="clear_all">Clear All</string>
+    <string name="button_record_times">Record Times</string>
+    <string name="button_change_lineups">Change Lineups</string>
+    
 
 </resources>

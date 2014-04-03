@@ -25,9 +25,8 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000e;
-        public static final int button2=0x7f08000c;
-        public static final int change_lineups_button=0x7f08000d;
+        public static final int action_settings=0x7f08000d;
+        public static final int change_lineups_button=0x7f08000c;
         public static final int container=0x7f080000;
         public static final int enter_num_field=0x7f080008;
         public static final int enter_num_text=0x7f080009;
@@ -58,8 +57,10 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int blank=0x7f05000c;
+        public static final int button_change_lineups=0x7f050015;
         public static final int button_clear=0x7f050009;
         public static final int button_go=0x7f05000b;
+        public static final int button_record_times=0x7f050014;
         public static final int button_send=0x7f050004;
         public static final int button_start=0x7f050008;
         public static final int button_stop=0x7f050007;
