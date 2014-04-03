@@ -9,11 +9,12 @@
         android:layout_height="wrap_content"
         android:paddingBottom="50dp">
         <LinearLayout android:id="@+id/timers_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        
-    </LinearLayout>
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:divider="?android:dividerHorizontal"
+	        android:showDividers="middle">
+	    </LinearLayout>
     </ScrollView>
     <RelativeLayout 
         android:id="@+id/timer_controls_rel"

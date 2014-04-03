@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,11 @@ public class DisplayTimersActivity extends Activity {
 		Timer[] timers = new Timer[numTimers];
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 		for (int i = 0; i < numTimers; i++) {
-			timers[i] = new Timer(this, timer_list, "Boat" + (i+1));
+			timers[i] = new Timer(this, timer_list, "Boat Number " + (i+1));
+//			if (i+1 < numTimers) {
+//				View hLine = new View(this);
+//				timer_list.addView(hLine)
+//			}
 		}
 
 		if (savedInstanceState == null) {
