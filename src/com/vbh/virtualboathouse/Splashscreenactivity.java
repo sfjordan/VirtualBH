@@ -27,7 +27,7 @@ public class Splashscreenactivity extends Activity {
 			}
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLinups = (Button) findViewById(R.id.change_lineups_button);
-		// adding a comment to check if github is working
+		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v){

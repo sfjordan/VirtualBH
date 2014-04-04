@@ -1,30 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="100dp"
-    tools:context="com.vbh.virtualboathouse.Splashscreenactivity"
-    tools:ignore="MergeRootFrame"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:paddingRight="16dp"
+    tools:context="com.vbh.virtualboathouse.Splashscreenactivity"
+    tools:ignore="MergeRootFrame" >
 
     <Button
         android:id="@+id/record_times_button"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/change_lineups_button"
-        android:layout_alignParentTop="true"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+		android:padding="25dp"
         android:text="@string/button_record_times"
+        android:drawableLeft="@drawable/ic_timer"
         android:textSize="20sp" />
+    <View
+  		android:layout_width="0dp"
+  		android:layout_height="10dp">
+	</View>
 
     <Button
         android:id="@+id/change_lineups_button"
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/record_times_button"
-        android:layout_centerHorizontal="true"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:padding="25dp"
         android:text="@string/button_change_lineups"
+        android:drawableLeft="@drawable/ic_row"
         android:textSize="20sp" />
 
-</RelativeLayout>
+</LinearLayout>
