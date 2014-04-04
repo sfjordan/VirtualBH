@@ -23,13 +23,11 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
     public void onClick(View v) {
         if(DisplayTimersActivity.start_all == v) {
         	for(Timer t : timers) {
-        		Log.i("Timer", "timer " + t.toString() + " started");
         		t.start();
         	}
         }
         else if(DisplayTimersActivity.stop_all == v){
         	for(Timer t : timers) {
-        		Log.i("Timer", "timer " + t.toString() + " stopped");
     			t.stop();
     		}
         }
