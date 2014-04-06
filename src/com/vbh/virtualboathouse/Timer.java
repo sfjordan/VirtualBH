@@ -84,7 +84,7 @@ public class Timer {
 		LinearLayout.LayoutParams lp_stop = new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT);
 		lp_stop.weight = 1;
 		timer_buttons.addView(start_button, lp_start);
-		//timer_buttons.addView(clear_button, lp_clear);
+		timer_buttons.addView(clear_button, lp_clear);
 		timer_buttons.addView(stop_button, lp_stop);
 		this.ll.addView(whole_timer);
 	}

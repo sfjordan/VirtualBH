@@ -87,6 +87,7 @@ public class MilliChrono extends Chronometer {
     public void clear(){
     	mRunningTime = 0L;
     	mStarted = false;
+    	setBase(SystemClock.elapsedRealtime());
     	updateRunning();
     }
 
