@@ -17,9 +17,12 @@ public class MilliChrono extends Chronometer {
 	private static final String TAG = "MilliChrono";
 
     private long mBase;
+    private long mRunningTime;
+    private long showRunningTime;
     private boolean mVisible;
     private boolean mStarted;
     private boolean mRunning;
+    
     private OnChronometerTickListener mOnChronometerTickListener;
 
     public interface OnChronometerTickListener {
@@ -45,6 +48,7 @@ public class MilliChrono extends Chronometer {
     }
 
     private void init() {
+    	mRunningTime = 0L;
         mBase = SystemClock.elapsedRealtime();
         updateText(mBase);
     }
@@ -75,7 +79,16 @@ public class MilliChrono extends Chronometer {
 
     public void stop() {
         mStarted = false;
+        mRunningTime += timeElapsed;
+        System.out.println("Running time: "+mRunningTime);
         updateRunning();
+    }
+    
+    public void clear(){
+    	mRunningTime = 0L;
+    	mStarted = false;
+    	setBase(SystemClock.elapsedRealtime());
+    	updateRunning();
     }
 
 
@@ -100,11 +113,12 @@ public class MilliChrono extends Chronometer {
     
     public synchronized void updateText(long now) {
         timeElapsed = now - mBase;
+        showRunningTime = mRunningTime + timeElapsed;
         
         DecimalFormat df = new DecimalFormat("00");
         
-        int hours = (int)(timeElapsed / (3600 * 1000));
-        int remaining = (int)(timeElapsed % (3600 * 1000));
+        int hours = (int)(showRunningTime / (3600 * 1000));
+        int remaining = (int)(showRunningTime % (3600 * 1000));
         
         int minutes = (int)(remaining / (60 * 1000));
         remaining = (int)(remaining % (60 * 1000));
@@ -112,7 +126,7 @@ public class MilliChrono extends Chronometer {
         int seconds = (int)(remaining / 1000);
         remaining = (int)(remaining % (1000));
         
-        int hundredths = (int)(((int)timeElapsed % 1000) / 10);
+        int hundredths = (int)(((int)showRunningTime % 1000) / 10);
         
         String text = "";
         

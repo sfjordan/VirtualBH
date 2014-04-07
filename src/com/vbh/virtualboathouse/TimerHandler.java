@@ -40,14 +40,13 @@ public class TimerHandler extends Activity implements OnClickListener {
         else if(stop == v){
 		    if (!stopped) {
 		    	lastStop = SystemClock.elapsedRealtime();
-		    	clock.updateText(lastStop);
 			    clock.stop();
 		    	stopped = true;
 		    }
         }
         else if(clear == v){
         	if (stopped) {
-        		clock.updateText(clock.getBase());
+        		clock.clear();
         	}
         }
     }
