@@ -3,15 +3,22 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.os.Build;
 
 public class PickDistTimeActivity extends Activity {
+	
+	private EditText distanceEdit;
+	private Button goPickBoats;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,23 @@ public class PickDistTimeActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		goPickBoats = (Button) findViewById(R.id.goPickBoats);
+		distanceEdit = (EditText) findViewById(R.id.enter_distance);
+		goPickBoats.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(v == findViewById(R.id.goPickBoats)) 
+					if(distanceEdit.getText() != null) 
+						displayDistance(); }
+			});
+		
+	}
+	
+	private void displayDistance(){
+		Intent displayMainIntent = new Intent(this, MainActivity.class);
+		String message = distanceEdit.getText().toString();
+		System.out.println("distance: "+message);
+		startActivity(displayMainIntent);
 	}
 
 	@Override

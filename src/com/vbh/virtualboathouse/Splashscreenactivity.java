@@ -32,7 +32,7 @@ public class Splashscreenactivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.record_times_button)){
-					Intent displayBoatPickersIntent = new Intent(getBaseContext(), MainActivity.class);
+					Intent displayBoatPickersIntent = new Intent(getBaseContext(), PickDistTimeActivity.class);
 					startActivity(displayBoatPickersIntent);
 				}
 			}
