@@ -27,15 +27,16 @@ public final class R {
         public static final int ic_timer=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
-        public static final int change_lineups_button=0x7f08000e;
+        public static final int action_settings=0x7f080010;
+        public static final int change_lineups_button=0x7f08000f;
         public static final int container=0x7f080000;
-        public static final int enter_distance=0x7f08000b;
+        public static final int enter_distance=0x7f08000c;
+        public static final int enter_distance_text=0x7f08000b;
         public static final int enter_num_field=0x7f080008;
         public static final int enter_num_text=0x7f080009;
-        public static final int goPickBoats=0x7f08000c;
+        public static final int goPickBoats=0x7f08000d;
         public static final int go_button=0x7f08000a;
-        public static final int record_times_button=0x7f08000d;
+        public static final int record_times_button=0x7f08000e;
         public static final int save_times_button=0x7f080007;
         public static final int start_all_button=0x7f080005;
         public static final int stop_all_button=0x7f080006;
