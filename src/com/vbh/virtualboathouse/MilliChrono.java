@@ -20,8 +20,8 @@ public class MilliChrono extends Chronometer {
     private long mRunningTime;
     private long showRunningTime;
     private boolean mVisible;
-    private boolean mStarted; // whether the timer can be cleared
-    private boolean mRunning; // whether the timer is currently running.
+    private boolean mStarted; 
+    private boolean mRunning; 
     private static final int TICK_WHAT = 2;
     private long timeElapsed = 0L;
 
@@ -67,8 +67,9 @@ public class MilliChrono extends Chronometer {
     public void restartTimer(boolean running, long base) {
     	if (running) {
     		setBase(base);
-    		mRunning = true;
+    		//mRunning = true;
     	    mStarted = true;
+    	    mVisible = true;
     		updateRunning();
     	}
     	else {
@@ -108,9 +109,8 @@ public class MilliChrono extends Chronometer {
 
     public void stop() {
         mStarted = false;
-        timeElapsed = SystemClock.elapsedRealtime() - mBase;
-        System.out.println("Running time: "+mRunningTime);
         updateRunning();
+        //timeElapsed = SystemClock.elapsedRealtime() - mBase;
     }
     
     public void clear(){
@@ -141,7 +141,7 @@ public class MilliChrono extends Chronometer {
     }
     
     public synchronized void updateText(long time) {
-       //timeElapsed = now - mBase;
+        timeElapsed = time; // now - mBase;
         
         DecimalFormat df = new DecimalFormat("00");
         
@@ -175,9 +175,9 @@ public class MilliChrono extends Chronometer {
             	long now = SystemClock.elapsedRealtime() - mBase;
                 updateText(now);
                 dispatchChronometerTick();
-                mHandler.sendMessageDelayed(Message.obtain(mHandler,
-                        TICK_WHAT), 10);
+                mHandler.sendMessageDelayed(Message.obtain(mHandler, TICK_WHAT), 10);
             } else {
+            	//timeElapsed = SystemClock.elapsedRealtime() - mBase;
                 mHandler.removeMessages(TICK_WHAT);
             }
             mRunning = running;

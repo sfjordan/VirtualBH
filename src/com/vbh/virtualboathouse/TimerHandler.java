@@ -27,6 +27,9 @@ public class TimerHandler extends Activity implements OnClickListener {
 		this.clock = clock;
 	}
 	
+	public void setStoppedStatus(boolean stopped) {
+		this.stopped = stopped;
+	}
 	@Override
     public void onClick(View v) {
         if(start == v)

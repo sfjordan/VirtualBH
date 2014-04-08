@@ -97,6 +97,7 @@ public class Timer {
 	}
 
 	public void restart(long time, boolean state) {
+		th.setStoppedStatus(!state);
 		milli_chrono.restartTimer(state, time);
 	}
 
