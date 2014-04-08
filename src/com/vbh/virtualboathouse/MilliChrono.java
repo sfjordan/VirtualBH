@@ -22,6 +22,11 @@ public class MilliChrono extends Chronometer {
     private boolean mVisible;
     private boolean mStarted;
     private boolean mRunning;
+    private static final int TICK_WHAT = 2;
+    private long timeElapsed = 0L;
+    private int STOPPED = 0;
+    private int RUNNING = 1;
+    private int CLEARED = 2;
     
     private OnChronometerTickListener mOnChronometerTickListener;
 
@@ -29,9 +34,7 @@ public class MilliChrono extends Chronometer {
 
         void onChronometerTick(MilliChrono milli_chrono);
     }
-    private static final int TICK_WHAT = 2;
-
-    private long timeElapsed;
+    
     
     public MilliChrono(Context context) {
         this (context, null, 0);
@@ -43,14 +46,13 @@ public class MilliChrono extends Chronometer {
 
     public MilliChrono(Context context, AttributeSet attrs, int defStyle) {
         super (context, attrs, defStyle);
-
         init();
     }
 
     private void init() {
     	mRunningTime = 0L;
         mBase = SystemClock.elapsedRealtime();
-        updateText(mBase);
+        updateText(mRunningTime);
     }
     public void setBase(long base) {
         mBase = base;
@@ -60,6 +62,32 @@ public class MilliChrono extends Chronometer {
 
     public long getBase() {
         return mBase;
+    }
+    
+    public long getElapsedTime() {
+    	return timeElapsed;
+    }
+    
+    public void restartTimer(boolean running, long base) {
+    	if (running) {
+    		setBase(base);
+    		setStarted(true);
+    	}
+    	else {
+    		updateText(0L);
+    	}
+    }
+    
+    public long saveTime() {
+    	if (mStarted) {
+    		return mBase;
+    	}
+    	else {
+    		return timeElapsed;
+    	}
+    }
+    public boolean saveState() {
+    	return mStarted;
     }
 
     public void setOnChronometerTickListener(
@@ -72,23 +100,23 @@ public class MilliChrono extends Chronometer {
     }
 
     public void start() {
-        mBase = SystemClock.elapsedRealtime();
+        mBase = SystemClock.elapsedRealtime() - timeElapsed;
         mStarted = true;
         updateRunning();
     }
 
     public void stop() {
         mStarted = false;
-        mRunningTime += timeElapsed;
+        timeElapsed = SystemClock.elapsedRealtime() - mBase;
         System.out.println("Running time: "+mRunningTime);
         updateRunning();
     }
     
     public void clear(){
     	mRunningTime = 0L;
+    	timeElapsed = 0L;
     	mStarted = false;
-    	setBase(SystemClock.elapsedRealtime());
-    	updateRunning();
+    	updateText(timeElapsed);
     }
 
 
@@ -111,14 +139,13 @@ public class MilliChrono extends Chronometer {
         updateRunning();
     }
     
-    public synchronized void updateText(long now) {
-        timeElapsed = now - mBase;
-        showRunningTime = mRunningTime + timeElapsed;
+    public synchronized void updateText(long time) {
+       //timeElapsed = now - mBase;
         
         DecimalFormat df = new DecimalFormat("00");
         
-        int hours = (int)(showRunningTime / (3600 * 1000));
-        int remaining = (int)(showRunningTime % (3600 * 1000));
+        int hours = (int)(time / (3600 * 1000));
+        int remaining = (int)(time % (3600 * 1000));
         
         int minutes = (int)(remaining / (60 * 1000));
         remaining = (int)(remaining % (60 * 1000));
@@ -126,7 +153,7 @@ public class MilliChrono extends Chronometer {
         int seconds = (int)(remaining / 1000);
         remaining = (int)(remaining % (1000));
         
-        int hundredths = (int)(((int)showRunningTime % 1000) / 10);
+        int hundredths = (int)(((int)time % 1000) / 10);
         
         String text = "";
         
@@ -136,8 +163,7 @@ public class MilliChrono extends Chronometer {
         
        	text += df.format(minutes) + ":";
        	text += df.format(seconds) + ".";
-       	text += df.format(hundredths);
-        
+       	text += df.format(hundredths);   
         setText(text);
     }
 
@@ -145,7 +171,8 @@ public class MilliChrono extends Chronometer {
         boolean running = mVisible && mStarted;
         if (running != mRunning) {
             if (running) {
-                updateText(SystemClock.elapsedRealtime());
+            	long now = SystemClock.elapsedRealtime() - mBase;
+                updateText(now);
                 dispatchChronometerTick();
                 mHandler.sendMessageDelayed(Message.obtain(mHandler,
                         TICK_WHAT), 10);
@@ -159,7 +186,8 @@ public class MilliChrono extends Chronometer {
     private Handler mHandler = new Handler() {
         public void handleMessage(Message m) {
             if (mRunning) {
-                updateText(SystemClock.elapsedRealtime());
+            	long now = SystemClock.elapsedRealtime() - mBase;
+                updateText(now);
                 dispatchChronometerTick();
                 sendMessageDelayed(Message.obtain(this , TICK_WHAT), 10);
             }

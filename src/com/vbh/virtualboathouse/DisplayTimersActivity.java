@@ -20,19 +20,25 @@ public class DisplayTimersActivity extends Activity {
 	public static Button start_all;
 	public static Button stop_all;
 	public static Button save_times;
+	static final String TIMER_BASES = "timerBases";
+	static final String TIMER_STATES = "timerStates";
+	private int numTimers;
+	private Timer[] timers;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (savedInstanceState == null) {
+			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+		}
 		setContentView(R.layout.activity_display_timers);
 		Intent intent = getIntent();
-		int numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
-		Timer[] timers = new Timer[numTimers];
+		numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
+		timers = new Timer[numTimers];
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 		for (int i = 0; i < numTimers; i++) {
 			timers[i] = new Timer(this, timer_list, "Boat Number " + (i+1));
 		}
-		
 		TimerControlsHandler tch = new TimerControlsHandler(timers, this);
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
@@ -40,12 +46,29 @@ public class DisplayTimersActivity extends Activity {
 		start_all.setOnClickListener(tch);
 		stop_all.setOnClickListener(tch);
 		save_times.setOnClickListener(tch);
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+		if (savedInstanceState != null) {
+			long[] timerBases = savedInstanceState.getLongArray(TIMER_BASES);
+			boolean[] timerStates = savedInstanceState.getBooleanArray(TIMER_STATES);
+			for (int i = 0; i < numTimers; i++) {
+				timers[i].restart(timerBases[i], timerStates[i]);
+			}
 		}
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	    // Always call the superclass so it can save the view hierarchy state
+	    super.onSaveInstanceState(savedInstanceState);
+	    long[] timerBases = new long[numTimers];
+		boolean[] timerStates = new boolean[numTimers];
+	    for (int i = 0; i < numTimers; i++) {
+			timerBases[i] = timers[i].getRestartBase();
+			timerStates[i] = timers[i].getRestartState();
+		}
+	    savedInstanceState.putLongArray(TIMER_BASES, timerBases);
+	    savedInstanceState.putBooleanArray(TIMER_STATES, timerStates);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
