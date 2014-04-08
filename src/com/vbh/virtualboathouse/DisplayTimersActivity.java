@@ -28,9 +28,6 @@ public class DisplayTimersActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
-		}
 		setContentView(R.layout.activity_display_timers);
 		Intent intent = getIntent();
 		numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
