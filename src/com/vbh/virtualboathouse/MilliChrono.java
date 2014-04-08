@@ -20,18 +20,15 @@ public class MilliChrono extends Chronometer {
     private long mRunningTime;
     private long showRunningTime;
     private boolean mVisible;
-    private boolean mStarted;
-    private boolean mRunning;
+    private boolean mStarted; // whether the timer can be cleared
+    private boolean mRunning; // whether the timer is currently running.
     private static final int TICK_WHAT = 2;
     private long timeElapsed = 0L;
-    private int STOPPED = 0;
-    private int RUNNING = 1;
-    private int CLEARED = 2;
+
     
     private OnChronometerTickListener mOnChronometerTickListener;
 
     public interface OnChronometerTickListener {
-
         void onChronometerTick(MilliChrono milli_chrono);
     }
     
@@ -57,7 +54,6 @@ public class MilliChrono extends Chronometer {
     public void setBase(long base) {
         mBase = base;
         dispatchChronometerTick();
-        updateText(SystemClock.elapsedRealtime());
     }
 
     public long getBase() {
@@ -71,10 +67,15 @@ public class MilliChrono extends Chronometer {
     public void restartTimer(boolean running, long base) {
     	if (running) {
     		setBase(base);
-    		setStarted(true);
+    		mRunning = true;
+    	    mStarted = true;
+    		updateRunning();
     	}
     	else {
-    		updateText(0L);
+    		mStarted = false;
+    		mRunning = false;
+    		timeElapsed = base;
+    		updateText(timeElapsed);
     	}
     }
     
