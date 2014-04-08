@@ -24,6 +24,7 @@
     <string name="button_record_times">Record Times</string>
     <string name="button_change_lineups">Change Lineups</string>
     <string name="dialog_message">Saved!</string>
-    
+    <string name="title_activity_pick_dist_time">PickDistTimeActivity</string>
+    <string name="enter_distance">Enter racing distance:</string>
 
 </resources>
