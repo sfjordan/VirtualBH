@@ -16,8 +16,9 @@
         <activity
             android:name="com.vbh.virtualboathouse.DisplayTimersActivity"
             android:label="@string/title_activity_display_timers"
-            android:parentActivityName="com.vbh.virtualboathouse.MainActivity">
-            <!-- android:screenOrientation="portrait"--> 
+            android:parentActivityName="com.vbh.virtualboathouse.MainActivity" >
+
+            <!-- android:screenOrientation="portrait" -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.MainActivity" />
@@ -27,6 +28,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,7 +38,7 @@
             android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />            
+                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.MainActivity"
@@ -45,6 +47,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.PickDistTimeActivity" />
+        </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
     </application>
 

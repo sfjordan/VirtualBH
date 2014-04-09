@@ -26,5 +26,6 @@
     <string name="dialog_message">Saved!</string>
     <string name="title_activity_pick_dist_time">PickDistTimeActivity</string>
     <string name="enter_distance">Enter racing distance:</string>
+    <string name="api_url">https://cos333.herokuapp.com/json/</string>
 
 </resources>
