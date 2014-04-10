@@ -2,7 +2,9 @@ package com.vbh.virtualboathouse;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +20,8 @@ import android.os.Build;
 public class PickDistTimeActivity extends Activity {
 	
 	private EditText distanceEdit;
-	private Button goPickBoats;
+	private EditText timeEdit;
+	private Button goPickPiece;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +32,41 @@ public class PickDistTimeActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		goPickBoats = (Button) findViewById(R.id.goPickBoats);
+		goPickPiece = (Button) findViewById(R.id.goPickPiece);
 		distanceEdit = (EditText) findViewById(R.id.enter_distance);
-		goPickBoats.setOnClickListener(new OnClickListener() {
+		timeEdit = (EditText) findViewById(R.id.enter_time);
+		goPickPiece.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(v == findViewById(R.id.goPickBoats)) 
-					if(distanceEdit.getText() != null) 
-						displayDistance(); }
+				if(v == findViewById(R.id.goPickPiece)) 
+					if(!distanceEdit.getText().toString().isEmpty() && timeEdit.getText().toString().isEmpty()) 
+						displayDistance();
+					else if(!timeEdit.getText().toString().isEmpty() && distanceEdit.getText().toString().isEmpty())
+						displayTime();
+					else {
+						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+			        	builder.setMessage(R.string.pick_disttime_error_message);
+			        	AlertDialog saveDialog = builder.create();
+			        	saveDialog.show();
+					}
+				}
 			});
 		
 	}
 	
 	private void displayDistance(){
 		Intent displayMainIntent = new Intent(this, MainActivity.class);
-		String message = distanceEdit.getText().toString();
-		System.out.println("distance: "+message);
 		startActivity(displayMainIntent);
 	}
-
+	
+	private void displayTime(){
+		Intent countdownActivity = new Intent(this, CountdownActivity.class);
+		startActivity(countdownActivity);
+	}
+	
+	private Context getContext(){
+		return this;
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

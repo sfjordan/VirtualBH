@@ -29,12 +29,45 @@
 
         <requestFocus />
     </EditText>
-
-    <Button
-        android:id="@+id/goPickBoats"
+    
+    <TextView 
+        android:id="@+id/or_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/enter_distance"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/or_text"
+        android:textSize="35sp" />
+    
+    <TextView
+        android:id="@+id/enter_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/or_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/enter_time_text"
+        android:textSize="20sp" />
+    
+    <EditText
+        android:id="@+id/enter_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enter_time_text"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="time"
+        android:textAlignment="center"
+        android:textSize="20sp" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/goPickPiece"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enter_time"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:text="@string/button_go" />
