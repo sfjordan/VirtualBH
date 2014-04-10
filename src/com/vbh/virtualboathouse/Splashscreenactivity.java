@@ -9,7 +9,9 @@ import java.io.StreamCorruptedException;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,34 +44,11 @@ public class Splashscreenactivity extends Activity {
 				}
 			}
 		});
-		FileInputStream fis;
-		try {
-			fis = this.openFileInput("userData");
-		} catch (FileNotFoundException e) {
-			return;
-		}
-		ObjectInputStream is;
-		try {
-			is = new ObjectInputStream(fis);
-		} catch (Exception e) {
-			return;
-		}
-		CurrentUser cu;
-		try {
-			cu = (CurrentUser) is.readObject();
-		} catch (Exception e) {
-			return;
-		}
-		try {
-			is.close();
-		} catch (IOException e) {
-			return;
-		}
-		String username = cu.getUsername();
+		SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
 		TextView tv = (TextView) findViewById(R.id.textView1);
-		tv.setText(username);
+		tv.setText(sp.getString(CurrentUser.USERNAME, "admin"));
 		TextView tv1 = (TextView) findViewById(R.id.textView2);
-		tv1.setText(cu.getAPIKey());
+		tv1.setText(sp.getString(CurrentUser.API_KEY, "failed"));
 	}
 
 	private void launchBoatPickers() {
