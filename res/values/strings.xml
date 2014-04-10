@@ -15,7 +15,7 @@
     <string name="button_go">Go!</string>
     <string name="blank"></string>
     <string name="timer_name_text">" Boat"</string>
-    <string name="title_activity_splashscreenactivity">Splashscreen</string>
+    <string name="title_activity_splashscreenactivity">Virtual Boathouse</string>
     <string name="hello_world">Hello world!</string>
     <string name="save_times">Save Times</string>
     <string name="stop_all">Stop All</string>
@@ -31,5 +31,6 @@
     <string name="or_text">Or:</string>
     <string name="enter_time_text">Enter racing time:</string>
     <string name="pick_disttime_error_message">You must enter either a distance or time!</string>
+    <string name="login">Login</string>
 
 </resources>
