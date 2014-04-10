@@ -1,9 +1,12 @@
 package com.vbh.virtualboathouse;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -229,11 +233,24 @@ public class LoginActivity extends Activity {
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+		private LoginModel lm; 
+		private ErrorModel em;
+		private boolean seenError = false;
+		public static final String USER_DATA_FILE = "userData";
+		public static final String API_URL = "https://cos333.herokuapp.com/json/";
+		
+		public LoginModel getLoginModel() {
+			return this.lm;
+		}
+		
+		public ErrorModel getErrorModel() {
+			return this.em;
+		}
 		@Override
 		protected Boolean doInBackground(Void... params) {
 		    // Create a new HttpClient and Post Header
 		    HttpClient httpclient = new DefaultHttpClient();
-		    HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
+		    HttpPost httppost = new HttpPost(API_URL + "login/");
 		    HttpResponse response;
 		    try {
 		        // Add your data
@@ -262,13 +279,18 @@ public class LoginActivity extends Activity {
 		    if (jsonResponse == null) {
 		    	return false;
 		    }
+		    Gson gson = new Gson(); 
 		    try {
-		    	 Gson gson = new Gson(); 
-				 LoginModel lm = gson.fromJson(jsonResponse, LoginModel.class); // deserializes jsonResponse into 
+				 this.lm = gson.fromJson(jsonResponse, LoginModel.class); // deserializes jsonResponse into api key
 		    } catch (Exception e) {
-				 Gson gson = new Gson(); 
-				 ErrorModel lm = gson.fromJson(jsonResponse, ErrorModel.class); // deserializes jsonResponse into 
-		    }
+		    	try {
+		    		 this.em = gson.fromJson(jsonResponse, ErrorModel.class); // deserializes jsonResponse into error message 
+					 seenError = true; 
+		    	}
+				catch (Exception e2) {
+					return false;
+				}
+		    } 
 		    
 			return true;
 		}
@@ -279,11 +301,42 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				finish();
+				if (seenError) {
+					mPasswordView.setError(getString(R.string.error_incorrect_password));
+					mPasswordView.requestFocus();
+				}
+				else {
+					// save API key elsewhere
+					CurrentUser cu = new CurrentUser(lm, mUsername);
+					FileOutputStream fos;
+					try {
+						fos = getApplicationContext().openFileOutput(USER_DATA_FILE, Context.MODE_PRIVATE);
+					} catch (FileNotFoundException e) {
+						
+						return;
+					}
+					ObjectOutputStream os;
+					try {
+						os = new ObjectOutputStream(fos);
+					} catch (IOException e) {
+						return;
+					}
+					try {
+						os.writeObject(cu);
+					} catch (IOException e) {
+						return;
+					}
+					try {
+						os.close();
+					} catch (IOException e) {
+						return;
+					}
+					finish();
+				}
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+				// display toast saying there was a server authentication and invite the user to try again
+				
+				
 			}
 		}
 
