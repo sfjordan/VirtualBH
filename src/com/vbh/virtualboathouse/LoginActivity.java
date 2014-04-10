@@ -25,10 +25,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -44,15 +46,6 @@ import com.google.gson.Gson;
  */
 public class LoginActivity extends Activity {
 	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
-
-	private String apiKey;
-	
-	/**
 	 * The default email to populate the email field with.
 	 */
 	public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
@@ -65,6 +58,8 @@ public class LoginActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mUsername;
 	private String mPassword;
+	
+	public static boolean successfulLogin = false;
 
 	// UI references.
 	private EditText mUsernameView;
@@ -76,13 +71,6 @@ public class LoginActivity extends Activity {
 	// constants
 	private int MIN_PASSWORD_LEN = 6;
 
-	public String getAPIKey() {
-		return apiKey;
-	}
-	
-	public void setAPIKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -166,11 +154,12 @@ public class LoginActivity extends Activity {
 			mUsernameView.setError(getString(R.string.error_field_required));
 			focusView = mUsernameView;
 			cancel = true;
-		} else if (!mUsername.contains("@")) {
-			mUsernameView.setError(getString(R.string.error_invalid_email));
-			focusView = mUsernameView;
-			cancel = true;
 		}
+//	    else if (!mUsername.contains("@")) {
+//			mUsernameView.setError(getString(R.string.error_invalid_email));
+//			focusView = mUsernameView;
+//			cancel = true;
+//		}
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
@@ -226,7 +215,6 @@ public class LoginActivity extends Activity {
 			mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
 	}
-
 	
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
@@ -253,7 +241,7 @@ public class LoginActivity extends Activity {
 		    HttpPost httppost = new HttpPost(API_URL + "login/");
 		    HttpResponse response;
 		    try {
-		        // Add your data
+		        // Add username and password
 		        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 		        nameValuePairs.add(new BasicNameValuePair("username", mUsername));
 		        nameValuePairs.add(new BasicNameValuePair("password", mPassword ));
@@ -301,11 +289,14 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
+				
 				if (seenError) {
+					Log.i("UserAuthTask", "UserAuthTask recieved an error message ");
 					mPasswordView.setError(getString(R.string.error_incorrect_password));
 					mPasswordView.requestFocus();
 				}
 				else {
+					Log.i("UserAuthTask", "UserAuthTask succeeded on httpPost request ");
 					// save API key elsewhere
 					CurrentUser cu = new CurrentUser(lm, mUsername);
 					FileOutputStream fos;
@@ -331,11 +322,12 @@ public class LoginActivity extends Activity {
 					} catch (IOException e) {
 						return;
 					}
-					finish();
+					Intent splashscreenIntent = new Intent(getApplicationContext(), Splashscreenactivity.class);
+					startActivity(splashscreenIntent);
 				}
 			} else {
 				// display toast saying there was a server authentication and invite the user to try again
-				
+				Log.i("UserAuthTask", "UserAuthTask failed on httpPost request ");
 				
 			}
 		}
