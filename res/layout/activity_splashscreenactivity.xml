@@ -33,18 +33,37 @@
         android:text="@string/button_change_lineups"
         android:drawableLeft="@drawable/ic_row"
         android:textSize="20sp" />
+    <View 
+        android:layout_width="0dp"
+        android:layout_height="40dp">
+    </View>
+    
+    <TextView 
+        android:id="@+id/login_text"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="14sp"
+        android:textColor="#708090"
+        android:text="@string/currently_loggedin_text">
+   </TextView>
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
      <TextView
         android:id="@+id/textView2"
-        android:layout_width="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>
