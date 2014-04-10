@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.vbh.virtualboathouse.LoginActivity.UserLoginTask;
 
 public class LaunchActivity extends Activity {
 	private static int LAUNCH_TIME_OUT = 3000;
@@ -82,8 +81,7 @@ public class LaunchActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_launch,
-					container, false);
+			View rootView = inflater.inflate(R.layout.fragment_launch, container, false);
 			return rootView;
 		}
 	}
