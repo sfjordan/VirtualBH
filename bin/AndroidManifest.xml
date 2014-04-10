@@ -17,16 +17,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-<<<<<<< HEAD
             android:name="com.vbh.virtualboathouse.LaunchActivity"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
-=======
-            android:name="com.vbh.virtualboathouse.LoginActivity"
-            android:label="@string/login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
->>>>>>> bd19a84932a3f2d53850d8f08c04b3c4a97969ea
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,11 +37,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.Splashscreenactivity"
-<<<<<<< HEAD
-            android:label="@string/app_name" >
-=======
             android:label="@string/title_activity_splashscreenactivity" >
->>>>>>> bd19a84932a3f2d53850d8f08c04b3c4a97969ea
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.LaunchActivity" />
@@ -76,8 +66,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.MainActivity" />
         </activity>
-<<<<<<< HEAD
-=======
         <activity
             android:name="com.vbh.virtualboathouse.CountdownActivity"
             android:label="@string/title_activity_countdown"
@@ -86,7 +74,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.PickDistTimeActivity" />
         </activity>
->>>>>>> bd19a84932a3f2d53850d8f08c04b3c4a97969ea
     </application>
 
 </manifest>
