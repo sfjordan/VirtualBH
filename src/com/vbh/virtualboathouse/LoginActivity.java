@@ -26,6 +26,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -224,7 +225,6 @@ public class LoginActivity extends Activity {
 		private LoginModel lm; 
 		private ErrorModel em;
 		private boolean seenError = false;
-		public static final String USER_DATA_FILE = "userData";
 		public static final String API_URL = "https://cos333.herokuapp.com/json/";
 		
 		public LoginModel getLoginModel() {
@@ -296,32 +296,17 @@ public class LoginActivity extends Activity {
 					mPasswordView.requestFocus();
 				}
 				else {
-					Log.i("UserAuthTask", "UserAuthTask succeeded on httpPost request ");
-					// save API key elsewhere
+					Log.i("UserAuthTask", "UserAuthTask succeeded on httpPost request " + lm.getAPIKey());
+					// save API key in internal storage
 					CurrentUser cu = new CurrentUser(lm, mUsername);
-					FileOutputStream fos;
-					try {
-						fos = getApplicationContext().openFileOutput(USER_DATA_FILE, Context.MODE_PRIVATE);
-					} catch (FileNotFoundException e) {
-						
-						return;
-					}
-					ObjectOutputStream os;
-					try {
-						os = new ObjectOutputStream(fos);
-					} catch (IOException e) {
-						return;
-					}
-					try {
-						os.writeObject(cu);
-					} catch (IOException e) {
-						return;
-					}
-					try {
-						os.close();
-					} catch (IOException e) {
-						return;
-					}
+					cu.writeObject(cu, CurrentUser.USER_DATA_FILE, getApplicationContext());
+					// save the api key and the username for future accesses
+					SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
+					SharedPreferences.Editor spEditor = sp.edit();
+					spEditor.putString(CurrentUser.API_KEY, cu.getAPIKey());
+					spEditor.putString(CurrentUser.USERNAME, cu.getUsername());
+					spEditor.commit();
+					// launch the main menu activity 
 					Intent splashscreenIntent = new Intent(getApplicationContext(), Splashscreenactivity.class);
 					startActivity(splashscreenIntent);
 				}
@@ -330,6 +315,7 @@ public class LoginActivity extends Activity {
 				Log.i("UserAuthTask", "UserAuthTask failed on httpPost request ");
 				
 			}
+			finish();
 		}
 
 		@Override
