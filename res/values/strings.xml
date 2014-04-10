@@ -34,13 +34,6 @@
     <string name="enter_time_text">Enter racing time:</string>
     <string name="pick_disttime_error_message">You must enter either a distance or time!</string>
     <string name="login">Login</string>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
     <string name="currently_loggedin_text">Currently logged in as:</string>
-=======
->>>>>>> bd19a84932a3f2d53850d8f08c04b3c4a97969ea
->>>>>>> a1c3da1b7f9122a757defdcedd67745955bbe83d
->>>>>>> c95c1b73c76f509a0d875fb44c4aa3b63de0a4ee
 
 </resources>
