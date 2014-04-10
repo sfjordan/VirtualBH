@@ -28,9 +28,10 @@
     <string name="enter_distance">Enter racing distance:</string>
     <string name="api_url">https://cos333.herokuapp.com/json/</string>
     <string name="title_activity_countdown">Countdown Timer</string>
-    <string name="or_text">Or:</string>
+    <string name="or_text">Or</string>
     <string name="enter_time_text">Enter racing time:</string>
     <string name="pick_disttime_error_message">You must enter either a distance or time!</string>
     <string name="login">Login</string>
+    <string name="currently_loggedin_text">Currently logged in as:</string>
 
 </resources>

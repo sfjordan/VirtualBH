@@ -27,8 +27,8 @@ public final class R {
         public static final int ic_timer=0x7f020002;
     }
     public static final class id {
-        public static final int action_forgot_password=0x7f08001d;
-        public static final int action_settings=0x7f08001c;
+        public static final int action_forgot_password=0x7f08001e;
+        public static final int action_settings=0x7f08001d;
         public static final int change_lineups_button=0x7f080019;
         public static final int container=0x7f080000;
         public static final int email=0x7f08000b;
@@ -44,6 +44,7 @@ public final class R {
         public static final int login_form=0x7f08000a;
         public static final int login_status=0x7f080008;
         public static final int login_status_message=0x7f080009;
+        public static final int login_text=0x7f08001a;
         public static final int or_text=0x7f080014;
         public static final int password=0x7f08000c;
         public static final int record_times_button=0x7f080018;
@@ -51,8 +52,8 @@ public final class R {
         public static final int sign_in_button=0x7f08000e;
         public static final int start_all_button=0x7f080005;
         public static final int stop_all_button=0x7f080006;
-        public static final int textView1=0x7f08001a;
-        public static final int textView2=0x7f08001b;
+        public static final int textView1=0x7f08001b;
+        public static final int textView2=0x7f08001c;
         public static final int timer_controls=0x7f080004;
         public static final int timer_controls_rel=0x7f080003;
         public static final int timers_list=0x7f080002;
@@ -80,10 +81,10 @@ public final class R {
         public static final int splashscreenactivity=0x7f070005;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f050024;
+        public static final int action_forgot_password=0x7f050025;
         public static final int action_settings=0x7f050001;
-        public static final int action_sign_in_register=0x7f050022;
-        public static final int action_sign_in_short=0x7f050023;
+        public static final int action_sign_in_register=0x7f050023;
+        public static final int action_sign_in_short=0x7f050024;
         public static final int api_url=0x7f050019;
         public static final int app_name=0x7f050000;
         public static final int blank=0x7f05000c;
@@ -95,32 +96,33 @@ public final class R {
         public static final int button_start=0x7f050008;
         public static final int button_stop=0x7f050007;
         public static final int clear_all=0x7f050013;
+        public static final int currently_loggedin_text=0x7f05001f;
         public static final int dialog_message=0x7f050016;
         public static final int edit_message=0x7f050003;
         public static final int enter_distance=0x7f050018;
         public static final int enter_num_timers=0x7f05000a;
         public static final int enter_time_text=0x7f05001c;
-        public static final int error_field_required=0x7f050029;
-        public static final int error_incorrect_password=0x7f050028;
-        public static final int error_invalid_email=0x7f050026;
-        public static final int error_invalid_password=0x7f050027;
+        public static final int error_field_required=0x7f05002a;
+        public static final int error_incorrect_password=0x7f050029;
+        public static final int error_invalid_email=0x7f050027;
+        public static final int error_invalid_password=0x7f050028;
         public static final int hello_text=0x7f050006;
         public static final int hello_world=0x7f05000f;
         public static final int login=0x7f05001e;
-        public static final int login_progress_signing_in=0x7f050025;
+        public static final int login_progress_signing_in=0x7f050026;
         public static final int or_text=0x7f05001b;
         public static final int pick_disttime_error_message=0x7f05001d;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f050020;
-        public static final int prompt_password=0x7f050021;
+        public static final int prompt_email=0x7f050021;
+        public static final int prompt_password=0x7f050022;
         public static final int save_times=0x7f050010;
         public static final int start_all=0x7f050012;
         public static final int stop_all=0x7f050011;
         public static final int timer_name_text=0x7f05000d;
         public static final int title_activity_countdown=0x7f05001a;
         public static final int title_activity_display_timers=0x7f050002;
-        public static final int title_activity_login=0x7f05001f;
+        public static final int title_activity_login=0x7f050020;
         public static final int title_activity_main=0x7f050005;
         public static final int title_activity_pick_dist_time=0x7f050017;
         public static final int title_activity_splashscreenactivity=0x7f05000e;
