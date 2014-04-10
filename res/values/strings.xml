@@ -27,15 +27,12 @@
     <string name="title_activity_pick_dist_time">Set Up Distance/Time</string>
     <string name="enter_distance">Enter racing distance:</string>
     <string name="api_url">https://cos333.herokuapp.com/json/</string>
-<<<<<<< HEAD
     <string name="title_activity_launch">LaunchActivity</string>
 	<string name="copyright_info">&#169; 2014, VirtualBoathouse Inc.</string>
-=======
     <string name="title_activity_countdown">Countdown Timer</string>
     <string name="or_text">Or:</string>
     <string name="enter_time_text">Enter racing time:</string>
     <string name="pick_disttime_error_message">You must enter either a distance or time!</string>
     <string name="login">Login</string>
->>>>>>> bd19a84932a3f2d53850d8f08c04b3c4a97969ea
 
 </resources>
