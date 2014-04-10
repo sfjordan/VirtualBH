@@ -1,7 +1,13 @@
 package com.vbh.virtualboathouse;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.OptionalDataException;
+import java.io.StreamCorruptedException;
+
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.os.Build;
+import android.widget.TextView;
 
 public class Splashscreenactivity extends Activity {
 
@@ -36,6 +42,34 @@ public class Splashscreenactivity extends Activity {
 				}
 			}
 		});
+		FileInputStream fis;
+		try {
+			fis = this.openFileInput("userData");
+		} catch (FileNotFoundException e) {
+			return;
+		}
+		ObjectInputStream is;
+		try {
+			is = new ObjectInputStream(fis);
+		} catch (Exception e) {
+			return;
+		}
+		CurrentUser cu;
+		try {
+			cu = (CurrentUser) is.readObject();
+		} catch (Exception e) {
+			return;
+		}
+		try {
+			is.close();
+		} catch (IOException e) {
+			return;
+		}
+		String username = cu.getUsername();
+		TextView tv = (TextView) findViewById(R.id.textView1);
+		tv.setText(username);
+		TextView tv1 = (TextView) findViewById(R.id.textView2);
+		tv1.setText(cu.getAPIKey());
 	}
 
 	private void launchBoatPickers() {
