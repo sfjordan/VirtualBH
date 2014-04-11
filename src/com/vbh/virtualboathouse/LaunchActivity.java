@@ -5,21 +5,29 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class LaunchActivity extends Activity {
-	private static int LAUNCH_TIME_OUT = 3000;
+	private static int LAUNCH_TIME_OUT = 5000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
+		Typeface type = Typeface.createFromAsset(getAssets(),"fonts/MyriadPro-Semibold.ttf"); 
+		TextView appTitle = (TextView)findViewById(R.id.app_title_header);
+		appTitle.setTypeface(type);
+		//appTitle.setGravity(Gravity.CENTER);
+		appTitle.setPadding(25, 25, 40, 25);
 		
 	    new Handler().postDelayed(new Runnable() {	  
 	            /*

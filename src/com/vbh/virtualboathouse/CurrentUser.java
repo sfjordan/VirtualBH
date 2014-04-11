@@ -67,4 +67,8 @@ public class CurrentUser implements Serializable {
 		}
 		return cu;
 	}
+
+	public static boolean deleteUserDataFile(Context context) {
+		return context.deleteFile(USER_DATA_FILE);
+	}
 }

@@ -65,14 +65,20 @@ public class Splashscreenactivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		// Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.action_settings:
+	            return true;
+	        case R.id.action_logout:
+	            if (CurrentUser.deleteUserDataFile(this)) {
+	            	finish();
+	            	return true;
+	            }
+	            	
+	            else return false;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	/**
