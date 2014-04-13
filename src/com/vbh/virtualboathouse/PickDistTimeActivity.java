@@ -20,8 +20,12 @@ import android.os.Build;
 public class PickDistTimeActivity extends Activity {
 	
 	private EditText distanceEdit;
-	private EditText timeEdit;
+	private EditText timeMinEdit;
+	private EditText timeSecEdit;
 	private Button goPickPiece;
+	private int distance;
+	private int timeMin;
+	private int timeSec;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +38,19 @@ public class PickDistTimeActivity extends Activity {
 		}
 		goPickPiece = (Button) findViewById(R.id.goPickPiece);
 		distanceEdit = (EditText) findViewById(R.id.enter_distance);
-		timeEdit = (EditText) findViewById(R.id.enter_time);
+		timeMinEdit = (EditText) findViewById(R.id.enter_min_time);
+		timeSecEdit = (EditText) findViewById(R.id.enter_sec_time);
 		goPickPiece.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(v == findViewById(R.id.goPickPiece)) 
-					if(!distanceEdit.getText().toString().isEmpty() && timeEdit.getText().toString().isEmpty()) 
+					if(!distanceEdit.getText().toString().isEmpty() 
+							&& timeMinEdit.getText().toString().isEmpty() 
+							&& timeSecEdit.getText().toString().isEmpty()) 
 						displayDistance();
-					else if(!timeEdit.getText().toString().isEmpty() && distanceEdit.getText().toString().isEmpty())
+					else if((!timeMinEdit.getText().toString().isEmpty() 
+							|| !timeSecEdit.getText().toString().isEmpty()) 
+							&& distanceEdit.getText().toString().isEmpty())
 						displayTime();
 					else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -55,11 +64,20 @@ public class PickDistTimeActivity extends Activity {
 	}
 	
 	private void displayDistance(){
+		distance = Integer.parseInt(distanceEdit.getText().toString());
+		//pass distance along?
 		Intent displayMainIntent = new Intent(this, MainActivity.class);
 		startActivity(displayMainIntent);
 	}
 	
 	private void displayTime(){
+		if (timeMinEdit.getText().toString().isEmpty())
+			timeMin = 0;
+		else timeMin = Integer.parseInt(timeMinEdit.getText().toString());
+		if (timeSecEdit.getText().toString().isEmpty())
+			timeSec = 0;
+		else timeSec = Integer.parseInt(timeSecEdit.getText().toString());
+		//pas time along?
 		Intent countdownActivity = new Intent(this, CountdownActivity.class);
 		startActivity(countdownActivity);
 	}

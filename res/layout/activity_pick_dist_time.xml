@@ -15,7 +15,7 @@
         android:layout_marginTop="35dp"
         android:text="@string/enter_distance"
         android:textSize="20sp" />
-    
+
     <EditText
         android:id="@+id/enter_distance"
         android:layout_width="wrap_content"
@@ -29,8 +29,8 @@
 
         <requestFocus />
     </EditText>
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/or_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         android:layout_marginTop="30dp"
         android:text="@string/or_text"
         android:textSize="35sp" />
-    
+
     <TextView
         android:id="@+id/enter_time_text"
         android:layout_width="wrap_content"
@@ -49,29 +49,76 @@
         android:layout_marginTop="30dp"
         android:text="@string/enter_time_text"
         android:textSize="20sp" />
-    
-    <EditText
-        android:id="@+id/enter_time"
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" 
         android:layout_below="@+id/enter_time_text"
         android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="time"
-        android:textAlignment="center"
-        android:textSize="20sp" >
+        >
 
-    </EditText>
+        <EditText
+            android:id="@+id/enter_min_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/colon_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/enter_min_time"
+            android:text="@string/colon_separator"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/enter_sec_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/colon_separator"
+            android:ems="4"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/minutes_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enter_min_time"
+            android:layout_marginLeft="24dp"
+            android:textSize="14sp"
+        	android:textColor="#708090"
+        	android:text="@string/minutes"
+            />
+
+        <TextView
+            android:id="@+id/seconds_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enter_sec_time"
+            android:layout_toRightOf="@+id/minutes_text"
+            android:layout_marginLeft="45dp"
+            android:textSize="14sp"
+        	android:textColor="#708090"
+        	android:text="@string/seconds"
+            />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/goPickPiece"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/enter_time"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
+        android:layout_alignLeft="@+id/enter_distance"
+        android:layout_alignRight="@+id/enter_distance"
+        android:layout_below="@+id/enter_time_text"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="100dp"
         android:text="@string/button_go" />
-
-    
 
 </RelativeLayout>
