@@ -66,7 +66,7 @@ public class PickDistTimeActivity extends Activity {
 	private void displayDistance(){
 		distance = Integer.parseInt(distanceEdit.getText().toString());
 		//pass distance along?
-		Intent displayMainIntent = new Intent(this, MainActivity.class);
+		Intent displayMainIntent = new Intent(this, PickNumBoatsActivity.class);
 		startActivity(displayMainIntent);
 	}
 	

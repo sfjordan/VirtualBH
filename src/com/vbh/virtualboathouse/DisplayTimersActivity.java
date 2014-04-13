@@ -30,7 +30,7 @@ public class DisplayTimersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_timers);
 		Intent intent = getIntent();
-		numTimers = Integer.parseInt(intent.getStringExtra(MainActivity.NUM_TIMERS));
+		numTimers = Integer.parseInt(intent.getStringExtra(PickNumBoatsActivity.NUM_TIMERS));
 		timers = new Timer[numTimers];
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 		for (int i = 0; i < numTimers; i++) {

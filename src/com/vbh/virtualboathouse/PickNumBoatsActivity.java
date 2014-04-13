@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.os.Build;
 
-public class MainActivity extends Activity {
+public class PickNumBoatsActivity extends Activity {
 
 	public final static String NUM_TIMERS = "com.vbh.virtualboathouse.NUM_TIMERS";
 	private EditText numBoatsEdit;	

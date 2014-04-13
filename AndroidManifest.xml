@@ -51,7 +51,7 @@
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
         <activity
-            android:name="com.vbh.virtualboathouse.MainActivity"
+            android:name="com.vbh.virtualboathouse.PickNumBoatsActivity"
             android:label="@string/title_activity_main"
             android:parentActivityName="com.vbh.virtualboathouse.PickDistTimeActivity" >
             <meta-data
@@ -61,7 +61,7 @@
         <activity
             android:name="com.vbh.virtualboathouse.DisplayTimersActivity"
             android:label="@string/title_activity_display_timers"
-            android:parentActivityName="com.vbh.virtualboathouse.MainActivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.PickNumBoatsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.MainActivity" />
