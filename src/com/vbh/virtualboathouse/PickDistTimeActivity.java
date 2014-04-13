@@ -55,8 +55,8 @@ public class PickDistTimeActivity extends Activity {
 					else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 			        	builder.setMessage(R.string.pick_disttime_error_message);
-			        	AlertDialog saveDialog = builder.create();
-			        	saveDialog.show();
+			        	AlertDialog disttimeDialog = builder.create();
+			        	disttimeDialog.show();
 					}
 				}
 			});
@@ -65,7 +65,6 @@ public class PickDistTimeActivity extends Activity {
 	
 	private void displayDistance(){
 		distance = Integer.parseInt(distanceEdit.getText().toString());
-		//pass distance along?
 		Intent displayMainIntent = new Intent(this, PickNumBoatsActivity.class);
 		startActivity(displayMainIntent);
 	}
@@ -77,9 +76,18 @@ public class PickDistTimeActivity extends Activity {
 		if (timeSecEdit.getText().toString().isEmpty())
 			timeSec = 0;
 		else timeSec = Integer.parseInt(timeSecEdit.getText().toString());
-		//pas time along?
-		Intent countdownActivity = new Intent(this, CountdownActivity.class);
-		startActivity(countdownActivity);
+		if (timeMin >= 60 || timeSec >= 60) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        	builder.setMessage(R.string.invalid_time_error_message);
+        	AlertDialog invalidtimeDialog = builder.create();
+        	invalidtimeDialog.show();
+		}
+		else {
+			int[] array = {timeMin, timeSec};
+			Intent countdownActivity = new Intent(this, CountdownActivity.class);
+			countdownActivity.putExtra("numbers", array);
+			startActivity(countdownActivity);
+		}
 	}
 	
 	private Context getContext(){

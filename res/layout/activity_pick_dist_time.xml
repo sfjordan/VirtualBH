@@ -6,16 +6,6 @@
     tools:context="com.vbh.virtualboathouse.PickDistTimeActivity"
     tools:ignore="MergeRootFrame" >
 
-    <TextView
-        android:id="@+id/enter_distance_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:text="@string/enter_distance"
-        android:textSize="20sp" />
-
     <EditText
         android:id="@+id/enter_distance"
         android:layout_width="wrap_content"
@@ -64,7 +54,7 @@
             android:ems="4"
             android:inputType="number"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/colon_separator"
@@ -82,30 +72,29 @@
             android:ems="4"
             android:inputType="number"
             android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/minutes_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/enter_min_time"
-            android:layout_marginLeft="24dp"
-            android:textSize="14sp"
-        	android:textColor="#708090"
-        	android:text="@string/minutes"
-            />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/seconds_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/enter_sec_time"
             android:layout_below="@+id/enter_sec_time"
-            android:layout_toRightOf="@+id/minutes_text"
-            android:layout_marginLeft="45dp"
-            android:textSize="14sp"
-        	android:textColor="#708090"
-        	android:text="@string/seconds"
-            />
+            android:layout_marginLeft="16dp"
+            android:text="@string/seconds"
+            android:textColor="#708090"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/minutes_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/enter_min_time"
+            android:layout_below="@+id/enter_min_time"
+            android:layout_marginRight="16dp"
+            android:text="@string/minutes"
+            android:textColor="#708090"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -120,5 +109,15 @@
         android:layout_marginBottom="0dp"
         android:layout_marginTop="100dp"
         android:text="@string/button_go" />
+
+    <TextView
+        android:id="@+id/enter_distance_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:text="@string/enter_distance"
+        android:textSize="20sp" />
 
 </RelativeLayout>
