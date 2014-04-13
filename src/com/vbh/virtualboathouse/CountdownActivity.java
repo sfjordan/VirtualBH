@@ -26,6 +26,7 @@ public class CountdownActivity extends Activity {
 	private TextView countdownText;
 	private static final String FORMAT = "%02d:%02d";
 	private long timeInMillis;
+	private boolean running;
 	
 	
 	@Override
@@ -51,7 +52,8 @@ public class CountdownActivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.start_button)){
-					StartTimer();
+					if (!running)
+						StartTimer();
 				}
 			}
 		});
@@ -74,16 +76,19 @@ public class CountdownActivity extends Activity {
 	        }
 
 	        public void onFinish() {
+	        	running = false;
 	            countdownText.setText("Done!");
 	        }
 	     };
 	}
 	
 	private void StartTimer(){
+		running = true;
 		CountDownTimer.start();
 		
 	}
 	private void CancelTimer(){
+		running = false;
 		CountDownTimer.cancel();
 		countdownText.setText(formatTime(timeInMillis));
 	}
