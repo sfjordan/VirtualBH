@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ public class CountdownActivity extends Activity {
 	private static final String FORMAT = "%02d:%02d";
 	private long timeInMillis;
 	private boolean running;
+	private long millisToGo;
 	
 	
 	@Override
@@ -66,20 +68,32 @@ public class CountdownActivity extends Activity {
 			}
 		});
 		
-		
-		//set countdownText initially:
-		countdownText.setText(formatTime(timeInMillis));
-		
-		CountDownTimer = new CountDownTimer(timeInMillis, 1000) { // adjust the milli seconds here
-	        public void onTick(long millisUntilFinished) {
-	            countdownText.setText(formatTime(millisUntilFinished));              
-	        }
-
-	        public void onFinish() {
-	        	running = false;
-	            countdownText.setText("Done!");
-	        }
-	     };
+		//recover from save:
+		if (savedInstanceState != null) {
+			running = savedInstanceState.getBoolean("running");
+			if (running) {
+				long elapsedTime = System.currentTimeMillis() - savedInstanceState.getLong("currentTime");
+				millisToGo = savedInstanceState.getLong("millisToGo") - elapsedTime;
+				if (millisToGo <= 0){
+					countdownText.setText("Done!");
+				}
+				else {
+					CountDownTimer = CreateTimer(millisToGo);
+					StartTimer();
+				}
+			}
+			else CountDownTimer = CreateTimer(timeInMillis);
+		}
+		else CountDownTimer = CreateTimer(timeInMillis);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	    // Always call the superclass so it can save the view hierarchy state
+	    super.onSaveInstanceState(savedInstanceState);
+	    savedInstanceState.putBoolean("running", running);
+	    savedInstanceState.putLong("millisToGo", millisToGo);
+	    savedInstanceState.putLong("currentTime", System.currentTimeMillis());
 	}
 	
 	private void StartTimer(){
@@ -90,7 +104,7 @@ public class CountdownActivity extends Activity {
 	private void CancelTimer(){
 		running = false;
 		CountDownTimer.cancel();
-		countdownText.setText(formatTime(timeInMillis));
+		CountDownTimer = CreateTimer(timeInMillis);
 	}
 	
 	private long convertTime(int minutes, int seconds){
@@ -109,7 +123,24 @@ public class CountdownActivity extends Activity {
 		return formattedTime;
 		
 	}
-
+	
+	private CountDownTimer CreateTimer(long millis){
+		CountDownTimer = new CountDownTimer(millis, 1000) { // adjust the milli seconds here
+	        public void onTick(long millisUntilFinished) {
+	            countdownText.setText(formatTime(millisUntilFinished));
+	            millisToGo = millisUntilFinished;   
+	        }
+	        public void onFinish() {
+	        	running = false;
+	            countdownText.setText("Done!");
+	        }
+	     };
+	     countdownText.setText(formatTime(millis));
+	     
+	     return CountDownTimer;
+	}
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

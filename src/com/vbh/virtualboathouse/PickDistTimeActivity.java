@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,10 +37,15 @@ public class PickDistTimeActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
 		goPickPiece = (Button) findViewById(R.id.goPickPiece);
 		distanceEdit = (EditText) findViewById(R.id.enter_distance);
 		timeMinEdit = (EditText) findViewById(R.id.enter_min_time);
 		timeSecEdit = (EditText) findViewById(R.id.enter_sec_time);
+		distanceEdit.setGravity(Gravity.CENTER);
+		timeMinEdit.setGravity(Gravity.CENTER);
+		timeSecEdit.setGravity(Gravity.CENTER);
+		
 		goPickPiece.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

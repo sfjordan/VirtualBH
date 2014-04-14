@@ -41,7 +41,7 @@ public class PickNumBoatsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(v == findViewById(R.id.go_button)) 
-					if(numBoatsEdit.getText() != null) 
+					if(!numBoatsEdit.getText().toString().isEmpty()) 
 						displayTimers(); }
 			});
 	}
