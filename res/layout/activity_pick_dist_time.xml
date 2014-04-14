@@ -24,14 +24,25 @@
 
             <requestFocus />
         </EditText>
+        
+        <TextView
+                android:id="@+id/meters_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/enter_distance"
+                android:layout_marginLeft="16dp"
+                android:text="@string/meters"
+                android:textColor="#708090"
+                android:textSize="14sp" />
 
         <TextView
             android:id="@+id/or_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/enter_distance"
+            android:layout_below="@+id/meters_text"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/or_text"
             android:textSize="35sp" />
 
