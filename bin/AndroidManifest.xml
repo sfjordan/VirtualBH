@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.vbh.virtualboathouse.LaunchActivity"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
@@ -74,6 +74,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.PickDistTimeActivity" />
         </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.ChangeLinupsActivity"
+            android:label="@string/title_activity_change_linups"
+            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
+        </activity>
     </application>
-</manifest>
 
+</manifest>
