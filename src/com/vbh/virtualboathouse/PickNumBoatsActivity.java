@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ public class PickNumBoatsActivity extends Activity {
 		Button goButton = (Button) findViewById(R.id.go_button);		
 
 		numBoatsEdit = (EditText)findViewById(R.id.enter_num_field);
+		numBoatsEdit.setGravity(Gravity.CENTER);
 		goButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
