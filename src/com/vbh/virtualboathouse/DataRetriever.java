@@ -7,8 +7,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,20 +29,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.R.string;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 
-public class DataRetriever {
+public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
  
     public DataRetriever() {
  
     }
     
-    public ArrayList<String> getAthletes() {
-        ArrayList<String> items = new ArrayList<String>();
+    protected ArrayList<String> doInBackground(String... urls) {
+    	System.out.println("in background");
+        ArrayList<String> data = new ArrayList<String>();
      
         try {
-            URL url = new URL("https://cos333.herokuapp.com/json/athletes/");
-            HttpURLConnection urlConnection = 
-                (HttpURLConnection) url.openConnection();
+            URL url = new URL(urls[0]);
+            HttpsURLConnection urlConnection = 
+                (HttpsURLConnection) url.openConnection();
+            
+            //dumpl all cert info
+   	     	print_https_cert(urlConnection);
+            //dump all the content
+   	     	print_content(urlConnection);
+   	     	
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
                         // gets the server json data
@@ -52,9 +67,10 @@ public class DataRetriever {
  
                 for (int i = 0; i < ja.length(); i++) {
                     JSONObject jo = (JSONObject) ja.get(i);
-                    items.add(jo.getString("text"));
+                    data.add(jo.getString("text"));
                 }
             }
+            urlConnection.disconnect();
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -65,7 +81,78 @@ public class DataRetriever {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return items;
+        
+        return data;
+	}
+    
+    public void getAthletes() {
+    	this.execute("https://cos333.herokuapp.com/json/athletes/");	
     }
+    
+    public void getBoats() {
+    	this.execute("https://cos333.herokuapp.com/json/boats/");	
+    }
+    
+    public static boolean isNetworkConnected(Context c) {
+        ConnectivityManager conManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conManager.getActiveNetworkInfo();
+        return ( netInfo != null && netInfo.isConnected() );
+  }
+	private void print_content(HttpsURLConnection con){
+		if(con!=null){
+			try {
+		 
+			   System.out.println("****** Content of the URL ********");			
+			   BufferedReader br = 
+				new BufferedReader(
+					new InputStreamReader(con.getInputStream()));
+		 
+			   String input;
+		 
+			   while ((input = br.readLine()) != null){
+			      System.out.println(input);
+			   }
+			   br.close();
+		 
+			} 
+			catch (IOException e) {
+			   e.printStackTrace();
+			}
+	    }
+	 
+	  }
+	private void print_https_cert(HttpsURLConnection con){	 
+	    if(con!=null){
+	      try {
+	    	
+	    	System.out.println("****** cert info for URL ********");
+			System.out.println("Response Code : " + con.getResponseCode());
+			System.out.println("Cipher Suite : " + con.getCipherSuite());
+			System.out.println("\n");
+		 
+			Certificate[] certs = con.getServerCertificates();
+			for(Certificate cert : certs){
+			   System.out.println("Cert Type : " + cert.getType());
+			   System.out.println("Cert Hash Code : " + cert.hashCode());
+			   System.out.println("Cert Public Key Algorithm : " 
+		                                    + cert.getPublicKey().getAlgorithm());
+			   System.out.println("Cert Public Key Format : " 
+		                                    + cert.getPublicKey().getFormat());
+			   System.out.println("\n");
+			}
+		 
+	      }
+      	catch (SSLPeerUnverifiedException e) {
+			e.printStackTrace();
+		}
+      	catch (IOException e){
+			e.printStackTrace();
+		}
+	 
+    }
+	 
+   }
+
+	
 
 }
