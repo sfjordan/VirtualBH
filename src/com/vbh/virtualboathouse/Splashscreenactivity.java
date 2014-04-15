@@ -34,13 +34,21 @@ public class Splashscreenactivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 			}
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
-		Button changeLinups = (Button) findViewById(R.id.change_lineups_button);
+		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.record_times_button)){
 					launchBoatPickers();
+				}
+			}
+		});
+		changeLineups.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.change_lineups_button)){
+					launchChangeLineups();
 				}
 			}
 		});
@@ -54,6 +62,12 @@ public class Splashscreenactivity extends Activity {
 	private void launchBoatPickers() {
 		Intent displayBoatPickersIntent = new Intent(this, PickDistTimeActivity.class);
 		startActivity(displayBoatPickersIntent);
+	}
+	
+	private void launchChangeLineups(){
+		Intent changeLineupsIntent = new Intent(this, ChangeLineupsActivity.class);
+		startActivity(changeLineupsIntent);
+		
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

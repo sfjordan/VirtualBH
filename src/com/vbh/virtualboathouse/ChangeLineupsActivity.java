@@ -1,5 +1,7 @@
 package com.vbh.virtualboathouse;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -9,9 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.os.Build;
+import android.content.Context;
+import android.content.Intent;
 
-public class ChangeLinupsActivity extends Activity {
+public class ChangeLineupsActivity extends Activity {
+	
+	public Button getLineups;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,22 @@ public class ChangeLinupsActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		getLineups = (Button) findViewById(R.id.get_lineups_button);
+		getLineups.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(v == findViewById(R.id.get_lineups_button))
+					System.out.println("getting athletes...");
+					getAthletes();
+			}
+		});
+	}
+	
+	private void getAthletes(){
+		DataRetriever dr = new DataRetriever();
+		dr.getAthletes();
+		
 	}
 
 	@Override

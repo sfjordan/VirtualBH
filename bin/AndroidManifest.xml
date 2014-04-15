@@ -75,7 +75,7 @@
                 android:value="com.vbh.virtualboathouse.PickDistTimeActivity" />
         </activity>
         <activity
-            android:name="com.vbh.virtualboathouse.ChangeLinupsActivity"
+            android:name="com.vbh.virtualboathouse.ChangeLineupsActivity"
             android:label="@string/title_activity_change_linups"
             android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
             <meta-data

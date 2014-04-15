@@ -43,5 +43,6 @@
     <string name="invalid_time_error_message">Please enter a valid time.    Minutes: 0&#8211;59 and Seconds: 0&#8211;59</string>
     <string name="title_activity_change_linups">ChangeLinupsActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="get_lineups_text">Get lineups</string>
 
 </resources>
