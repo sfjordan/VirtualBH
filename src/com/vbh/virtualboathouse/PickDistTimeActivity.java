@@ -71,8 +71,16 @@ public class PickDistTimeActivity extends Activity {
 	
 	private void displayDistance(){
 		distance = Integer.parseInt(distanceEdit.getText().toString());
-		Intent displayMainIntent = new Intent(this, PickNumBoatsActivity.class);
-		startActivity(displayMainIntent);
+		if (distance < 1 || distance > 10000000) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        	builder.setMessage(R.string.invalid_distance_error_message);
+        	AlertDialog invaliddistanceDialog = builder.create();
+        	invaliddistanceDialog.show();
+		}
+		else {
+			Intent displayMainIntent = new Intent(this, PickNumBoatsActivity.class);
+			startActivity(displayMainIntent);
+		}
 	}
 	
 	private void displayTime(){
