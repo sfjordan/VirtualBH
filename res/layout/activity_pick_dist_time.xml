@@ -1,77 +1,138 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.vbh.virtualboathouse.PickDistTimeActivity"
-    tools:ignore="MergeRootFrame" >
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/enter_distance_text"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:text="@string/enter_distance"
-        android:textSize="20sp" />
-    
-    <EditText
-        android:id="@+id/enter_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enter_distance_text"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textSize="20sp" >
+        tools:context="com.vbh.virtualboathouse.PickDistTimeActivity"
+        tools:ignore="MergeRootFrame" >
 
-        <requestFocus />
-    </EditText>
-    
-    <TextView 
-        android:id="@+id/or_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enter_distance"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="@string/or_text"
-        android:textSize="35sp" />
-    
-    <TextView
-        android:id="@+id/enter_time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/or_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="@string/enter_time_text"
-        android:textSize="20sp" />
-    
-    <EditText
-        android:id="@+id/enter_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enter_time_text"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="time"
-        android:textAlignment="center"
-        android:textSize="20sp" >
+        <EditText
+            android:id="@+id/enter_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enter_distance_text"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="20sp" >
 
-    </EditText>
+            <requestFocus />
+        </EditText>
+        
+        <TextView
+                android:id="@+id/meters_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/enter_distance"
+                android:layout_marginLeft="16dp"
+                android:text="@string/meters"
+                android:textColor="#708090"
+                android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/goPickPiece"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enter_time"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:text="@string/button_go" />
+        <TextView
+            android:id="@+id/or_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/meters_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/or_text"
+            android:textSize="35sp" />
 
-    
+        <TextView
+            android:id="@+id/enter_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/or_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="@string/enter_time_text"
+            android:textSize="20sp" />
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enter_time_text"
+            android:layout_centerHorizontal="true" >
+
+            <EditText
+                android:id="@+id/enter_min_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/colon_separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/enter_min_time"
+                android:text="@string/colon_separator"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/enter_sec_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/colon_separator"
+                android:ems="4"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/seconds_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/enter_sec_time"
+                android:layout_below="@+id/enter_sec_time"
+                android:layout_marginLeft="16dp"
+                android:text="@string/seconds"
+                android:textColor="#708090"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/minutes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/enter_min_time"
+                android:layout_below="@+id/enter_min_time"
+                android:layout_marginRight="16dp"
+                android:text="@string/minutes"
+                android:textColor="#708090"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/goPickPiece"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/enter_distance"
+            android:layout_alignRight="@+id/enter_distance"
+            android:layout_below="@+id/enter_time_text"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/button_go" />
+
+        <TextView
+            android:id="@+id/enter_distance_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:text="@string/enter_distance"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</ScrollView>
