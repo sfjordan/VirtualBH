@@ -82,6 +82,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.PickBoatsActivity"
+            android:label="@string/title_activity_pick_boats"
+            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
+        </activity>
     </application>
 
 </manifest>

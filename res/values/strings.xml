@@ -44,5 +44,6 @@
     <string name="title_activity_change_linups">ChangeLinupsActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="get_lineups_text">Get lineups</string>
+    <string name="title_activity_pick_boats">PickBoatsActivity</string>
 
 </resources>

@@ -93,16 +93,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_launch=0x7f030003;
         public static final int activity_login=0x7f030004;
         public static final int activity_main=0x7f030005;
-        public static final int activity_pick_dist_time=0x7f030006;
-        public static final int activity_splashscreenactivity=0x7f030007;
-        public static final int athlete_show=0x7f030008;
-        public static final int fragment_change_linups=0x7f030009;
-        public static final int fragment_countdown=0x7f03000a;
-        public static final int fragment_display_timers=0x7f03000b;
-        public static final int fragment_launch=0x7f03000c;
-        public static final int fragment_main=0x7f03000d;
-        public static final int fragment_pick_dist_time=0x7f03000e;
-        public static final int fragment_splashscreenactivity=0x7f03000f;
+        public static final int activity_pick_boats=0x7f030006;
+        public static final int activity_pick_dist_time=0x7f030007;
+        public static final int activity_splashscreenactivity=0x7f030008;
+        public static final int athlete_show=0x7f030009;
+        public static final int fragment_change_linups=0x7f03000a;
+        public static final int fragment_countdown=0x7f03000b;
+        public static final int fragment_display_timers=0x7f03000c;
+        public static final int fragment_launch=0x7f03000d;
+        public static final int fragment_main=0x7f03000e;
+        public static final int fragment_pick_boats=0x7f03000f;
+        public static final int fragment_pick_dist_time=0x7f030010;
+        public static final int fragment_splashscreenactivity=0x7f030011;
     }
     public static final class menu {
         public static final int change_linups=0x7f080000;
@@ -111,15 +113,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int launch=0x7f080003;
         public static final int login=0x7f080004;
         public static final int main=0x7f080005;
-        public static final int pick_dist_time=0x7f080006;
-        public static final int splashscreenactivity=0x7f080007;
+        public static final int pick_boats=0x7f080006;
+        public static final int pick_dist_time=0x7f080007;
+        public static final int splashscreenactivity=0x7f080008;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f060030;
+        public static final int action_forgot_password=0x7f060031;
         public static final int action_logout=0x7f060022;
         public static final int action_settings=0x7f060001;
-        public static final int action_sign_in_register=0x7f06002e;
-        public static final int action_sign_in_short=0x7f06002f;
+        public static final int action_sign_in_register=0x7f06002f;
+        public static final int action_sign_in_short=0x7f060030;
         public static final int api_url=0x7f060019;
         public static final int app_name=0x7f060000;
         public static final int blank=0x7f06000d;
@@ -140,24 +143,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int enter_distance=0x7f060018;
         public static final int enter_num_timers=0x7f06000b;
         public static final int enter_time_text=0x7f06001e;
-        public static final int error_field_required=0x7f060035;
-        public static final int error_incorrect_password=0x7f060034;
-        public static final int error_invalid_email=0x7f060032;
-        public static final int error_invalid_password=0x7f060033;
+        public static final int error_field_required=0x7f060036;
+        public static final int error_incorrect_password=0x7f060035;
+        public static final int error_invalid_email=0x7f060033;
+        public static final int error_invalid_password=0x7f060034;
         public static final int get_lineups_text=0x7f06002a;
         public static final int hello_text=0x7f060006;
         public static final int hello_world=0x7f060029;
         public static final int invalid_time_error_message=0x7f060027;
         public static final int login=0x7f060020;
-        public static final int login_progress_signing_in=0x7f060031;
+        public static final int login_progress_signing_in=0x7f060032;
         public static final int meters=0x7f060026;
         public static final int minutes=0x7f060024;
         public static final int or_text=0x7f06001d;
         public static final int pick_disttime_error_message=0x7f06001f;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f06002c;
-        public static final int prompt_password=0x7f06002d;
+        public static final int prompt_email=0x7f06002d;
+        public static final int prompt_password=0x7f06002e;
         public static final int save_times=0x7f060010;
         public static final int seconds=0x7f060025;
         public static final int start_all=0x7f060012;
@@ -167,8 +170,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_activity_countdown=0x7f06001c;
         public static final int title_activity_display_timers=0x7f060002;
         public static final int title_activity_launch=0x7f06001a;
-        public static final int title_activity_login=0x7f06002b;
+        public static final int title_activity_login=0x7f06002c;
         public static final int title_activity_main=0x7f060005;
+        public static final int title_activity_pick_boats=0x7f06002b;
         public static final int title_activity_pick_dist_time=0x7f060017;
         public static final int title_activity_splashscreenactivity=0x7f06000f;
     }
