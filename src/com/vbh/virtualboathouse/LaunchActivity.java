@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 
 public class LaunchActivity extends Activity {
-	private static int LAUNCH_TIME_OUT = 5000;
+	private static int LAUNCH_TIME_OUT = 2000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
