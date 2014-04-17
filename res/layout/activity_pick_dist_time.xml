@@ -114,6 +114,7 @@
 
         <Button
             android:id="@+id/goPickPiece"
+            android:textColor="@android:color/white"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/enter_distance"

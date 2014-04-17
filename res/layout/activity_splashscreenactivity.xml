@@ -12,6 +12,7 @@
 
     <Button
         android:id="@+id/record_times_button"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight="1"
@@ -26,6 +27,7 @@
 
     <Button
         android:id="@+id/change_lineups_button"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight="1"
