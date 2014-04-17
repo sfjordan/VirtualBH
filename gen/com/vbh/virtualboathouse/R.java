@@ -33,10 +33,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int boat=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int ic_row=0x7f020002;
-        public static final int ic_timer=0x7f020003;
+        public static final int apptheme_btn_radio_on_pressed_holo_light=0x7f020000;
+        public static final int apptheme_progress_bg_holo_light=0x7f020001;
+        public static final int apptheme_progress_secondary_holo_light=0x7f020002;
+        public static final int apptheme_progressbar_indeterminate_holo1=0x7f020003;
+        public static final int apptheme_progressbar_indeterminate_holo3=0x7f020004;
+        public static final int apptheme_progressbar_indeterminate_holo6=0x7f020005;
+        public static final int apptheme_progressbar_indeterminate_holo7=0x7f020006;
+        public static final int apptheme_progressbar_indeterminate_holo8=0x7f020007;
+        public static final int boat=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
+        public static final int ic_row=0x7f02000a;
+        public static final int ic_timer=0x7f02000b;
     }
     public static final class id {
         public static final int action_forgot_password=0x7f09002c;
