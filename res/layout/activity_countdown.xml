@@ -29,7 +29,6 @@
         <Button
             android:textColor="@android:color/white"
             android:id="@+id/start_button"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -39,7 +38,6 @@
         <Button
             android:textColor="@android:color/white"
             android:id="@+id/cancel_button"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
