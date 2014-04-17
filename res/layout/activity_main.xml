@@ -33,6 +33,7 @@
 
     <Button
         android:id="@+id/go_button"
+        android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/enter_num_field"

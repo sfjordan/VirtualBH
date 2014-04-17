@@ -1,6 +1,7 @@
 package com.vbh.virtualboathouse;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -80,8 +81,11 @@ public class Timer {
 		clear_button = new Button(context);
 		stop_button = new Button(context);
 		start_button.setText(context.getResources().getString(R.string.button_start));
+		start_button.setTextColor(Color.parseColor("white"));
 		clear_button.setText(context.getResources().getString(R.string.button_clear));
+		clear_button.setTextColor(Color.parseColor("white"));
 		stop_button.setText(context.getResources().getString(R.string.button_stop));
+		stop_button.setTextColor(Color.parseColor("white"));
 		// give equal weight
 		LinearLayout.LayoutParams lp_start = new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT);
 		lp_start.weight = 1;
