@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vbh.virtualboathouse"
     android:versionCode="1"
+    android:theme="@android:style/Theme.Holo"
     android:versionName="1.0" >
 
     <uses-sdk
