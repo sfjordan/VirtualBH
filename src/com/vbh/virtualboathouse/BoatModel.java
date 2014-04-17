@@ -25,6 +25,11 @@ public class BoatModel implements Serializable {
 	public long getPrivateKey() {
 		return pk;
 	}
+	
+	public BoatFields getBoatFields() {
+		return fields;
+	}
+	
 	@SerializedName("fields")
 	private BoatFields fields;
 	

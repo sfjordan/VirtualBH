@@ -27,7 +27,10 @@ public class AthleteModel implements Serializable  {
 	@SerializedName("fields")
 	private AthleteFields fields;
 	
-	private class AthleteFields {
+	public AthleteFields getAthleteFields() {
+		return fields;
+	}
+	public class AthleteFields {
 		@SerializedName("name")
 		private String name;
 		@SerializedName("year")
@@ -41,7 +44,7 @@ public class AthleteModel implements Serializable  {
 		@SerializedName("status")
 		private String status;
 		@SerializedName("user")
-		private int user;
+		private int userID;
 		@SerializedName("height")
 		private int height;
 		
@@ -63,8 +66,8 @@ public class AthleteModel implements Serializable  {
 		public String getStatus() {
 			return status;
 		}
-		public int getUser() {
-			return user;
+		public int getUserID() {
+			return userID;
 		}
 		public int getHeight() {
 			return height;
