@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,9 +56,11 @@ public class Splashscreenactivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.update_data_button)){
-					//launchDataUpdater();
-					lastUpdated.setText(currentDateString());
-					System.out.println("date: "+currentDateString());
+					boolean success = updateData();
+					if (success) {
+						lastUpdated.setText(currentDateString());
+						System.out.println("date: "+currentDateString());
+					}
 				}
 			}
 		});
@@ -70,9 +73,31 @@ public class Splashscreenactivity extends Activity {
 		tv1.setText(sp.getString(CurrentUser.API_KEY, "failed"));
 	}
 
-	private void updateData() {
+	private boolean updateData() {
 		DataRetriever dr = new DataRetriever(this);
 		dr.getAthletes();
+		dr.getBoats();
+		dr.getMostRecentPractice();
+		AthleteModel am[] = DataSaver.readObjectArray(dr.ATHLETE_DATA_FILENAME, this);
+		BoatModel bm[] = DataSaver.readObjectArray(dr.BOAT_DATA_FILENAME, this);
+		// build boat list
+		SparseArray<Boat> boatList = new SparseArray<Boat>(bm.length);
+		for (BoatModel boatModel : bm) {
+			Boat boat = new Boat(boatModel);
+			boatList.append(boat.getBoatID(), boat);
+		}
+		// build roster
+		Roster roster = new Roster(am);
+		// currently, just get the most recent practice
+		//PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME, this);
+		// 
+		
+		// implement getting all and choosing later
+		// PracticeModel pm[] = DataSaver.readObject(dr.PRACTICE_DATA_FILENAME, this);
+		// figure out most recent practice
+		//int practice = 2;
+		//dr.getPractice(practice);
+		return true;
 	}
 	
 	private void launchBoatPickers() {
@@ -86,10 +111,6 @@ public class Splashscreenactivity extends Activity {
 		
 	}
 	
-	private void launchDataUpdater(){
-		//TODO code
-		//TODO update date updated
-	}
 	
 	private String currentDateString(){
 		Time now = new Time();

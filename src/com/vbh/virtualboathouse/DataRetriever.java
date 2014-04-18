@@ -43,22 +43,25 @@ import android.os.AsyncTask;
 
 public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	
-	private String ATHLETE_URL = "https://cos333.herokuapp.com/json/athletes/";
-	private String BOATS_URL   = "https://cos333.herokuapp.com/json/boats/";
-	private String PRACTICE_URL = "https://cos333.herokuapp.com/json/practices/";
-	private String LINEUP_URL   = "/lineups/";
+	private final String ATHLETE_URL = "https://cos333.herokuapp.com/json/athletes/";
+	private final String BOATS_URL   = "https://cos333.herokuapp.com/json/boats/";
+	private final String PRACTICE_URL = "https://cos333.herokuapp.com/json/practices/";
+	private final String LINEUP_URL   = "/lineups/";
+	private final String RECENT_PRACTICE_URL = "https://cos333.herokuapp.com/json/practice/recent";
 	
-	private String ATHLETE_DATA_FILENAME  = "athleteData";
-	private String BOAT_DATA_FILENAME     = "boatData";
-	private String PRACTICE_DATA_FILENAME = "practiceData";
-	private String LINEUP_DATA_FILENAME   = "practiceLineupData";
-	private String GENERIC_DATA_FILENAME  = "genericData";
+	public final String ATHLETE_DATA_FILENAME  = "athleteModelData";
+	public final String BOAT_DATA_FILENAME     = "boatModelData";
+	public final String PRACTICE_DATA_FILENAME = "practiceModelData";
+	public final String LINEUP_DATA_FILENAME   = "practiceLineupModelData";
+	public final String RECENT_PRACTICE_DATA_FILENAME = "recentPracticeModelData";
+	public final String GENERIC_DATA_FILENAME  = "genericModelData";
 	
 	private int currentData = 0;
 	private final int ATHLETE         = 1;
 	private final int BOATS           = 2;
 	private final int PRACTICE        = 3;
 	private final int PRACTICE_LINEUP = 4;
+	private final int RECENT_PRACTICE = 5;
 	
 	private Context context; 
 	
@@ -140,6 +143,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
 	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel[].class); // deserializes jsonResponse into practice models
 	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineups
+	    		case RECENT_PRACTICE: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineup - should only have one value
 	    	}
 	    	saveData();
 	    } catch (Exception e) {
@@ -160,29 +164,15 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     }
     
     public boolean saveData() {
-    	FileOutputStream fos;
-		ObjectOutputStream os;
-		try {
-			switch(currentData) {
-    			case ATHLETE:  fos = context.openFileOutput(ATHLETE_DATA_FILENAME, Context.MODE_PRIVATE);
-    			case BOATS:    fos = context.openFileOutput(BOAT_DATA_FILENAME, Context.MODE_PRIVATE);
-    			case PRACTICE: fos = context.openFileOutput(PRACTICE_DATA_FILENAME, Context.MODE_PRIVATE);
-    			case PRACTICE_LINEUP: fos = context.openFileOutput(LINEUP_DATA_FILENAME, Context.MODE_PRIVATE);
-    			default: fos = context.openFileOutput(GENERIC_DATA_FILENAME, Context.MODE_PRIVATE);
-			}	
-			os = new ObjectOutputStream(fos);
-	    	switch(currentData) {
-	    		case ATHLETE:  os.writeObject(this.am);
-	    		case BOATS:    os.writeObject(this.bm);
-	    		case PRACTICE: os.writeObject(this.pm);
-	    		case PRACTICE_LINEUP: os.writeObject(this.plm);
-	    	}
-			os.close();
-		} catch (Exception e) {
-			return false;
+		boolean success = true;
+    	switch(currentData) {
+			case ATHLETE:  success = DataSaver.writeObjectArray(this.am, ATHLETE_DATA_FILENAME, context);
+			case BOATS:    success = DataSaver.writeObjectArray(this.bm, BOAT_DATA_FILENAME, context);
+			case PRACTICE: success = DataSaver.writeObjectArray(this.pm, PRACTICE_DATA_FILENAME, context);
+			case PRACTICE_LINEUP: success = DataSaver.writeObjectArray(this.plm, LINEUP_DATA_FILENAME, context);
+			case RECENT_PRACTICE: success = DataSaver.writeObjectArray(this.plm, RECENT_PRACTICE_DATA_FILENAME, context);
 		}
-    	
-    	return true;
+    	return success;
     }
     
     public void getAthletes() {
@@ -195,6 +185,10 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	this.execute(BOATS_URL);	
     }
     
+    public void getMostRecentPractice() {
+    	
+    	
+    }
     public void getPractices() {
     	currentData = PRACTICE;
     	this.execute(PRACTICE_URL);	
@@ -230,61 +224,5 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		} 
 	    return total.toString(); // Return full string
 	}
-	private void print_content(HttpsURLConnection con){
-		if(con!=null){
-			try {
-		 
-			   System.out.println("****** Content of the URL ********");			
-			   BufferedReader br = 
-				new BufferedReader(
-					new InputStreamReader(con.getInputStream()));
-		 
-			   String input;
-		 
-			   while ((input = br.readLine()) != null){
-			      System.out.println(input);
-			   }
-			   br.close();
-		 
-			} 
-			catch (IOException e) {
-			   e.printStackTrace();
-			}
-	    }
-	 
-	  }
-	private void print_https_cert(HttpsURLConnection con){	 
-	    if(con!=null){
-	      try {
-	    	
-	    	System.out.println("****** cert info for URL ********");
-			System.out.println("Response Code : " + con.getResponseCode());
-			System.out.println("Cipher Suite : " + con.getCipherSuite());
-			System.out.println("\n");
-		 
-			Certificate[] certs = con.getServerCertificates();
-			for(Certificate cert : certs){
-			   System.out.println("Cert Type : " + cert.getType());
-			   System.out.println("Cert Hash Code : " + cert.hashCode());
-			   System.out.println("Cert Public Key Algorithm : " 
-		                                    + cert.getPublicKey().getAlgorithm());
-			   System.out.println("Cert Public Key Format : " 
-		                                    + cert.getPublicKey().getFormat());
-			   System.out.println("\n");
-			}
-		 
-	      }
-      	catch (SSLPeerUnverifiedException e) {
-			e.printStackTrace();
-		}
-      	catch (IOException e){
-			e.printStackTrace();
-		}
-	 
-    }
-	 
-   }
-
-	
 
 }

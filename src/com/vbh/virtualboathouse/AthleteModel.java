@@ -30,7 +30,12 @@ public class AthleteModel implements Serializable  {
 	public AthleteFields getAthleteFields() {
 		return fields;
 	}
-	public class AthleteFields {
+	public class AthleteFields implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4032030594628423875L;
+		
 		@SerializedName("name")
 		private String name;
 		@SerializedName("year")
