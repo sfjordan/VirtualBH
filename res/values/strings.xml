@@ -40,12 +40,14 @@
     <string name="minutes">minutes</string>
     <string name="seconds">seconds</string>
     <string name="meters">meters</string>
-    <string name="invalid_time_error_message">Please enter a valid time.    Minutes: 0&#8211;59 and Seconds: 0&#8211;59</string>
+    <string name="invalid_time_error_message">Please enter a valid time. Minutes: 0&#8211;59 and Seconds: 0&#8211;59</string>
     <string name="invalid_boats_error_message">Please enter a valid number of boats: (1&#8211;50).</string>
     <string name="invalid_distance_error_message">Please enter a valid distance: (1&#8211;10,000,000).</string>
-    <string name="title_activity_change_linups">ChangeLineupsActivity</string>
+    <string name="title_activity_change_linups">Change Lineups</string>
     <string name="hello_world">Hello world!</string>
     <string name="get_lineups_text">Get lineups</string>
-    <string name="title_activity_pick_boats">PickBoatsActivity</string>
+    <string name="title_activity_pick_boats">Set Up Number of Boats</string>
+    <string name="title_activity_crew_selector">Select Crews</string>
+    <string name="select_crews_text">Select Crews</string>
 
 </resources>

@@ -19,7 +19,8 @@ import android.content.Intent;
 
 public class ChangeLineupsActivity extends Activity {
 	
-	public Button getLineups;
+	private Button getLineups;
+	private Button pickCrews;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,15 @@ public class ChangeLineupsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(v == findViewById(R.id.get_lineups_button))
-					System.out.println("getting athletes...");
 					getAthletes();
+			}
+		});
+		pickCrews = (Button) findViewById(R.id.pick_crews_button);
+		pickCrews.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (v==findViewById(R.id.pick_crews_button))
+					pickCrews();
 			}
 		});
 	}
@@ -46,6 +54,11 @@ public class ChangeLineupsActivity extends Activity {
 		DataRetriever dr = new DataRetriever(this);
 		dr.getAthletes();
 		
+	}
+	
+	private void pickCrews() {
+		Intent displayCrewSelectorIntent = new Intent(this, CrewSelectorActivity.class);
+		startActivity(displayCrewSelectorIntent);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vbh.virtualboathouse"
-    android:versionCode="1"
     android:theme="@android:style/Theme.Holo"
+    android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -90,6 +90,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
+        </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.CrewSelectorActivity"
+            android:label="@string/title_activity_crew_selector"
+            android:parentActivityName="com.vbh.virtualboathouse.PickDistTimeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vbh.virtualboathouse.PickDistTimeActivity" />
         </activity>
     </application>
 
