@@ -13,7 +13,7 @@ public class BoatModel implements Serializable {
 	
 
 	@SerializedName("pk")
-	private long pk; // private key
+	private int pk; // private key
 	
 	@SerializedName("model")
 	private String model;
@@ -22,7 +22,7 @@ public class BoatModel implements Serializable {
 		return model;
 	}
 	
-	public long getPrivateKey() {
+	public int getPrivateKey() {
 		return pk;
 	}
 	
@@ -33,7 +33,11 @@ public class BoatModel implements Serializable {
 	@SerializedName("fields")
 	private BoatFields fields;
 	
-	public class BoatFields {
+	public class BoatFields implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -5909140212880311212L;
 		@SerializedName("coxed")
 		private boolean coxed;
 		@SerializedName("name")

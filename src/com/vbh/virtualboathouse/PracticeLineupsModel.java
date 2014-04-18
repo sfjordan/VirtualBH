@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class PracticeLineupsModel implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7633689448845229342L;
+
 	@SerializedName("pk")
 	private int pk; // private key
 	
@@ -25,7 +30,11 @@ public class PracticeLineupsModel implements Serializable {
 	public PracticeLineupsFields getPLFields() {
 		return fields;
 	}
-	public class PracticeLineupsFields {
+	public class PracticeLineupsFields implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3518434490680826559L;
 		@SerializedName("position")
 		private String position;
 		@SerializedName("practice")

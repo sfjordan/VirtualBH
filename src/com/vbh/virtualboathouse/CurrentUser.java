@@ -39,34 +39,6 @@ public class CurrentUser implements Serializable {
 	public String getName() {
 		return name;
 	}
-	
-	public boolean writeObject(CurrentUser cu, String filename, Context context) {
-		FileOutputStream fos;
-		ObjectOutputStream os;
-		try {
-			fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
-			os = new ObjectOutputStream(fos);
-			os.writeObject(cu);
-			os.close();
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-	
-	public static CurrentUser readObject(String filename, Context context) {
-		FileInputStream fis;
-		ObjectInputStream is;
-		CurrentUser cu;
-		try {
-			fis = context.openFileInput(filename);
-			is = new ObjectInputStream(fis);
-			cu = (CurrentUser) is.readObject();
-		} catch (Exception e) {
-			return null;
-		}
-		return cu;
-	}
 
 	public static boolean deleteUserDataFile(Context context) {
 		return context.deleteFile(USER_DATA_FILE);

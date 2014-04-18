@@ -28,7 +28,11 @@ public class PracticeModel implements Serializable {
 	@SerializedName("fields")
 	private PracticeFields fields;
 	
-	public class PracticeFields {
+	public class PracticeFields implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2864998990390740034L;
 		@SerializedName("workout")
 		private String workout;
 		@SerializedName("name")

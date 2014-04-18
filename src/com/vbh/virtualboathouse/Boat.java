@@ -14,14 +14,19 @@ public class Boat implements Serializable {
 	private final boolean coxed;
 	private final int numSeats;
 	private final String name;
+	private final int boatID;
 	
 	public Boat(BoatModel bm) {
 		BoatFields bf = bm.getBoatFields();
 		this.coxed = bf.isCoxed();
 		this.numSeats = bf.getSeats();
 		this.name = bf.getName();
+		this.boatID = bm.getPrivateKey();
 	}
 
+	public int getBoatID() {
+		return boatID;
+	}
 	public boolean isCoxed() {
 		return coxed;
 	}
