@@ -299,7 +299,7 @@ public class LoginActivity extends Activity {
 					Log.i("UserAuthTask", "UserAuthTask succeeded on httpPost request " + lm.getAPIKey());
 					// save API key in internal storage
 					CurrentUser cu = new CurrentUser(lm, mUsername);
-					cu.writeObject(cu, CurrentUser.USER_DATA_FILE, getApplicationContext());
+					DataSaver.writeObject(cu, CurrentUser.USER_DATA_FILE, getApplicationContext());
 					// save the api key and the username for future accesses
 					SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
 					SharedPreferences.Editor spEditor = sp.edit();
