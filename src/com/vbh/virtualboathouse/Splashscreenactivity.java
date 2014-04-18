@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Splashscreenactivity extends Activity {
+	
+	private TextView lastUpdated;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,8 @@ public class Splashscreenactivity extends Activity {
 			}
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
+		Button updateData = (Button) findViewById(R.id.update_data_button);
+		lastUpdated = (TextView) findViewById(R.id.date_textstub);
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
 			@Override
@@ -52,6 +57,18 @@ public class Splashscreenactivity extends Activity {
 				}
 			}
 		});
+		updateData.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.update_data_button)){
+					//launchDataUpdater();
+					lastUpdated.setText(currentDateString());
+					System.out.println("date: "+currentDateString());
+				}
+			}
+		});
+		
+		
 		SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(sp.getString(CurrentUser.USERNAME, "admin"));
@@ -68,6 +85,17 @@ public class Splashscreenactivity extends Activity {
 		Intent changeLineupsIntent = new Intent(this, ChangeLineupsActivity.class);
 		startActivity(changeLineupsIntent);
 		
+	}
+	
+	private void launchDataUpdater(){
+		//TODO code
+		//TODO update date updated
+	}
+	
+	private String currentDateString(){
+		Time now = new Time();
+		now.setToNow();
+		return now.format("%l:%M%P %a, %d %b");
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

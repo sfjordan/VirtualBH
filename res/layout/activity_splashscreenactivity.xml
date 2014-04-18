@@ -37,19 +37,48 @@
         android:textSize="20sp" />
     <View 
         android:layout_width="0dp"
-        android:layout_height="40dp">
+        android:layout_height="10dp">
     </View>
     
     <Button
-        android:id="@+id/get_data_button"
+        android:id="@+id/update_data_button"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight="1"
-        android:padding="25dp"
+        android:padding="20dp"
         android:text="@string/update_text"
-        android:drawableLeft="@drawable/ic_action_refresh"
+        android:drawableLeft="@drawable/ic_update"
         android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal">
+    
+	    <TextView 
+	        android:id="@+id/last_updated_textstub"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="12sp"
+	        android:textColor="#708090"
+	        android:text="@string/last_updated_text">
+	   </TextView>
+	   <TextView
+	       android:id="@+id/date_textstub"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@+id/last_updated_textstub"
+	        android:textSize="12sp"
+	        android:textColor="#708090">
+	       
+	   </TextView>
+	   
+   </RelativeLayout>
+    
+    
     <View 
         android:layout_width="0dp"
         android:layout_height="40dp">

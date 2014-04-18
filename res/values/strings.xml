@@ -49,6 +49,7 @@
     <string name="title_activity_pick_boats">Set Up Number of Boats</string>
     <string name="title_activity_crew_selector">Select Crews</string>
     <string name="select_crews_text">Select Crews</string>
-    <string name="update_text">Update</string>
+    <string name="update_text">Update data</string>
+    <string name="last_updated_text">"last updated: "</string>
 
 </resources>

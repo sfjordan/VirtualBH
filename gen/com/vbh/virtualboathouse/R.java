@@ -101,21 +101,22 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int apptheme_textfield_disabled_holo_light=0x7f02003e;
         public static final int apptheme_textfield_focused_holo_light=0x7f02003f;
         public static final int boat=0x7f020040;
-        public static final int ic_action_refresh=0x7f020041;
-        public static final int ic_launcher=0x7f020042;
-        public static final int ic_row=0x7f020043;
-        public static final int ic_timer=0x7f020044;
+        public static final int ic_launcher=0x7f020041;
+        public static final int ic_row=0x7f020042;
+        public static final int ic_timer=0x7f020043;
+        public static final int ic_update=0x7f020044;
     }
     public static final class id {
-        public static final int action_forgot_password=0x7f09002e;
-        public static final int action_logout=0x7f09002f;
-        public static final int action_settings=0x7f09002d;
+        public static final int action_forgot_password=0x7f090030;
+        public static final int action_logout=0x7f090031;
+        public static final int action_settings=0x7f09002f;
         public static final int app_title_header=0x7f09000d;
         public static final int cancel_button=0x7f090005;
         public static final int change_lineups_button=0x7f090025;
         public static final int colon_separator=0x7f09001f;
         public static final int container=0x7f090000;
         public static final int countdown_text=0x7f090003;
+        public static final int date_textstub=0x7f090028;
         public static final int email=0x7f090011;
         public static final int enter_distance=0x7f090019;
         public static final int enter_distance_text=0x7f09001a;
@@ -124,18 +125,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int enter_num_text=0x7f090016;
         public static final int enter_sec_time=0x7f090020;
         public static final int enter_time_text=0x7f09001d;
-        public static final int get_data_button=0x7f090026;
         public static final int get_lineups_button=0x7f090001;
         public static final int goPickPiece=0x7f090023;
         public static final int go_button=0x7f090017;
+        public static final int last_updated_textstub=0x7f090027;
         public static final int login=0x7f090013;
         public static final int login_form=0x7f090010;
         public static final int login_status=0x7f09000e;
         public static final int login_status_message=0x7f09000f;
-        public static final int login_text=0x7f090027;
+        public static final int login_text=0x7f090029;
         public static final int meters_text=0x7f09001b;
         public static final int minutes_text=0x7f090022;
-        public static final int name=0x7f09002a;
+        public static final int name=0x7f09002c;
         public static final int or_text=0x7f09001c;
         public static final int password=0x7f090012;
         public static final int pick_crews_button=0x7f090002;
@@ -146,15 +147,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sign_in_button=0x7f090014;
         public static final int start_all_button=0x7f09000a;
         public static final int start_button=0x7f090004;
-        public static final int status=0x7f09002b;
+        public static final int status=0x7f09002d;
         public static final int stop_all_button=0x7f09000b;
-        public static final int textView1=0x7f090028;
-        public static final int textView2=0x7f090029;
+        public static final int textView1=0x7f09002a;
+        public static final int textView2=0x7f09002b;
         public static final int timer_controls=0x7f090009;
         public static final int timer_controls_rel=0x7f090008;
         public static final int timers_list=0x7f090007;
         public static final int timers_list_scroll=0x7f090006;
-        public static final int year=0x7f09002c;
+        public static final int update_data_button=0x7f090026;
+        public static final int year=0x7f09002e;
     }
     public static final class layout {
         public static final int activity_change_linups=0x7f030000;
@@ -191,11 +193,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int splashscreenactivity=0x7f080009;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f060036;
+        public static final int action_forgot_password=0x7f060037;
         public static final int action_logout=0x7f060022;
         public static final int action_settings=0x7f060001;
-        public static final int action_sign_in_register=0x7f060034;
-        public static final int action_sign_in_short=0x7f060035;
+        public static final int action_sign_in_register=0x7f060035;
+        public static final int action_sign_in_short=0x7f060036;
         public static final int api_url=0x7f060019;
         public static final int app_name=0x7f060000;
         public static final int blank=0x7f06000d;
@@ -216,26 +218,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int enter_distance=0x7f060018;
         public static final int enter_num_timers=0x7f06000b;
         public static final int enter_time_text=0x7f06001e;
-        public static final int error_field_required=0x7f06003b;
-        public static final int error_incorrect_password=0x7f06003a;
-        public static final int error_invalid_email=0x7f060038;
-        public static final int error_invalid_password=0x7f060039;
+        public static final int error_field_required=0x7f06003c;
+        public static final int error_incorrect_password=0x7f06003b;
+        public static final int error_invalid_email=0x7f060039;
+        public static final int error_invalid_password=0x7f06003a;
         public static final int get_lineups_text=0x7f06002c;
         public static final int hello_text=0x7f060006;
         public static final int hello_world=0x7f06002b;
         public static final int invalid_boats_error_message=0x7f060028;
         public static final int invalid_distance_error_message=0x7f060029;
         public static final int invalid_time_error_message=0x7f060027;
+        public static final int last_updated_text=0x7f060031;
         public static final int login=0x7f060020;
-        public static final int login_progress_signing_in=0x7f060037;
+        public static final int login_progress_signing_in=0x7f060038;
         public static final int meters=0x7f060026;
         public static final int minutes=0x7f060024;
         public static final int or_text=0x7f06001d;
         public static final int pick_disttime_error_message=0x7f06001f;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f060032;
-        public static final int prompt_password=0x7f060033;
+        public static final int prompt_email=0x7f060033;
+        public static final int prompt_password=0x7f060034;
         public static final int save_times=0x7f060010;
         public static final int seconds=0x7f060025;
         public static final int select_crews_text=0x7f06002f;
@@ -247,7 +250,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_activity_crew_selector=0x7f06002e;
         public static final int title_activity_display_timers=0x7f060002;
         public static final int title_activity_launch=0x7f06001a;
-        public static final int title_activity_login=0x7f060031;
+        public static final int title_activity_login=0x7f060032;
         public static final int title_activity_main=0x7f060005;
         public static final int title_activity_pick_boats=0x7f06002d;
         public static final int title_activity_pick_dist_time=0x7f060017;
