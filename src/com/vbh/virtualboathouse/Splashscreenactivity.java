@@ -57,7 +57,6 @@ public class Splashscreenactivity extends Activity {
 				if (v==findViewById(R.id.update_data_button)){
 					//launchDataUpdater();
 					lastUpdated.setText(currentDateString());
-					System.out.println("date: "+currentDateString());
 				}
 			}
 		});
@@ -71,7 +70,7 @@ public class Splashscreenactivity extends Activity {
 	}
 
 	private void launchBoatPickers() {
-		Intent displayBoatPickersIntent = new Intent(this, PickDistTimeActivity.class);
+		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
 		startActivity(displayBoatPickersIntent);
 	}
 	

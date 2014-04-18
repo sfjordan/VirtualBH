@@ -6,12 +6,14 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,12 +30,12 @@ public class CrewSelectorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_crew_selector);
 
-		/*if (savedInstanceState == null) {
+		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}*/
+		}
 		
-		LinearLayout layout = new LinearLayout(this);
+		/*LinearLayout layout = (LinearLayout) findViewById(R.id.spinner_layout);
 		
 		Spinner boat_picker = new Spinner(this);
 		ArrayList<String> spinnerArray = new ArrayList<String>();
@@ -48,7 +50,22 @@ public class CrewSelectorActivity extends Activity {
 		
 		layout.addView(boat_picker);
 
-	    setContentView(layout);
+	    setContentView(layout);*/
+	    
+	    go_button = (Button) findViewById(R.id.go_button);
+	    go_button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.go_button)){
+					launchPickDistTime();
+				}
+			}
+		});
+	}
+	
+	private void launchPickDistTime(){
+		Intent pickDistTimeIntent = new Intent(this, PickDistTimeActivity.class);
+		startActivity(pickDistTimeIntent);
 	}
 
 	@Override

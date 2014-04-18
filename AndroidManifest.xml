@@ -46,10 +46,10 @@
         <activity
             android:name="com.vbh.virtualboathouse.PickDistTimeActivity"
             android:label="@string/title_activity_pick_dist_time"
-            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.CrewSelectorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
+                android:value="com.vbh.virtualboathouse.CrewSelectorActivity" />
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickNumBoatsActivity"
@@ -86,18 +86,18 @@
         <activity
             android:name="com.vbh.virtualboathouse.PickBoatsActivity"
             android:label="@string/title_activity_pick_boats"
-            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.CrewSelectorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
+                android:value="com.vbh.virtualboathouse.CrewSelectorActivity" />
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.CrewSelectorActivity"
             android:label="@string/title_activity_crew_selector"
-            android:parentActivityName="com.vbh.virtualboathouse.PickDistTimeActivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.vbh.virtualboathouse.PickDistTimeActivity" />
+                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
     </application>
 
