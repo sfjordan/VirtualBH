@@ -67,7 +67,9 @@ public class Athlete implements Serializable {
 	public int getHeight() {
 		return height;
 	}	
-	
+	public String getRole() {
+		return role;
+	}
 	
 	
 }

@@ -22,6 +22,9 @@ public class PracticeLineupsModel implements Serializable {
 	@SerializedName("fields")
 	private PracticeLineupsFields fields;
 	
+	public PracticeLineupsFields getPLFields() {
+		return fields;
+	}
 	public class PracticeLineupsFields {
 		@SerializedName("position")
 		private String position;

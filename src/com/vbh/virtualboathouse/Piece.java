@@ -3,6 +3,8 @@ package com.vbh.virtualboathouse;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import android.util.SparseArray;
+
 public class Piece implements Serializable {
 	/**
 	 * 
@@ -14,19 +16,20 @@ public class Piece implements Serializable {
 	private boolean timed;
 	private int distance;
 	private String direction;
-	private ArrayList<Lineup> lineups;
+	private final ArrayList<Lineup> lineups;
 	private long[] times;
 	private ArrayList<String> notes;
 	private String margin;
 	
-	public Piece(Lineup lineup) {
+	public Piece(PracticeLineupsModel[] plm, Roster roster, SparseArray<Boat> boats) {
 		pieceID = 10L;
-		lineups.add(lineup);
+		lineups = new ArrayList<Lineup>(plm.length);
+		for (PracticeLineupsModel lineup : plm) {
+			lineups.add(new Lineup(lineup, roster, boats));
+		}
+		times = new long[plm.length];
 	}
 
-	public void addLineup(Lineup lineup) {
-		lineups.add(lineup);
-	}
 	
 	public long getPieceID() {
 		return pieceID;

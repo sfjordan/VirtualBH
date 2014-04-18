@@ -65,12 +65,25 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	private AthleteModel[] am;
 	private ErrorModel em;
 	private BoatModel[] bm;
-	private PracticeModel pm;
-	private PracticeLineupsModel plm;
+	private PracticeModel[] pm;
+	private PracticeLineupsModel[] plm;
 
 	
 	public AthleteModel[] getAthleteModel() {
 		return am;
+	}
+	
+	
+	public PracticeModel[] getPracticeModel() {
+		return pm;
+	}
+	
+	public BoatModel[] getBoatModel() {
+		return bm;
+	}
+	
+	public PracticeLineupsModel[] getPracticeLineupsModel() {
+		return plm;
 	}
 	
 	public ErrorModel getErrorModel() {
@@ -125,8 +138,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    	switch(currentData) {
 	    		case ATHLETE: am = gson.fromJson(data.get(0), AthleteModel[].class); // deserializes jsonResponse into athlete models
 	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
-	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel.class); // deserializes jsonResponse into practice models
-	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel.class); // deserializes jsonResponse into lineups
+	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel[].class); // deserializes jsonResponse into practice models
+	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineups
 	    	}
 	    	saveData();
 	    } catch (Exception e) {
