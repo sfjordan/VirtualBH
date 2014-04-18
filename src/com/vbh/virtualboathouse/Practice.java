@@ -2,6 +2,7 @@ package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Practice implements Serializable {
 	
@@ -16,11 +17,23 @@ public class Practice implements Serializable {
 	private String weather;
 	private int temperature;
 	private final long practiceID;
+	private final long msTime;
+	private final Date date;
 	
 	public Practice() {
 		practiceID = 10L;
+		msTime = System.currentTimeMillis();
+		date = new Date(msTime);
 	}
 	
+	public long getMsTime() {
+		return msTime;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
 	public long getPracticeID() {
 		return practiceID;
 	}

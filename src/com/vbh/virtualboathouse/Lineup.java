@@ -2,11 +2,16 @@ package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
 
+import android.util.SparseArray;
+
+import com.vbh.virtualboathouse.PracticeLineupsModel.PracticeLineupsFields;
+
 public class Lineup implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2384016072304205878L;
+	
 	private Boat boat;
 	private Athlete coxswain;
 	private String[] athleteNames;
@@ -14,10 +19,31 @@ public class Lineup implements Serializable {
 	private String position;
 	private final long lineupID;
 	
-	public Lineup(){
-		lineupID = 10L;
-		
+	public Lineup(PracticeLineupsModel plm, Roster roster, SparseArray<Boat> boats){
+		this.lineupID = plm.getPrivateKey();
+		PracticeLineupsFields plmf = plm.getPLFields();
+		int[] tempAthletes = plmf.getAthleteIDs();
+		this.position = plmf.getPosition();
+		this.boat = boats.get(plmf.getBoatID());
+		if (boat.isCoxed()) {
+			this.coxswain = roster.getAthlete(tempAthletes[0]);
+			this.athleteNames = new String[tempAthletes.length - 1];
+		    for (int i = 1; i < tempAthletes.length; i++) {
+		    	this.athleteID[i-1] = tempAthletes[i];
+		    	this.athleteNames[i-1] = roster.getAthlete(tempAthletes[i]).getFirstInitLastName();
+		    }
+		}
+		else {
+			coxswain = null;
+			int i = 0;
+			for (int athleteID : tempAthletes) {
+		    	this.athleteID[i] = athleteID;
+		    	this.athleteNames[i] = roster.getAthlete(athleteID).getFirstInitLastName();
+		    	i++;
+		    }
+		}
 	}
+	
 	public long getLineupID() {
 		return lineupID;
 	}
@@ -35,11 +61,11 @@ public class Lineup implements Serializable {
 		return boat.getName();
 	}
 	public int getAthleteIDFromSeat(int seat) {
-		return athleteID[seat - 1];
+		return athleteID[seat];
 	}
 	
 	public Athlete getAthleteFromSeat(int seat, Roster roster) {
-		return roster.getAthlete(getAthleteIDFromSeat(seat - 1));
+		return roster.getAthlete(getAthleteIDFromSeat(seat));
 	}
 	
 }
