@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class PracticeLineupsModel implements Serializable {
 
 	@SerializedName("pk")
-	private long pk; // private key
+	private int pk; // private key
 	
 	@SerializedName("model")
 	private String model;
@@ -16,7 +16,7 @@ public class PracticeLineupsModel implements Serializable {
 		return model;
 	}
 	
-	public long getPrivateKey() {
+	public int getPrivateKey() {
 		return pk;
 	}
 	@SerializedName("fields")

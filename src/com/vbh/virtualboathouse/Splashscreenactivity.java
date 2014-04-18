@@ -1,11 +1,5 @@
 package com.vbh.virtualboathouse;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.OptionalDataException;
-import java.io.StreamCorruptedException;
 
 import android.app.Activity;
 import android.app.Fragment;

@@ -35,7 +35,7 @@ public class LaunchActivity extends Activity {
 	             */
 	            @Override
 	            public void run() {
-	        		CurrentUser cu = CurrentUser.readObject(CurrentUser.USER_DATA_FILE, getApplicationContext());
+	        		CurrentUser cu = DataSaver.readObject(CurrentUser.USER_DATA_FILE, getApplicationContext());
 	        		if (cu == null) { // if the file doesn't exist, or there was some problem with file IO 
 	        			// launch the login activity
 	        			Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
