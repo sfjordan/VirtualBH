@@ -17,7 +17,7 @@ public class Lineup implements Serializable {
 	private String[] athleteNames;
 	private int[] athleteID;
 	private String position;
-	private final long lineupID;
+	private final int lineupID;
 	
 	public Lineup(PracticeLineupsModel plm, Roster roster, SparseArray<Boat> boats){
 		this.lineupID = plm.getPrivateKey();
@@ -44,7 +44,7 @@ public class Lineup implements Serializable {
 		}
 	}
 	
-	public long getLineupID() {
+	public int getLineupID() {
 		return lineupID;
 	}
 	public int getNumOfSeats() {
