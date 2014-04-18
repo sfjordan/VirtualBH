@@ -53,6 +53,11 @@ public class Splashscreenactivity extends Activity {
 		tv1.setText(sp.getString(CurrentUser.API_KEY, "failed"));
 	}
 
+	private void updateData() {
+		DataRetriever dr = new DataRetriever(this);
+		dr.getAthletes();
+	}
+	
 	private void launchBoatPickers() {
 		Intent displayBoatPickersIntent = new Intent(this, PickDistTimeActivity.class);
 		startActivity(displayBoatPickersIntent);
