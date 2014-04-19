@@ -3,7 +3,9 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,6 +15,11 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 	
 	private Timer[] timers;
 	private Context context;
+	
+	private long currentPieceID;
+	private Piece currentPiece;
+	private Practice currentPractice;
+	private int currentPracticeID;
 	
 	public TimerControlsHandler(Timer[] timers, Context context) {
 		this.timers = timers;
@@ -32,10 +39,31 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
     		}
         }
         else if(DisplayTimersActivity.save_times == v){
+        	// get data 
+        	SharedPreferences sharedPref = this.getSharedPreferences(
+			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+			currentPiece = currentPractice.getPiece(currentPieceID);
+        	// save times to current piece
+			SparseArray<Lineup> lineups = currentPiece.getLineups();
+			int keyIndex = 0;
+        	for(Timer t : timers) {
+        		currentPiece.setTime(lineups.valueAt(keyIndex).getLineupID(), t.getElapsedTime());
+        	}
+        	// save piece to practice
+        	currentPractice.addPiece(currentPiece);
+        	// write practice to file
+        	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+        	//TODO add redirect to new piece screen
+        	
+        	// display saved message
         	AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         	builder.setMessage(R.string.dialog_message);
         	AlertDialog saveDialog = builder.create();
         	saveDialog.show();
+        	
         	
         }
     }

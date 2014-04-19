@@ -3,9 +3,12 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,16 +28,29 @@ public class DisplayTimersActivity extends Activity {
 	private int numTimers;
 	private Timer[] timers;
 	
+	private long currentPieceID;
+	private Piece currentPiece;
+	private Practice currentPractice;
+	private int currentPracticeID;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_timers);
 		Intent intent = getIntent();
-		numTimers = Integer.parseInt(intent.getStringExtra(PickNumBoatsActivity.NUM_TIMERS));
+		numTimers = intent.getIntExtra(getString(R.string.CURRENT_NUM_BOATS), 3);
 		timers = new Timer[numTimers];
+		// get data 
+    	SharedPreferences sharedPref = this.getSharedPreferences(
+		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+		currentPiece = currentPractice.getPiece(currentPieceID);
+		SparseArray<Lineup> lineups = currentPiece.getLineups();
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 		for (int i = 0; i < numTimers; i++) {
-			timers[i] = new Timer(this, timer_list, "Boat Number " + (i+1));
+			timers[i] = new Timer(this, timer_list, lineups.valueAt(i).getName());
 		}
 		TimerControlsHandler tch = new TimerControlsHandler(timers, this);
 		start_all = (Button)findViewById(R.id.start_all_button);

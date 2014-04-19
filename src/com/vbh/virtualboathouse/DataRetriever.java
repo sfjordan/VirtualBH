@@ -186,8 +186,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     }
     
     public void getMostRecentPractice() {
-    	
-    	
+    	currentData = RECENT_PRACTICE;
+    	this.execute(RECENT_PRACTICE_URL);
     }
     public void getPractices() {
     	currentData = PRACTICE;

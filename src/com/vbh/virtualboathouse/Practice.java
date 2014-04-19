@@ -3,6 +3,10 @@ package com.vbh.virtualboathouse;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.util.SparseArray;
 
 public class Practice implements Serializable {
 	
@@ -10,7 +14,7 @@ public class Practice implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1118024584163974421L;
-	private ArrayList<Piece> pieces;
+	private Map<Long, Piece> pieces;
 	private ArrayList<String> notes;
 	private int windSpeed;
 	private String windNotes;
@@ -20,10 +24,11 @@ public class Practice implements Serializable {
 	private final long msTime;
 	private final Date date;
 	
-	public Practice() {
-		practiceID = 10L;
+	public Practice(int practiceID) {
+		this.practiceID = practiceID;
 		msTime = System.currentTimeMillis();
 		date = new Date(msTime);
+		pieces = new HashMap<Long, Piece>();
 	}
 	
 	public long getMsTime() {
@@ -39,7 +44,10 @@ public class Practice implements Serializable {
 	}
 	
 	public void addPiece(Piece piece) {
-		pieces.add(piece);
+		pieces.put(piece.getPieceID(), piece);
+	}
+	public Piece getPiece(long pieceID) {
+		return pieces.get(pieceID);
 	}
 	
 	public void addNote(String note) {
@@ -78,7 +86,7 @@ public class Practice implements Serializable {
 		this.temperature = temperature;
 	}
 
-	public ArrayList<Piece> getPieces() {
+	public Map<Long, Piece> getPieces() {
 		return pieces;
 	}
 

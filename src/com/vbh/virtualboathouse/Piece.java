@@ -18,20 +18,31 @@ public class Piece implements Serializable {
 	private int distance;
 	private String direction;
 	private final SparseArray<Lineup> lineups;
-	private long[] times;
+	private SparseArray<Long> times;
 	private ArrayList<String> notes;
 	private String margin;
+	private long msCountdownTime;
 	
-	public Piece(PracticeLineupsModel[] plm, Roster roster, SparseArray<Boat> boats) {
+	public Piece(Lineup[] lineups, Roster roster, SparseArray<Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
-		lineups = new SparseArray<Lineup>(plm.length);
-		for (PracticeLineupsModel lineup : plm) {
-			Lineup l = new Lineup(lineup, roster, boats);
-			lineups.append(l.getLineupID(), l);
+		this.lineups = new SparseArray<Lineup>(lineups.length);
+		for (Lineup l : lineups) {
+			this.lineups.append(l.getLineupID(), l);
 		}
-		times = new long[plm.length];
+		times = new SparseArray<Long>(lineups.length);
 	}
-
+	public int getNumBoats() {
+		return lineups.size();
+	}
+	public long getCountdownTime() {
+		return msCountdownTime;
+	}
+	public void setCountdownTime(int[] times) {
+		long time = times[1];
+		time += times[0]*60;
+		time = time*1000;
+		msCountdownTime = time;
+	}
 	
 	public long getPieceID() {
 		return pieceID;
@@ -42,6 +53,7 @@ public class Piece implements Serializable {
 
 	public void setCountdown(boolean countdown) {
 		this.countdown = countdown;
+		this.timed = !countdown;
 	}
 
 	public boolean isTimed() {
@@ -50,6 +62,7 @@ public class Piece implements Serializable {
 
 	public void setTimed(boolean timed) {
 		this.timed = timed;
+		this.countdown = !timed;
 	}
 
 	public int getDistance() {
@@ -68,12 +81,12 @@ public class Piece implements Serializable {
 		this.direction = direction;
 	}
 
-	public long[] getTimes() {
+	public SparseArray<Long> getTimes() {
 		return times;
 	}
 
-	public void setTimes(long[] times) {
-		this.times = times;
+	public void setTime(int lineupID, long time) {
+		times.put(lineupID, time);
 	}
 
 	public ArrayList<String> getNotes() {

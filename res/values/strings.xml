@@ -51,5 +51,20 @@
     <string name="select_crews_text">Select Crews</string>
     <string name="update_text">Update data</string>
     <string name="last_updated_text">"last updated: "</string>
+    
+    
+    
+    <!-- These strings are used for accessing resources -->
+    <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
+    <string name="CURRENT_PRACTICE_ID">CURRENT_PRACTICE_ID</string>
+    <string name="CURRENT_PIECE_ID">"CURRENT_PIECE_ID"</string>
+    
+    <string name="ROSTER_FILE">com.vbh.virtualboathouse.RosterData</string>
+    <string name="BOATS_FILE">com.vbh.virtualboathouse.BoatData</string>
+    <string name="PIECE_ID_FILE">com.vbh.virtualboathouse.PieceIDData</string>
+    <string name="PRACTICE_FILE">com.vbh.virtualboathouse.PracticeData</string>
+    
+    <!-- Extras for intents -->
+    <string name="CURRENT_NUM_BOATS">current_num_boats</string>
 
 </resources>

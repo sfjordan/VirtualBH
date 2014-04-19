@@ -56,16 +56,13 @@ public class Splashscreenactivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.update_data_button)){
-<<<<<<< HEAD
 					//launchDataUpdater();
 					lastUpdated.setText(currentDateString());
-=======
 					boolean success = updateData();
 					if (success) {
 						lastUpdated.setText(currentDateString());
 						System.out.println("date: "+currentDateString());
 					}
->>>>>>> a34cbb64dda46942158156d793508b50b4028f1b
 				}
 			}
 		});
@@ -79,12 +76,17 @@ public class Splashscreenactivity extends Activity {
 	}
 
 	private boolean updateData() {
+		boolean success = true;
 		DataRetriever dr = new DataRetriever(this);
 		dr.getAthletes();
 		dr.getBoats();
 		dr.getMostRecentPractice();
 		AthleteModel am[] = DataSaver.readObjectArray(dr.ATHLETE_DATA_FILENAME, this);
+		if (am == null) {
+			return false;
+		}
 		BoatModel bm[] = DataSaver.readObjectArray(dr.BOAT_DATA_FILENAME, this);
+		if (bm == null) return false;
 		// build boat list
 		SparseArray<Boat> boatList = new SparseArray<Boat>(bm.length);
 		for (BoatModel boatModel : bm) {
@@ -93,16 +95,13 @@ public class Splashscreenactivity extends Activity {
 		}
 		// build roster
 		Roster roster = new Roster(am);
-		// currently, just get the most recent practice
-		//PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME, this);
-		// 
-		
-		// implement getting all and choosing later
-		// PracticeModel pm[] = DataSaver.readObject(dr.PRACTICE_DATA_FILENAME, this);
-		// figure out most recent practice
-		//int practice = 2;
-		//dr.getPractice(practice);
-		return true;
+		// save roster and boat list to files
+		success = DataSaver.writeObject(boatList, getString(R.string.BOATS_FILE), this);
+		if (!success) return false;
+		success = DataSaver.writeObject(roster, getString(R.string.ROSTER_FILE), this);
+		if (!success) return false;
+
+		return success;
 	}
 	
 	private void launchBoatPickers() {

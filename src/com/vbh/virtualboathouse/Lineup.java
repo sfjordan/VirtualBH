@@ -67,5 +67,15 @@ public class Lineup implements Serializable {
 	public Athlete getAthleteFromSeat(int seat, Roster roster) {
 		return roster.getAthlete(getAthleteIDFromSeat(seat));
 	}
+	/**
+	 * This will eventually use the current settings to display the name of boat based on the user's preferences
+	 * It will be able to show the first initial, last name of the stroke or the coxswain, the name of the boat
+	 * or the name of the lineup. 
+	 * @return The identifier for the lineup, based on the setting preference of the user. 
+	 */
+	public String getName() {
+		//TODO add settings preference logic here!!!
+		return getNameForSeat(athleteNames.length);
+	}
 	
 }

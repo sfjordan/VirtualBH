@@ -28,6 +28,9 @@ public class Timer {
 		addComponents();
 		setHandlers();
 	}
+	public long getElapsedTime() {
+		return milli_chrono.getElapsedTime();
+	}
 	
 	public void start() {
 		th.onClick(start_button);

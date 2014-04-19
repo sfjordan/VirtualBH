@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,11 @@ public class PickDistTimeActivity extends Activity {
 	private int distance;
 	private int timeMin;
 	private int timeSec;
+	
+	private long currentPieceID;
+	private Piece currentPiece;
+	private Practice currentPractice;
+	private int currentPracticeID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,12 @@ public class PickDistTimeActivity extends Activity {
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
+			SharedPreferences sharedPref = this.getSharedPreferences(
+			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+			currentPiece = currentPractice.getPiece(currentPieceID);
 		}
 		
 		goPickPiece = (Button) findViewById(R.id.goPickPiece);
@@ -78,8 +90,10 @@ public class PickDistTimeActivity extends Activity {
         	invaliddistanceDialog.show();
 		}
 		else {
-			Intent displayMainIntent = new Intent(this, PickNumBoatsActivity.class);
-			startActivity(displayMainIntent);
+			currentPiece.setDistance(distance);
+			currentPiece.setTimed(true);
+			saveData();
+			displayTimers();
 		}
 	}
 	
@@ -98,10 +112,22 @@ public class PickDistTimeActivity extends Activity {
 		}
 		else {
 			int[] array = {timeMin, timeSec};
+			currentPiece.setCountdown(true);
+			currentPiece.setCountdownTime(array);
+			saveData();
 			Intent countdownActivity = new Intent(this, CountdownActivity.class);
 			countdownActivity.putExtra("numbers", array);
 			startActivity(countdownActivity);
 		}
+	}
+	private void saveData() {
+		currentPractice.addPiece(currentPiece);
+		DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+	}
+	private void displayTimers() {
+		Intent displayTimersIntent = new Intent(this, DisplayTimersActivity.class);
+		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), currentPiece.getNumBoats()); 
+		startActivity(displayTimersIntent);
 	}
 	
 	private Context getContext(){
