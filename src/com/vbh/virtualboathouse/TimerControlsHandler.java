@@ -5,38 +5,64 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 
 public class TimerControlsHandler extends Activity implements OnClickListener {
 	
 	private Timer[] timers;
 	private Context context;
+	private Button stop_all;
 	
 	private long currentPieceID;
 	private Piece currentPiece;
 	private Practice currentPractice;
 	private int currentPracticeID;
 	
-	public TimerControlsHandler(Timer[] timers, Context context) {
+	public TimerControlsHandler(Timer[] timers, Button stop_all, Context context) {
 		this.timers = timers;
 		this.context = context;
+		this.stop_all = stop_all;
 	}
 	
 	@Override
     public void onClick(View v) {
         if(DisplayTimersActivity.start_all == v) {
+        	//set text to 'Stop All'
+        	stop_all.setText("Stop All");
+			stop_all.setTextColor(Color.parseColor("white"));
         	for(Timer t : timers) {
         		t.start();
         	}
         }
         else if(DisplayTimersActivity.stop_all == v){
         	for(Timer t : timers) {
-    			t.stop();
-    		}
+        		t.stop_button.performClick();
+        	}
         }
+        //Note: this chunk adds 'clear all' functionality, still buggy
+        /*else if(DisplayTimersActivity.stop_all == v){
+        	if (allStopped()){
+        		//set text to 'Stop All'
+        		stop_all.setText("Stop All");
+    			stop_all.setTextColor(Color.parseColor("white"));
+	        	for(Timer t : timers) {
+	    			t.clear_button.performClick();
+	    		}
+        	}
+        	else {
+        		//set text to 'Clear All'
+        		stop_all.setText("Clear All");
+    			stop_all.setTextColor(Color.parseColor("white"));
+        		for(Timer t : timers) {
+	    			t.stop_button.performClick();
+	    		}
+        	}
+        }*/
         else if(DisplayTimersActivity.save_times == v){
         	// get data 
         	SharedPreferences sharedPref = this.getSharedPreferences(
@@ -72,6 +98,16 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
 		pickNewPieceIntent.putExtra("FROM","timers"); 
 		startActivity(pickNewPieceIntent);
+	}
+	
+	private boolean allStopped(){
+		boolean allstopped = true;
+		for (Timer t : timers){
+			if (!t.stopped)
+				allstopped = false;
+		}
+		System.out.println("allstopped: "+allstopped);
+		return allstopped;
 	}
 
 }

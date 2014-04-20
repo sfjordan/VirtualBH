@@ -38,21 +38,21 @@ public class DisplayTimersActivity extends Activity {
 		numTimers = intent.getIntExtra(getString(R.string.CURRENT_NUM_BOATS), 3);
 		timers = new Timer[numTimers];
 		// get data 
-    	SharedPreferences sharedPref = this.getSharedPreferences(
+    	/*SharedPreferences sharedPref = this.getSharedPreferences(
 		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
 		currentPiece = currentPractice.getPiece(currentPieceID);
-		SparseArray<Lineup> lineups = currentPiece.getLineups();
+		SparseArray<Lineup> lineups = currentPiece.getLineups();*/
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 		for (int i = 0; i < numTimers; i++) {
-			timers[i] = new Timer(this, timer_list, lineups.valueAt(i).getName());
+			timers[i] = new Timer(this, timer_list, "test"/*lineups.valueAt(i).getName()*/);
 		}
-		TimerControlsHandler tch = new TimerControlsHandler(timers, this);
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
 		save_times = (Button)findViewById(R.id.save_times_button);
+		TimerControlsHandler tch = new TimerControlsHandler(timers, stop_all, this);
 		start_all.setOnClickListener(tch);
 		stop_all.setOnClickListener(tch);
 		save_times.setOnClickListener(tch);

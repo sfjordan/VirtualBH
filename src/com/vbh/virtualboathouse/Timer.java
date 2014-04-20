@@ -15,6 +15,7 @@ public class Timer {
 	public Button start_button;
 	public Button clear_button;
 	public TextView boat_name;
+	public boolean stopped;
 	private Context context;
 	private String name;
 	private TimerHandler th;
@@ -24,6 +25,7 @@ public class Timer {
 		this.context = c;
 		this.ll = ll;
 		this.name = name;
+		stopped = true;
 		addComponents();
 		setHandlers();
 	}
@@ -32,14 +34,17 @@ public class Timer {
 	}
 	
 	public void start() {
+		stopped = false;
 		th.onClick(start_button);
 	}
 	
 	public void stop() {
+		stopped = true;
 		th.onClick(stop_button);
 	}
 	
 	public void clear() {
+		stopped = true;
 		th.onClick(clear_button);
 	}
 	
@@ -97,7 +102,7 @@ public class Timer {
 		lp_stop.weight = 1;
 		// add to the view
 		timer_buttons.addView(start_button, lp_start);
-		timer_buttons.addView(clear_button, lp_clear);
+		//timer_buttons.addView(clear_button, lp_clear); NOTE: stop button now doubles as clear button
 		timer_buttons.addView(stop_button, lp_stop);
 		this.ll.addView(whole_timer);
 	}

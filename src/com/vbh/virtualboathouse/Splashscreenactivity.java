@@ -41,6 +41,7 @@ public class Splashscreenactivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.record_times_button)){
 					launchBoatPickers();
+					//testTimers();
 				}
 			}
 		});
@@ -106,6 +107,10 @@ public class Splashscreenactivity extends Activity {
 	private void launchBoatPickers() {
 		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
 		startActivity(displayBoatPickersIntent);
+	}
+	private void testTimers(){
+		Intent testTimersIntent = new Intent(this, DisplayTimersActivity.class);
+		startActivity(testTimersIntent);
 	}
 	
 	@SuppressWarnings("unused")
