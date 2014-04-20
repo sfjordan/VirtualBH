@@ -11,7 +11,7 @@ import android.util.SparseArray;
 public class Practice implements Serializable {
 	
 	/**
-	 * 
+	 * constant for serialization
 	 */
 	private static final long serialVersionUID = 1118024584163974421L;
 	private Map<Long, Piece> pieces;
