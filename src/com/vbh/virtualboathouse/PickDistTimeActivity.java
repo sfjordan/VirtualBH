@@ -1,12 +1,10 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.os.Build;
 
 public class PickDistTimeActivity extends Activity {
 	
@@ -29,6 +26,7 @@ public class PickDistTimeActivity extends Activity {
 	private int timeMin;
 	private int timeSec;
 	
+	@SuppressWarnings("unused")
 	private long currentPieceID;
 	private Piece currentPiece;
 	private Practice currentPractice;
@@ -92,6 +90,7 @@ public class PickDistTimeActivity extends Activity {
         	invaliddistanceDialog.show();
 		}
 		else {
+			//TODO: currently generates null pointer
 			currentPiece.setDistance(distance);
 			currentPiece.setTimed(true);
 			saveData();
@@ -128,7 +127,7 @@ public class PickDistTimeActivity extends Activity {
 	}
 	private void displayTimers() {
 		Intent displayTimersIntent = new Intent(this, DisplayTimersActivity.class);
-		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), currentPiece.getNumBoats()); 
+		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), "2" /*currentPiece.getNumBoats()*/); 
 		startActivity(displayTimersIntent);
 	}
 	

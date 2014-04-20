@@ -3,7 +3,6 @@ package com.vbh.virtualboathouse;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -16,12 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.os.Build;
 
 public class CrewSelectorActivity extends Activity {
 	
@@ -105,7 +99,7 @@ public class CrewSelectorActivity extends Activity {
 					
 					//TODO
 					//NOTE: this block generates a null pointer atm 
-					/*// get the practice ID
+					// get the practice ID
 					SharedPreferences sharedPref = context.getSharedPreferences(
 					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 					int currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
@@ -122,7 +116,7 @@ public class CrewSelectorActivity extends Activity {
 					editor.apply();
 					ArrayList<Long> pieceIDs = new ArrayList<Long>();
 					pieceIDs.add(firstPiece.getPieceID());
-					DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);*/
+					DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);
 					launchPickDistTime();
 				}
 			}
@@ -142,10 +136,6 @@ public class CrewSelectorActivity extends Activity {
 		return true;
 	}
 	
-	private Context getContext(){
-		return this;
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will

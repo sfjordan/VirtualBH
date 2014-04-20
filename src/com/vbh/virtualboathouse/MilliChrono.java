@@ -4,6 +4,7 @@ package com.vbh.virtualboathouse;
  * The Android chronometer widget revised so as to count milliseconds
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -12,13 +13,15 @@ import android.util.AttributeSet;
 import android.widget.Chronometer;
 import java.text.DecimalFormat;
 
+@SuppressLint("HandlerLeak")
 public class MilliChrono extends Chronometer {
     @SuppressWarnings("unused")
 	private static final String TAG = "MilliChrono";
 
     private long mBase;
     private long mRunningTime;
-    private long showRunningTime;
+    @SuppressWarnings("unused")
+	private long showRunningTime;
     private boolean mVisible;
     private boolean mStarted; 
     private boolean mRunning; 
@@ -184,7 +187,7 @@ public class MilliChrono extends Chronometer {
         }
     }
 
-    private Handler mHandler = new Handler() {
+	private Handler mHandler = new Handler() {
         public void handleMessage(Message m) {
             if (mRunning) {
             	long now = SystemClock.elapsedRealtime() - mBase;

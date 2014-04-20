@@ -1,9 +1,6 @@
 package com.vbh.virtualboathouse;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.os.Build;
-import android.content.Context;
 import android.content.Intent;
 
 public class ChangeLineupsActivity extends Activity {

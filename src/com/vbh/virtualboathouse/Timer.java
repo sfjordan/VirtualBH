@@ -3,7 +3,6 @@ package com.vbh.virtualboathouse;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;

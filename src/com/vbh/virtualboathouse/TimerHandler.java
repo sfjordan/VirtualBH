@@ -1,19 +1,17 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import com.vbh.virtualboathouse.MilliChrono;
 
 
 public class TimerHandler extends Activity implements OnClickListener {
 	
 	private boolean stopped = true;
+	@SuppressWarnings("unused")
 	private long lastStop;
 	private Button start;
 	private Button stop;

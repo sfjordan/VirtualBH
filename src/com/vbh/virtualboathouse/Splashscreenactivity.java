@@ -57,7 +57,6 @@ public class Splashscreenactivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.update_data_button)){
 					//launchDataUpdater();
-					lastUpdated.setText(currentDateString());
 					boolean success = updateData();
 					if (success) {
 						lastUpdated.setText(currentDateString());
@@ -109,6 +108,7 @@ public class Splashscreenactivity extends Activity {
 		startActivity(displayBoatPickersIntent);
 	}
 	
+	@SuppressWarnings("unused")
 	private void testPickNewPiece(){
 		Intent displayPickNewPiece = new Intent(this, PickNewPieceActivity.class);
 		displayPickNewPiece.putExtra("FROM","timers");

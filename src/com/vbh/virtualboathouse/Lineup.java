@@ -13,6 +13,7 @@ public class Lineup implements Serializable {
 	private static final long serialVersionUID = 2384016072304205878L;
 	
 	private Boat boat;
+	@SuppressWarnings("unused")
 	private Athlete coxswain;
 	private String[] athleteNames;
 	private int[] athleteID;
