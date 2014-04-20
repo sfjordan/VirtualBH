@@ -42,12 +42,14 @@ public class PickDistTimeActivity extends Activity {
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-			SharedPreferences sharedPref = this.getSharedPreferences(
+			//TODO
+			//Note: this block generates a null pointer atm.
+/*			SharedPreferences sharedPref = this.getSharedPreferences(
 			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
-			currentPiece = currentPractice.getPiece(currentPieceID);
+			currentPiece = currentPractice.getPiece(currentPieceID);*/
 		}
 		
 		goPickPiece = (Button) findViewById(R.id.goPickPiece);

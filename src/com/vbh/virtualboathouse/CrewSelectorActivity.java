@@ -44,16 +44,21 @@ public class CrewSelectorActivity extends Activity {
 			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME, this);
 			this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
 			this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
-			SparseArray<Lineup> lineups = new SparseArray<Lineup>(plm.length);
-			String[] lineupNames = new String[plm.length];
-			int[] lineupIDs = new int[plm.length];
-			int i = 0;
-			for (PracticeLineupsModel lineupModel : plm) {
-				Lineup l = new Lineup(lineupModel, roster, boatList);
-				lineups.append(l.getLineupID(), l);
-				lineupNames[i] = l.getAthleteFromSeat(l.getAthleteIDFromSeat(l.getNumOfSeats()), roster).getFirstInitLastName();
-				lineupIDs[i] = l.getLineupID();
-				i++;
+			System.out.println("plm is null: "+(plm==null));
+			//TODO
+			//Note: plm being null generates nullpointer and crashes activity
+			if (plm != null){
+				SparseArray<Lineup> lineups = new SparseArray<Lineup>(plm.length);
+				String[] lineupNames = new String[plm.length];
+				int[] lineupIDs = new int[plm.length];
+				int i = 0;
+				for (PracticeLineupsModel lineupModel : plm) {
+					Lineup l = new Lineup(lineupModel, roster, boatList);
+					lineups.append(l.getLineupID(), l);
+					lineupNames[i] = l.getAthleteFromSeat(l.getAthleteIDFromSeat(l.getNumOfSeats()), roster).getFirstInitLastName();
+					lineupIDs[i] = l.getLineupID();
+					i++;
+				}
 			}
 			// display the stroke seats in the selector. 
 			
@@ -98,7 +103,9 @@ public class CrewSelectorActivity extends Activity {
 					int numOfLineups = 3;
 					Lineup[] lineups = new Lineup[numOfLineups];
 					
-					// get the practice ID
+					//TODO
+					//NOTE: this block generates a null pointer atm 
+					/*// get the practice ID
 					SharedPreferences sharedPref = context.getSharedPreferences(
 					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 					int currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
@@ -115,7 +122,7 @@ public class CrewSelectorActivity extends Activity {
 					editor.apply();
 					ArrayList<Long> pieceIDs = new ArrayList<Long>();
 					pieceIDs.add(firstPiece.getPieceID());
-					DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);
+					DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);*/
 					launchPickDistTime();
 				}
 			}
