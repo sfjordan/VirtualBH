@@ -99,6 +99,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.PickNewPieceActivity"
+            android:label="@string/title_activity_pick_new_piece" >
+        </activity>
     </application>
 
 </manifest>

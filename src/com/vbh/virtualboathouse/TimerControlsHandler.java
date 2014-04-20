@@ -3,6 +3,7 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.SparseArray;
@@ -57,6 +58,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         	// write practice to file
         	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
         	//TODO add redirect to new piece screen
+        	PickNewPiece();
         	
         	// display saved message
         	AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
@@ -67,6 +69,12 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         	
         }
     }
+	
+	private void PickNewPiece(){
+		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
+		pickNewPieceIntent.putExtra("FROM","timers"); 
+		startActivity(pickNewPieceIntent);
+	}
 
 }
 
