@@ -109,6 +109,12 @@ public class Splashscreenactivity extends Activity {
 		startActivity(displayBoatPickersIntent);
 	}
 	
+	private void testPickNewPiece(){
+		Intent displayPickNewPiece = new Intent(this, PickNewPieceActivity.class);
+		displayPickNewPiece.putExtra("FROM","timers");
+		startActivity(displayPickNewPiece);
+	}
+	
 	private void launchChangeLineups(){
 		Intent changeLineupsIntent = new Intent(this, ChangeLineupsActivity.class);
 		startActivity(changeLineupsIntent);

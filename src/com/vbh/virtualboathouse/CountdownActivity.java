@@ -4,6 +4,7 @@ import android.R.string;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import android.os.CountDownTimer;
 
 public class CountdownActivity extends Activity {
 	
-	private Button start, cancel;
+	private Button start, cancel, savePiece;
 	private CountDownTimer CountDownTimer;	
 	private TextView countdownText;
 	private static final String FORMAT = "%02d:%02d";
@@ -50,6 +51,7 @@ public class CountdownActivity extends Activity {
 		countdownText = (TextView)findViewById(R.id.countdown_text);
 		start = (Button)findViewById(R.id.start_button);
 		cancel = (Button)findViewById(R.id.cancel_button);
+		savePiece = (Button)findViewById(R.id.save_piece_button);
 		start.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v){
@@ -64,6 +66,14 @@ public class CountdownActivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.cancel_button)){
 					CancelTimer();
+				}
+			}
+		});
+		savePiece.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.save_piece_button)){
+					PickNewPiece();
 				}
 			}
 		});
@@ -138,6 +148,12 @@ public class CountdownActivity extends Activity {
 	     countdownText.setText(formatTime(millis));
 	     
 	     return CountDownTimer;
+	}
+	
+	private void PickNewPiece(){
+		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
+		pickNewPieceIntent.putExtra("FROM","countdown"); 
+		startActivity(pickNewPieceIntent);
 	}
 	
 	

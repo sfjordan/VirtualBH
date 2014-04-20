@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.vbh.virtualboathouse.PickNewPieceActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <RelativeLayout
+        android:id="@+id/relative_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout 
+        android:id="@+id/rest_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/direction_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center|bottom"
+            android:hint="@string/direction"
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/notes_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/direction_text"
+            android:ems="10"
+            android:hint="@string/notes"
+            android:inputType="textMultiLine|textAutoCorrect" >
+        </EditText>
+
+        <Button
+            android:id="@+id/change_lineups_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notes_text"
+            android:text="@string/button_change_lineups"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/new_piece_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/change_lineups_button"
+            android:text="@string/new_piece"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/finish_practice_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/new_piece_button"
+            android:text="@string/finish_practice"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+</LinearLayout>
