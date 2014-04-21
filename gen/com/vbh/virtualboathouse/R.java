@@ -131,6 +131,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int goPickPiece=0x7f090025;
         public static final int go_button=0x7f090008;
         public static final int last_updated_textstub=0x7f09002f;
+        public static final int lineup_checklist=0x7f090007;
         public static final int login=0x7f090016;
         public static final int login_form=0x7f090013;
         public static final int login_status=0x7f090011;
@@ -152,7 +153,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int scroll_view=0x7f09001a;
         public static final int seconds_text=0x7f090023;
         public static final int sign_in_button=0x7f090017;
-        public static final int spinner_layout=0x7f090007;
         public static final int start_all_button=0x7f09000d;
         public static final int start_button=0x7f090004;
         public static final int status=0x7f090035;

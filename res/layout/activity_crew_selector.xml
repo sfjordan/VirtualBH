@@ -7,11 +7,12 @@
     tools:ignore="MergeRootFrame" >
     
     <LinearLayout
-        android:id="@+id/spinner_layout"
-        android:orientation="vertical">
-        
-        
-    </LinearLayout>
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:id="@+id/lineup_checklist">
+	   
+	</LinearLayout>
     
     <Button
         android:id="@+id/go_button"

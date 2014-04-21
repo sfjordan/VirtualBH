@@ -11,6 +11,7 @@ import java.io.Serializable;
 import android.content.Context;
 
 public class CurrentUser implements Serializable {
+	
 	/**
 	 * Constant for serialization
 	 */

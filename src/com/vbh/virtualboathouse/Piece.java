@@ -23,13 +23,28 @@ public class Piece implements Serializable {
 	private String margin;
 	private long msCountdownTime;
 	
-	public Piece(Lineup[] lineups, Roster roster, SparseArray<Boat> boats) {
+	public Piece (Lineup[] lineups, Roster roster, SparseArray<Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
 		this.lineups = new SparseArray<Lineup>(lineups.length);
 		for (Lineup l : lineups) {
 			this.lineups.append(l.getLineupID(), l);
 		}
 		times = new SparseArray<Long>(lineups.length);
+	}
+	public Piece (ArrayList<Lineup> lineups, Roster roster, SparseArray<Boat> boats) {
+		pieceID = UUID.randomUUID().getLeastSignificantBits();
+		this.lineups = new SparseArray<Lineup>(lineups.size());
+		for (Lineup l : lineups) {
+			this.lineups.append(l.getLineupID(), l);
+		}
+		times = new SparseArray<Long>(lineups.size());
+	}
+	
+	
+	public Piece (Piece oldPiece) {
+		pieceID = UUID.randomUUID().getLeastSignificantBits();
+		this.lineups = oldPiece.getLineups();
+		times = new SparseArray<Long>(lineups.size());
 	}
 	public int getNumBoats() {
 		return lineups.size();

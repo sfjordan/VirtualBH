@@ -65,11 +65,14 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	
 	private Context context; 
 	
+	private int currentPracticeID;
+	
 	private AthleteModel[] am;
 	private ErrorModel em;
 	private BoatModel[] bm;
 	private PracticeModel[] pm;
 	private PracticeLineupsModel[] plm;
+	private RecentModel rm;
 
 	
 	public AthleteModel[] getAthleteModel() {
@@ -83,6 +86,10 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	
 	public BoatModel[] getBoatModel() {
 		return bm;
+	}
+	
+	public RecentModel getRecentModel() {
+		return rm;
 	}
 	
 	public PracticeLineupsModel[] getPracticeLineupsModel() {
@@ -143,7 +150,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
 	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel[].class); // deserializes jsonResponse into practice models
 	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineups
-	    		case RECENT_PRACTICE: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineup - should only have one value
+	    		case RECENT_PRACTICE: rm = gson.fromJson(data.get(0), RecentModel.class); // deserializes jsonResponse into id - should only have one value
 	    	}
 	    	saveData();
 	    } catch (Exception e) {
@@ -169,8 +176,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			case ATHLETE:  success = DataSaver.writeObjectArray(this.am, ATHLETE_DATA_FILENAME, context);
 			case BOATS:    success = DataSaver.writeObjectArray(this.bm, BOAT_DATA_FILENAME, context);
 			case PRACTICE: success = DataSaver.writeObjectArray(this.pm, PRACTICE_DATA_FILENAME, context);
-			case PRACTICE_LINEUP: success = DataSaver.writeObjectArray(this.plm, LINEUP_DATA_FILENAME, context);
-			case RECENT_PRACTICE: success = DataSaver.writeObjectArray(this.plm, RECENT_PRACTICE_DATA_FILENAME, context);
+			case PRACTICE_LINEUP: success = DataSaver.writeObjectArray(this.plm, LINEUP_DATA_FILENAME + currentPracticeID, context);
+			case RECENT_PRACTICE: success = DataSaver.writeObject(this.rm, RECENT_PRACTICE_DATA_FILENAME, context);
 		}
     	return success;
     }
@@ -185,16 +192,18 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	this.execute(BOATS_URL);	
     }
     
-    public void getMostRecentPractice() {
+    public void getMostRecentPracticeID() {
     	currentData = RECENT_PRACTICE;
     	this.execute(RECENT_PRACTICE_URL);
     }
+    
     public void getPractices() {
     	currentData = PRACTICE;
     	this.execute(PRACTICE_URL);	
     }
     public void getPractice(int practiceID) {
     	currentData = PRACTICE_LINEUP;
+    	currentPracticeID = practiceID;
     	this.execute(PRACTICE_URL + practiceID + LINEUP_URL);	
     }
     
@@ -203,6 +212,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
         NetworkInfo netInfo = conManager.getActiveNetworkInfo();
         return ( netInfo != null && netInfo.isConnected() );
     }
+    
 	private String inputStreamToString(InputStream is) {
 	    String line = "";
 	    StringBuilder total = new StringBuilder();

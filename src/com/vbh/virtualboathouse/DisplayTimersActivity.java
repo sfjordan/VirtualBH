@@ -80,6 +80,7 @@ public class DisplayTimersActivity extends Activity {
 		}
 	    savedInstanceState.putLongArray(TIMER_BASES, timerBases);
 	    savedInstanceState.putBooleanArray(TIMER_STATES, timerStates);
+	    
 	}
 	
 	@Override

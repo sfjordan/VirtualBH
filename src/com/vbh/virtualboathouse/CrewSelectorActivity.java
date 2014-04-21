@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -26,68 +27,52 @@ import android.os.Build;
 public class CrewSelectorActivity extends Activity {
 	
 	private Button go_button;
+	private LinearLayout lineups_checklist;
 
 	private Context context;
 	private Roster roster;
 	private SparseArray<Boat> boatList;
+	private CheckBox[] lineupBoxes;
+	
+	private int currentPracticeID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_crew_selector);
 		context = this;
+		lineups_checklist = (LinearLayout) findViewById(R.id.lineup_checklist);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-			
+			// get the practice ID
+			SharedPreferences sharedPref = context.getSharedPreferences(
+			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 			// currently, just get the most recent practice
 			DataRetriever dr = new DataRetriever(this);
-			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME, this);
+			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
 			this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
 			this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
 			SparseArray<Lineup> lineups = new SparseArray<Lineup>(plm.length);
 			String[] lineupNames = new String[plm.length];
 			int[] lineupIDs = new int[plm.length];
 			int i = 0;
+			lineupBoxes = new CheckBox[lineupNames.length];
 			for (PracticeLineupsModel lineupModel : plm) {
 				Lineup l = new Lineup(lineupModel, roster, boatList);
 				lineups.append(l.getLineupID(), l);
-				lineupNames[i] = l.getAthleteFromSeat(l.getAthleteIDFromSeat(l.getNumOfSeats()), roster).getFirstInitLastName();
-				lineupIDs[i] = l.getLineupID();
+				// uses stroke seat by default here
+				// TODO implement adjustable setting
+				lineupBoxes[i].setText(l.getAthleteFromSeat(l.getAthleteIDFromSeat(l.getNumOfSeats()), roster).getFirstInitLastName());
+				lineupBoxes[i].setTag(l);
+				lineups_checklist.addView(lineupBoxes[i]);
 				i++;
 			}
-			// display the stroke seats in the selector. 
-			
-			// get practiceID from model... currently just default to 9
-			int practiceID = 9;
-			// implement getting all and choosing later
-			// save current practice id to shared prefs
-			SharedPreferences sharedPref = this.getSharedPreferences(
-			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = sharedPref.edit();
-			editor.putInt(getString(R.string.CURRENT_PRACTICE_ID), practiceID);
-			editor.apply();
-			 
 		}
 		
 		
 		
 		
-		/*LinearLayout layout = (LinearLayout) findViewById(R.id.spinner_layout);
-		
-		Spinner boat_picker = new Spinner(this);
-		ArrayList<String> spinnerArray = new ArrayList<String>();
-	    spinnerArray.add("Boat 1");
-	    spinnerArray.add("Boat 2");
-	    spinnerArray.add("Boat 3");
-	    spinnerArray.add("Boat 4");
-	    spinnerArray.add("Boat 5");
-	    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-	    boat_picker.setAdapter(spinnerArrayAdapter);
-		boat_picker.setAdapter(spinnerArrayAdapter);
-		
-		layout.addView(boat_picker);
-
-	    setContentView(layout);*/
 	    
 	    go_button = (Button) findViewById(R.id.go_button);
 	    go_button.setOnClickListener(new OnClickListener() {
@@ -95,21 +80,21 @@ public class CrewSelectorActivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.go_button)){
 					// get the selected IDs
-					int numOfLineups = 3;
-					Lineup[] lineups = new Lineup[numOfLineups];
-					
-					// get the practice ID
-					SharedPreferences sharedPref = context.getSharedPreferences(
-					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-					int currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+					ArrayList<Lineup> listLineups = new ArrayList<Lineup>();
+					for (int i = 0; i < lineupBoxes.length; i++) {
+						if (lineupBoxes[i].isChecked()) 
+							listLineups.add((Lineup) lineupBoxes[i].getTag());
+					}
 					// create the practice
 					Practice currentPractice = new Practice(currentPracticeID);
 					// add a piece
-					Piece firstPiece = new Piece(lineups, roster, boatList);
+					Piece firstPiece = new Piece(listLineups, roster, boatList);
 					currentPractice.addPiece(firstPiece);
 					// write the practice to a file
 					DataSaver.writeObject(currentPractice, getString(R.string.PIECE_ID_FILE) + currentPracticeID, context);
 					// save the piece in shared prefs
+					SharedPreferences sharedPref = context.getSharedPreferences(
+					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putLong(getString(R.string.CURRENT_PIECE_ID), firstPiece.getPieceID());
 					editor.apply();
@@ -120,6 +105,15 @@ public class CrewSelectorActivity extends Activity {
 				}
 			}
 		});
+	}
+	
+	public void onCheckboxClicked(View view) {
+	    // Is the view now checked?
+	    boolean checked = ((CheckBox) view).isChecked();
+	    // Check which checkbox was clicked
+	    switch(view.getId()) {
+	       // TODO logic to decide on which text box
+	    }
 	}
 	
 	private void launchPickDistTime(){

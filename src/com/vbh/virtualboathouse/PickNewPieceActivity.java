@@ -3,7 +3,9 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +23,12 @@ import android.os.Build;
 
 public class PickNewPieceActivity extends Activity {
 
+	private long currentPieceID;
+	private Piece currentPiece;
+	private Practice currentPractice;
+	private int currentPracticeID;
+	private SharedPreferences sharedPref;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,27 +44,27 @@ public class PickNewPieceActivity extends Activity {
 		Button newPiece = (Button) findViewById(R.id.new_piece_button);
 		Button finishPractice = (Button) findViewById(R.id.finish_practice_button);
 		
-		Intent i= getIntent();
-		Bundle b = i.getExtras();
-		if (b != null) {
-	        String from = (String) b.get("FROM");
-	        System.out.println("b string is: "+b);
-	        if (from.equals("timers")) {
-	        	//nothing, apparently
-	        }
-	        else if (from.equals("countdown")){
-	        	//create margin text field
-	        	EditText marginText = new EditText(this);
-	        	marginText.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-	        	marginText.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
-	        	marginText.setHint("Enter Margin...");
-	        	rl.addView(marginText);
-	        	marginText.requestFocus();
-	        	
-	        }
-	        else System.out.println("Error in picknewpiece, shouldn't be here");
-		}
-		else System.out.println("b is null");
+		// pull information about the current practice/last piece
+		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+		currentPiece = currentPractice.getPiece(currentPieceID);
+	
+        if (currentPiece.isTimed()) {
+        	//nothing, apparently
+        }
+        else if (currentPiece.isCountdown()){
+        	//create margin text field
+        	EditText marginText = new EditText(this);
+        	marginText.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        	marginText.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
+        	marginText.setHint("Enter Margin...");
+        	rl.addView(marginText);
+        	marginText.requestFocus();
+        	
+        }
+        else System.out.println("Error in picknewpiece, shouldn't be here");
         //set onclicks
         changeLineups.setOnClickListener(new OnClickListener() {
 			@Override
@@ -88,14 +96,28 @@ public class PickNewPieceActivity extends Activity {
 	}
 	
 	private void NewPiece() {
-		//save data somewhere?
+		// save current piece to practice
+    	currentPractice.addPiece(currentPiece);
+    	// make new piece
+    	Piece newPiece = new Piece(currentPiece);
+    	currentPieceID = newPiece.getPieceID();
+    	currentPractice.addPiece(newPiece);
+    	// write practice to file
+    	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+    	// update sharedPrefs - note the apply() at the end, not saved otherwise.
+    	sharedPref.edit().putLong(getString(R.string.CURRENT_PIECE_ID), currentPieceID).apply();
+    	// new activity
 		Intent newPieceIntent = new Intent(this, PickDistTimeActivity.class);
 		startActivity(newPieceIntent);
 	}
 	
 	private void FinishPractice() {
-		//save data somewhere?
-		//confirmation dialog?
+		// save current piece to practice
+    	currentPractice.addPiece(currentPiece);
+    	// write practice to file
+    	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+		//TODO confirmation dialog
+	
 		Intent finishPracticeIntent = new Intent(this, Splashscreenactivity.class);
 		startActivity(finishPracticeIntent);
 	}

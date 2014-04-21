@@ -80,7 +80,7 @@ public class Splashscreenactivity extends Activity {
 		DataRetriever dr = new DataRetriever(this);
 		dr.getAthletes();
 		dr.getBoats();
-		dr.getMostRecentPractice();
+		dr.getMostRecentPracticeID();
 		AthleteModel am[] = DataSaver.readObjectArray(dr.ATHLETE_DATA_FILENAME, this);
 		if (am == null) {
 			return false;
@@ -100,6 +100,17 @@ public class Splashscreenactivity extends Activity {
 		if (!success) return false;
 		success = DataSaver.writeObject(roster, getString(R.string.ROSTER_FILE), this);
 		if (!success) return false;
+		// get the id of most recent practice then get practice
+		RecentModel rm = DataSaver.readObject(dr.RECENT_PRACTICE_DATA_FILENAME, this);
+		dr.getPractice(rm.getPracticeID());
+		// save id to sharedPrefs
+		SharedPreferences sharedPref = this.getSharedPreferences(
+		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(getString(R.string.CURRENT_PRACTICE_ID), rm.getPracticeID());
+		editor.apply();
+		
+		//PracticeLineupsModel[] plm = DataSaver.readObjectArray(dr.LINEUP_DATA_FILENAME + rm.getPracticeID(), this);
 
 		return success;
 	}

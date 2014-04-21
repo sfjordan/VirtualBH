@@ -35,7 +35,11 @@
             android:layout_below="@id/direction_text"
             android:ems="10"
             android:hint="@string/notes"
-            android:inputType="textMultiLine|textAutoCorrect" >
+            android:inputType="textMultiLine|textAutoCorrect" 
+            android:minLines="3"
+            android:maxLines="8"
+            android:scrollbars="vertical"
+            android:gravity="top|left">
         </EditText>
 
         <Button

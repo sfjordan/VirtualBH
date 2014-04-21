@@ -58,7 +58,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         	// write practice to file
         	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
         	//TODO add redirect to new piece screen
-        	PickNewPiece();
+        	pickNewPiece();
         	
         	// display saved message
         	AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
@@ -70,7 +70,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         }
     }
 	
-	private void PickNewPiece(){
+	private void pickNewPiece(){
 		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
 		pickNewPieceIntent.putExtra("FROM","timers"); 
 		startActivity(pickNewPieceIntent);
