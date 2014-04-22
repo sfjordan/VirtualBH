@@ -44,9 +44,7 @@ public class TimerHandler extends Activity implements OnClickListener {
         	}
         }
         else if(stop == v){
-        	System.out.println("in TH stopping");
 		    if (!stopped) {
-		    	System.out.println("not stopped, stopping...");
 			    clock.stop();
 		    	stopped = true;
 		    	t.stopped = true;
@@ -55,7 +53,6 @@ public class TimerHandler extends Activity implements OnClickListener {
 				stop.setTextColor(Color.parseColor("white"));
 		    }
 		    else {
-		    	System.out.println("stopped, clearing...");
 		    	clock.clear();
 		    	//set stop button text to stop
 		    	stop.setText("Stop");
