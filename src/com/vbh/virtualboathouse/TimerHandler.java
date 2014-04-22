@@ -12,17 +12,19 @@ import com.vbh.virtualboathouse.MilliChrono;
 
 public class TimerHandler extends Activity implements OnClickListener {
 	
-	private boolean stopped = true;
+	public boolean stopped = true;
 	private Button start;
 	private Button stop;
 	private Button clear;
 	private MilliChrono clock;
+	private Timer t;
 	
-	public TimerHandler(Button start, Button stop, Button clear, MilliChrono clock) {
+	public TimerHandler(Timer t, Button start, Button stop, Button clear, MilliChrono clock) {
 		this.start = start;
 		this.stop  = stop;
 		this.clear = clear;
 		this.clock = clock;
+		this.t = t;
 	}
 	
 	public void setStoppedStatus(boolean stopped) {
@@ -42,17 +44,15 @@ public class TimerHandler extends Activity implements OnClickListener {
         	}
         }
         else if(stop == v){
-        	System.out.println("in TH stopping");
 		    if (!stopped) {
-		    	System.out.println("not stopped, stopping...");
 			    clock.stop();
 		    	stopped = true;
+		    	t.stopped = true;
 		    	//set stop button text to clear
 		    	stop.setText("Clear");
 				stop.setTextColor(Color.parseColor("white"));
 		    }
 		    else {
-		    	System.out.println("stopped, clearing...");
 		    	clock.clear();
 		    	//set stop button text to stop
 		    	stop.setText("Stop");
