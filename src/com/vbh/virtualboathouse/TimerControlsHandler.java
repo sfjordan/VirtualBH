@@ -41,7 +41,8 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         }
         else if(DisplayTimersActivity.stop_all == v){
         	for(Timer t : timers) {
-        		t.stop_button.performClick();
+        		if (!t.stopped)
+        			t.stop();
         	}
         }
         //Note: this chunk adds 'clear all' functionality, still buggy
@@ -51,7 +52,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         		stop_all.setText("Stop All");
     			stop_all.setTextColor(Color.parseColor("white"));
 	        	for(Timer t : timers) {
-	    			t.clear_button.performClick();
+	    			t.clear();
 	    		}
         	}
         	else {
@@ -59,7 +60,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         		stop_all.setText("Clear All");
     			stop_all.setTextColor(Color.parseColor("white"));
         		for(Timer t : timers) {
-	    			t.stop_button.performClick();
+	    			t.stop();
 	    		}
         	}
         }*/

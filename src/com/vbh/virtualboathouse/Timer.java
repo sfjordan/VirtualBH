@@ -49,7 +49,7 @@ public class Timer {
 	}
 	
 	private void setHandlers() {
-		th = new TimerHandler(start_button, stop_button, clear_button, milli_chrono);
+		th = new TimerHandler(this, start_button, stop_button, clear_button, milli_chrono);
 		start_button.setOnClickListener(th);
 		stop_button.setOnClickListener(th);
 		clear_button.setOnClickListener(th);

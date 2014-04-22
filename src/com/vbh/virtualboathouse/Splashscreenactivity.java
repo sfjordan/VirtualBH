@@ -40,8 +40,8 @@ public class Splashscreenactivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.record_times_button)){
-					launchBoatPickers();
-					//testTimers();
+					//launchBoatPickers();
+					testTimers();
 				}
 			}
 		});
