@@ -36,6 +36,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	private int currentPracticeID;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
