@@ -13,6 +13,10 @@ public class DataSaver {
 	static final String STATE_PRACTICE_ID = "currentPracticeID";
 	static final String STATE_PRACTICE = "practice";
 	static final String STATE_PIECE = "piece";
+	static final String STATE_ROSTER = "roster";
+	static final String STATE_BOAT_LIST = "boatList";
+	static final String STATE_LINEUPS_ARRAY = "lineupsArrayList";
+	static final String STATE_LINEUPS_CHECKBOXES = "lineupCheckBoxes";
 	
 	
 	public static <E> boolean writeObject(E cu, String filename, Context context) {
