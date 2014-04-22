@@ -1,7 +1,6 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.os.Build;
 
 public class PickDistTimeActivity extends Activity {
 	
@@ -33,7 +31,8 @@ public class PickDistTimeActivity extends Activity {
 	private Piece currentPiece;
 	private Practice currentPractice;
 	private int currentPracticeID;
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,12 +41,20 @@ public class PickDistTimeActivity extends Activity {
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
+
 			SharedPreferences sharedPref = this.getSharedPreferences(
 			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
 			currentPiece = currentPractice.getPiece(currentPieceID);
+		}
+		else {
+			currentPracticeID = savedInstanceState.getInt(DataSaver.STATE_PRACTICE_ID);
+	        currentPractice   = (Practice) savedInstanceState.getSerializable(DataSaver.STATE_PRACTICE);
+	        currentPieceID    = savedInstanceState.getLong(DataSaver.STATE_PIECE_ID);
+	        currentPiece      = (Piece) savedInstanceState.getSerializable(DataSaver.STATE_PIECE);
+	        // TODO reinstantiate values in the fields for time or distance
 		}
 		
 		goPickPiece = (Button) findViewById(R.id.goPickPiece);
@@ -81,6 +88,19 @@ public class PickDistTimeActivity extends Activity {
 		
 	}
 	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	    // Save the current practice state
+	    savedInstanceState.putLong(DataSaver.STATE_PIECE_ID, currentPieceID);
+	    savedInstanceState.putInt(DataSaver.STATE_PRACTICE_ID, currentPracticeID);
+	    savedInstanceState.putSerializable(DataSaver.STATE_PRACTICE, currentPractice);
+	    savedInstanceState.putSerializable(DataSaver.STATE_PIECE, currentPiece);
+	    
+	    
+	    // Always call the superclass so it can save the view hierarchy state
+	    super.onSaveInstanceState(savedInstanceState);
+	}
+	
 	private void displayDistance(){
 		distance = Integer.parseInt(distanceEdit.getText().toString());
 		if (distance < 1 || distance > 10000000) {
@@ -90,6 +110,7 @@ public class PickDistTimeActivity extends Activity {
         	invaliddistanceDialog.show();
 		}
 		else {
+			//TODO: currently generates null pointer
 			currentPiece.setDistance(distance);
 			currentPiece.setTimed(true);
 			saveData();
@@ -126,7 +147,7 @@ public class PickDistTimeActivity extends Activity {
 	}
 	private void displayTimers() {
 		Intent displayTimersIntent = new Intent(this, DisplayTimersActivity.class);
-		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), currentPiece.getNumBoats()); 
+		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), "2" /*currentPiece.getNumBoats()*/); 
 		startActivity(displayTimersIntent);
 	}
 	

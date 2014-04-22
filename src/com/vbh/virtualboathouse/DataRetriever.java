@@ -1,23 +1,14 @@
 package com.vbh.virtualboathouse;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
-
-import org.apache.http.HttpEntity;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -25,27 +16,26 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
-import android.R.string;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Base64;
+import android.util.Log;
+import android.util.SparseArray;
 
 public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	
 	private final String ATHLETE_URL = "https://cos333.herokuapp.com/json/athletes/";
 	private final String BOATS_URL   = "https://cos333.herokuapp.com/json/boats/";
 	private final String PRACTICE_URL = "https://cos333.herokuapp.com/json/practices/";
+	private final String SINGLE_PRACTICE_URL = "https://cos333.herokuapp.com/json/practice/";
 	private final String LINEUP_URL   = "/lineups/";
 	private final String RECENT_PRACTICE_URL = "https://cos333.herokuapp.com/json/practice/recent";
 	
@@ -62,10 +52,13 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	private final int PRACTICE        = 3;
 	private final int PRACTICE_LINEUP = 4;
 	private final int RECENT_PRACTICE = 5;
+	private final int ATHLETES_BOATS  = 6;
 	
 	private Context context; 
 	
 	private int currentPracticeID;
+	private String username;
+	private String apiKey;
 	
 	private AthleteModel[] am;
 	private ErrorModel em;
@@ -112,15 +105,54 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
         if (!isNetworkConnected(context)) {
         	return null;
         }
-        
+        // get the user info from shared preferences
+        SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
+        username = sp.getString(CurrentUser.USERNAME, "admin");
+        apiKey = sp.getString(CurrentUser.API_KEY, "fail");
+        if (apiKey == "fail") {
+        	return null;
+        }
         // Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpGet httpget = new HttpGet(urls[0]);
-	    HttpResponse response;
-	    try {
+        String dataReturned = performHTTPRequest(urls[0]);
+	    if (dataReturned == null) return null;
+	    data.add(dataReturned);
+	   
+		if (currentData == ATHLETES_BOATS) {
+		    dataReturned = performHTTPRequest(BOATS_URL);
+		    if (dataReturned == null) return null;
+		    Log.i("DataRetriever", "boatModel = "+ dataReturned);
+		    // TODO remove
+		    data.add(dataReturned);
+		    dataReturned = performHTTPRequest(RECENT_PRACTICE_URL);
+		    if (dataReturned == null) return null;
+		    data.add(dataReturned);
+		    Gson gson = new Gson();
+		    Log.i("DataRetriever", "recentModel = "+ data.get(2));
+		    rm = gson.fromJson(data.get(2), RecentModel.class);
+		    dataReturned = performHTTPRequest(SINGLE_PRACTICE_URL + rm.getPracticeID() + LINEUP_URL);
+		    if (dataReturned == null) return null;
+		    data.add(dataReturned);
+		    Log.i("DataRetriever", "all data successfully pulled ");
+		}
+		
+	    return data;
+	}
+    
+    private String performHTTPRequest(String url) {
+    	HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("api_key", apiKey));
+        try {
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		HttpResponse response;
+		try {
 	        // Execute HTTP Get Request
-	        response = httpclient.execute(httpget);
-			
+			response = httpclient.execute(httpPost);	
 		} catch (ClientProtocolException e) {
 	       return null;
 		} catch (UnsupportedEncodingException e) {
@@ -129,37 +161,60 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			return null;
 		}
 		try {
-			data.add(inputStreamToString(response.getEntity().getContent()));
+			return inputStreamToString(response.getEntity().getContent());
 		} catch (IllegalStateException e1) {
 			return null;
 		} catch (IOException e1) {
 			return null; }
-	    return data;
-	}
+    }
     @Override
     protected void onPostExecute(ArrayList<String> data) {
     	boolean seenError = false;
     	Gson gson = new Gson(); 
+    	Log.i("DataRetriever", "entered onPostExecute ");
     	if (data == null) {
     		seenError = true;
     		// display could not get data 
+    		 Log.e("DataRetriever", "data is null ");
     	}
 	    try {
+	    	Log.i("DataRetriever", "entered try statement " + currentData);
 	    	switch(currentData) {
 	    		case ATHLETE: am = gson.fromJson(data.get(0), AthleteModel[].class); // deserializes jsonResponse into athlete models
 	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
 	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel[].class); // deserializes jsonResponse into practice models
 	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineups
-	    		case RECENT_PRACTICE: rm = gson.fromJson(data.get(0), RecentModel.class); // deserializes jsonResponse into id - should only have one value
+	    		case RECENT_PRACTICE: 
+	    			rm = gson.fromJson(data.get(0), RecentModel.class); // deserializes jsonResponse into id - should only have one value
+	    			SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+	    			SharedPreferences.Editor editor = sharedPref.edit();
+	    			editor.putInt(context.getString(R.string.CURRENT_PRACTICE_ID), rm.getPracticeID());
+	    			editor.apply();
+	    			this.getPractice(rm.getPracticeID());
+	    			currentData = RECENT_PRACTICE;
+	    		case ATHLETES_BOATS:  
+	    			Log.i("DataRetriever", "athleteModel = " + data.get(0));
+	    			am = gson.fromJson(data.get(0), AthleteModel[].class);
+	    			Log.i("DataRetriever", "athlete data successfully converted from JSON ");
+	    			Log.i("DataRetriever", "boatModel = " + data.get(1));
+	    			Log.i("DataRetriever", "practiceLineupsModel = " + data.get(3));
+	    			bm = gson.fromJson(data.get(1), BoatModel[].class);
+	    			Log.i("DataRetriever", "boat data successfully converted from JSON ");
+	    			plm = gson.fromJson(data.get(3), PracticeLineupsModel[].class);
+	    			Log.i("DataRetriever", "practice data successfully converted from JSON ");
+	    		
 	    	}
 	    	saveData();
 	    } catch (Exception e) {
 	    	try {
+	    		 Log.e("DataRetriever", "data is an error message ");
 	    		 this.em = gson.fromJson(data.get(0), ErrorModel.class); // deserializes jsonResponse into error message 
-				 seenError = true; 
+				 seenError = true;
+				 Log.e("DataRetriever", "Error: " +  em.getError());
 	    	}
 			catch (Exception e2) {
 				// log and return
+				saveData();
 				return;
 			}
 	    }
@@ -177,7 +232,22 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			case BOATS:    success = DataSaver.writeObjectArray(this.bm, BOAT_DATA_FILENAME, context);
 			case PRACTICE: success = DataSaver.writeObjectArray(this.pm, PRACTICE_DATA_FILENAME, context);
 			case PRACTICE_LINEUP: success = DataSaver.writeObjectArray(this.plm, LINEUP_DATA_FILENAME + currentPracticeID, context);
-			case RECENT_PRACTICE: success = DataSaver.writeObject(this.rm, RECENT_PRACTICE_DATA_FILENAME, context);
+			case RECENT_PRACTICE: success = true;
+			case ATHLETES_BOATS: 
+	    		// build boat list
+	    		SparseArray<Boat> boatList = new SparseArray<Boat>(bm.length);
+	    		for (BoatModel boatModel : bm) {
+	    			Boat boat = new Boat(boatModel);
+	    			boatList.append(boat.getBoatID(), boat);
+	    		}
+	    		// build roster
+	    		Roster roster = new Roster(am);
+	    		// save roster and boat list to files
+	         	success = DataSaver.writeObject(boatList, context.getString(R.string.BOATS_FILE), context);
+	    		if (!success) return false;
+	    		success = DataSaver.writeObject(roster, context.getString(R.string.ROSTER_FILE), context);
+	    		if (!success) return false;
+	    	    Log.i("DataRetriever", "all data successfully saved to files ");
 		}
     	return success;
     }
@@ -191,10 +261,19 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	currentData = BOATS;
     	this.execute(BOATS_URL);	
     }
+    public void getAthletesAndBoats() {
+    	currentData = ATHLETES_BOATS;
+    	this.execute(ATHLETE_URL);
+    }
     
-    public void getMostRecentPracticeID() {
+    public void getMostRecentPractice() {
     	currentData = RECENT_PRACTICE;
     	this.execute(RECENT_PRACTICE_URL);
+    }
+    
+    public void uploadPiece() {
+    	
+    	
     }
     
     public void getPractices() {
@@ -204,7 +283,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     public void getPractice(int practiceID) {
     	currentData = PRACTICE_LINEUP;
     	currentPracticeID = practiceID;
-    	this.execute(PRACTICE_URL + practiceID + LINEUP_URL);	
+    	this.execute(SINGLE_PRACTICE_URL + practiceID + LINEUP_URL);	
     }
     
     public static boolean isNetworkConnected(Context c) {

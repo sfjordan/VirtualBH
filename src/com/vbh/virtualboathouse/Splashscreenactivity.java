@@ -41,6 +41,7 @@ public class Splashscreenactivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.record_times_button)){
 					launchBoatPickers();
+					//testTimers();
 				}
 			}
 		});
@@ -57,7 +58,6 @@ public class Splashscreenactivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.update_data_button)){
 					//launchDataUpdater();
-					lastUpdated.setText(currentDateString());
 					boolean success = updateData();
 					if (success) {
 						lastUpdated.setText(currentDateString());
@@ -78,37 +78,17 @@ public class Splashscreenactivity extends Activity {
 	private boolean updateData() {
 		boolean success = true;
 		DataRetriever dr = new DataRetriever(this);
-		dr.getAthletes();
-		dr.getBoats();
-		dr.getMostRecentPracticeID();
-		AthleteModel am[] = DataSaver.readObjectArray(dr.ATHLETE_DATA_FILENAME, this);
-		if (am == null) {
-			return false;
-		}
-		BoatModel bm[] = DataSaver.readObjectArray(dr.BOAT_DATA_FILENAME, this);
-		if (bm == null) return false;
-		// build boat list
-		SparseArray<Boat> boatList = new SparseArray<Boat>(bm.length);
-		for (BoatModel boatModel : bm) {
-			Boat boat = new Boat(boatModel);
-			boatList.append(boat.getBoatID(), boat);
-		}
-		// build roster
-		Roster roster = new Roster(am);
-		// save roster and boat list to files
-		success = DataSaver.writeObject(boatList, getString(R.string.BOATS_FILE), this);
-		if (!success) return false;
-		success = DataSaver.writeObject(roster, getString(R.string.ROSTER_FILE), this);
-		if (!success) return false;
+		//dr.getAthletes();
+		//dr.getBoats();
+		dr.getAthletesAndBoats();
+
 		// get the id of most recent practice then get practice
-		RecentModel rm = DataSaver.readObject(dr.RECENT_PRACTICE_DATA_FILENAME, this);
-		dr.getPractice(rm.getPracticeID());
 		// save id to sharedPrefs
-		SharedPreferences sharedPref = this.getSharedPreferences(
-		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt(getString(R.string.CURRENT_PRACTICE_ID), rm.getPracticeID());
-		editor.apply();
+//		SharedPreferences sharedPref = this.getSharedPreferences(
+//		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+//		SharedPreferences.Editor editor = sharedPref.edit();
+//		editor.putInt(getString(R.string.CURRENT_PRACTICE_ID), rm.getPracticeID());
+//		editor.apply();
 		
 		//PracticeLineupsModel[] plm = DataSaver.readObjectArray(dr.LINEUP_DATA_FILENAME + rm.getPracticeID(), this);
 
@@ -119,7 +99,12 @@ public class Splashscreenactivity extends Activity {
 		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
 		startActivity(displayBoatPickersIntent);
 	}
+	private void testTimers(){
+		Intent testTimersIntent = new Intent(this, DisplayTimersActivity.class);
+		startActivity(testTimersIntent);
+	}
 	
+	@SuppressWarnings("unused")
 	private void testPickNewPiece(){
 		Intent displayPickNewPiece = new Intent(this, PickNewPieceActivity.class);
 		displayPickNewPiece.putExtra("FROM","timers");

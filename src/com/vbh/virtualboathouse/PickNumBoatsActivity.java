@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.os.Build;
 
 public class PickNumBoatsActivity extends Activity {
 

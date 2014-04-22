@@ -8,6 +8,11 @@ import java.io.ObjectOutputStream;
 import android.content.Context;
 
 public class DataSaver {
+	// constants for bundling data
+	static final String STATE_PIECE_ID = "currentPieceID";
+	static final String STATE_PRACTICE_ID = "currentPracticeID";
+	static final String STATE_PRACTICE = "practice";
+	static final String STATE_PIECE = "piece";
 	
 	
 	public static <E> boolean writeObject(E cu, String filename, Context context) {

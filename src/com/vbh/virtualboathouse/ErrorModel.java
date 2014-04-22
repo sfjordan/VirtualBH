@@ -2,6 +2,8 @@ package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ErrorModel implements Serializable {
 
 	/**
@@ -9,12 +11,11 @@ public class ErrorModel implements Serializable {
 	 */
 	private static final long serialVersionUID = 2L;
 
-	private String[] errorMessages;
+	@SerializedName("error")
+	private String error;
 	
-	public ErrorModel(String input) {
-		
-	}
-	public String[] getErrors() {
-		return errorMessages;
+
+	public String getError() {
+		return error;
 	}
 }

@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.util.SparseArray;
-
 public class Practice implements Serializable {
 	
 	/**

@@ -3,7 +3,6 @@ package com.vbh.virtualboathouse;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -30,11 +28,14 @@ public class CrewSelectorActivity extends Activity {
 	private LinearLayout lineups_checklist;
 
 	private Context context;
+	
 	private Roster roster;
 	private SparseArray<Boat> boatList;
+	private SparseArray<Lineup> lineups;
 	private CheckBox[] lineupBoxes;
 	
 	private int currentPracticeID;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +54,8 @@ public class CrewSelectorActivity extends Activity {
 			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
 			this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
 			this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
-			SparseArray<Lineup> lineups = new SparseArray<Lineup>(plm.length);
+
+			lineups = new SparseArray<Lineup>(plm.length);
 			String[] lineupNames = new String[plm.length];
 			int[] lineupIDs = new int[plm.length];
 			int i = 0;
@@ -68,11 +70,14 @@ public class CrewSelectorActivity extends Activity {
 				lineups_checklist.addView(lineupBoxes[i]);
 				i++;
 			}
+			System.out.println("plm is null: "+(plm==null));
 		}
-		
-		
-		
-		
+		else {
+			// reinstantiate data structures
+			
+			// TODO ensure check boxes are kept in the right state
+		}
+
 	    
 	    go_button = (Button) findViewById(R.id.go_button);
 	    go_button.setOnClickListener(new OnClickListener() {
@@ -85,6 +90,15 @@ public class CrewSelectorActivity extends Activity {
 						if (lineupBoxes[i].isChecked()) 
 							listLineups.add((Lineup) lineupBoxes[i].getTag());
 					}
+					int numOfLineups = 3;
+					Lineup[] lineups = new Lineup[numOfLineups];
+					
+					//TODO
+					//NOTE: this block generates a null pointer atm 
+					// get the practice ID
+					SharedPreferences sharedPref = context.getSharedPreferences(
+					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+					int currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 					// create the practice
 					Practice currentPractice = new Practice(currentPracticeID);
 					// add a piece
@@ -93,8 +107,6 @@ public class CrewSelectorActivity extends Activity {
 					// write the practice to a file
 					DataSaver.writeObject(currentPractice, getString(R.string.PIECE_ID_FILE) + currentPracticeID, context);
 					// save the piece in shared prefs
-					SharedPreferences sharedPref = context.getSharedPreferences(
-					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putLong(getString(R.string.CURRENT_PIECE_ID), firstPiece.getPieceID());
 					editor.apply();
@@ -129,10 +141,6 @@ public class CrewSelectorActivity extends Activity {
 		return true;
 	}
 	
-	private Context getContext(){
-		return this;
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will

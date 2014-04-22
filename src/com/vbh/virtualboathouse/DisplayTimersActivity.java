@@ -1,13 +1,11 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class DisplayTimersActivity extends Activity {
 
@@ -52,10 +49,10 @@ public class DisplayTimersActivity extends Activity {
 		for (int i = 0; i < numTimers; i++) {
 			timers[i] = new Timer(this, timer_list, lineups.valueAt(i).getName());
 		}
-		TimerControlsHandler tch = new TimerControlsHandler(timers, this);
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
 		save_times = (Button)findViewById(R.id.save_times_button);
+		TimerControlsHandler tch = new TimerControlsHandler(timers, stop_all, this);
 		start_all.setOnClickListener(tch);
 		stop_all.setOnClickListener(tch);
 		save_times.setOnClickListener(tch);
@@ -65,6 +62,10 @@ public class DisplayTimersActivity extends Activity {
 			for (int i = 0; i < numTimers; i++) {
 				timers[i].restart(timerBases[i], timerStates[i]);
 			}
+			currentPracticeID = savedInstanceState.getInt(DataSaver.STATE_PRACTICE_ID);
+	        currentPractice   = (Practice) savedInstanceState.getSerializable(DataSaver.STATE_PRACTICE);
+	        currentPieceID    = savedInstanceState.getLong(DataSaver.STATE_PIECE_ID);
+	        currentPiece      = (Piece) savedInstanceState.getSerializable(DataSaver.STATE_PIECE);
 		}
 	}
 
@@ -80,7 +81,11 @@ public class DisplayTimersActivity extends Activity {
 		}
 	    savedInstanceState.putLongArray(TIMER_BASES, timerBases);
 	    savedInstanceState.putBooleanArray(TIMER_STATES, timerStates);
-	    
+	    // Save the current practice state
+	    savedInstanceState.putLong(DataSaver.STATE_PIECE_ID, currentPieceID);
+	    savedInstanceState.putInt(DataSaver.STATE_PRACTICE_ID, currentPracticeID);
+	    savedInstanceState.putSerializable(DataSaver.STATE_PRACTICE, currentPractice);
+	    savedInstanceState.putSerializable(DataSaver.STATE_PIECE, currentPiece);
 	}
 	
 	@Override
