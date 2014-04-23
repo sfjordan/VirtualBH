@@ -48,7 +48,7 @@ public class TimerHandler extends Activity implements OnClickListener {
 			    clock.stop();
 		    	stopped = true;
 		    	t.stopped = true;
-		    	//set stop button text to clear
+		    	//set stop button text to clear 
 		    	stop.setText("Clear");
 				stop.setTextColor(Color.parseColor("white"));
 		    }

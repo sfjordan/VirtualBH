@@ -97,6 +97,7 @@ public class Splashscreenactivity extends Activity {
 	
 	private void launchBoatPickers() {
 		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
+		displayBoatPickersIntent.putExtra("FROM","recordTimes");
 		startActivity(displayBoatPickersIntent);
 	}
 	private void testTimers(){
@@ -112,7 +113,8 @@ public class Splashscreenactivity extends Activity {
 	}
 	
 	private void launchChangeLineups(){
-		Intent changeLineupsIntent = new Intent(this, ChangeLineupsActivity.class);
+		Intent changeLineupsIntent = new Intent(this, CrewSelectorActivity.class);
+		changeLineupsIntent.putExtra("FROM","changeLineups");
 		startActivity(changeLineupsIntent);
 		
 	}

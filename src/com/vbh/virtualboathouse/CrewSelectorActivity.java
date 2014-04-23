@@ -56,6 +56,9 @@ public class CrewSelectorActivity extends Activity {
 			// currently, just get the most recent practice
 			LineupModel lm[] = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
 			Log.i("CrewSelector", "lm is currently null: " + (lm==null));
+			DataRetriever dr = new DataRetriever(this);
+			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
+			System.out.println("plm is null: "+(plm==null));
 			this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
 			Log.i("CrewSelector", "roster is currently null: " + (roster==null));
 			this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
@@ -93,6 +96,12 @@ public class CrewSelectorActivity extends Activity {
 	      //  lineups     = savedInstanceState.getSparseParcelableArray(DataSaver.STATE_LINEUPS);
 	        lineupBoxes = (CheckBox[]) savedInstanceState.getSerializable(DataSaver.STATE_LINEUPS_CHECKBOXES);
 			// TODO ensure check boxes are kept in the right state
+		}
+		
+		Bundle b = getIntent().getExtras();
+		if (b!=null){
+			String fromstr = b.getString("FROM");
+			System.out.println("fromStr: "+fromstr);
 		}
 
 	    

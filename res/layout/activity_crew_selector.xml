@@ -17,6 +17,7 @@
         android:layout_width="fill_parent" 
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
+        android:textColor="@android:color/white"
         android:text="@string/button_go"
         android:layout_centerHorizontal="true"/>
     
