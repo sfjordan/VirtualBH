@@ -65,6 +65,7 @@
     <string name="BOATS_FILE">com.vbh.virtualboathouse.BoatData</string>
     <string name="PIECE_ID_FILE">com.vbh.virtualboathouse.PieceIDData</string>
     <string name="PRACTICE_FILE">com.vbh.virtualboathouse.PracticeData</string>
+    <string name="RECENT_LINEUP_FILE">com.vbh.virtualboathouse.RecentLineupData</string>
 
     <!-- Extras for intents -->
     <string name="CURRENT_NUM_BOATS">current_num_boats</string>

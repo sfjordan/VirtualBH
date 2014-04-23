@@ -1,6 +1,8 @@
 package com.vbh.virtualboathouse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -8,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,8 +33,8 @@ public class CrewSelectorActivity extends Activity {
 	private Context context;
 	
 	private Roster roster;
-	private SparseArray<Boat> boatList;
-	private SparseArray<Lineup> lineups;
+	private Map<Integer, Boat> boatList;
+	private Map<Integer, Lineup> lineups;
 	private CheckBox[] lineupBoxes;
 	
 	private int currentPracticeID;
@@ -51,31 +54,44 @@ public class CrewSelectorActivity extends Activity {
 			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 			// currently, just get the most recent practice
-			DataRetriever dr = new DataRetriever(this);
-			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
+			LineupModel lm[] = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
+			Log.i("CrewSelector", "lm is currently null: " + (lm==null));
 			this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
+			Log.i("CrewSelector", "roster is currently null: " + (roster==null));
 			this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
+			Log.i("CrewSelector", "boatList is currently null: " + (boatList==null));
 
-			lineups = new SparseArray<Lineup>(plm.length);
-			String[] lineupNames = new String[plm.length];
-			int[] lineupIDs = new int[plm.length];
+			lineups = new HashMap<Integer, Lineup>(lm.length);
+			String[] lineupNames = new String[lm.length];
+			int[] lineupIDs = new int[lm.length];
 			int i = 0;
 			lineupBoxes = new CheckBox[lineupNames.length];
-			for (PracticeLineupsModel lineupModel : plm) {
+			for (LineupModel lineupModel : lm) {
 				Lineup l = new Lineup(lineupModel, roster, boatList);
-				lineups.append(l.getLineupID(), l);
+				lineups.put(l.getLineupID(), l);
 				// uses stroke seat by default here
 				// TODO implement adjustable setting
-				lineupBoxes[i].setText(l.getAthleteFromSeat(l.getAthleteIDFromSeat(l.getNumOfSeats()), roster).getFirstInitLastName());
+				int numSeats = l.getNumOfSeats();
+				Log.i("CrewSelector", "number of seats is " + numSeats);
+				Athlete stroke = l.getAthleteFromSeat(numSeats, roster);
+				Log.i("CrewSelector", "Athlete is null " + (stroke == null));
+				String name = stroke.getFirstInitLastName();
+				Log.i("CrewSelector", "Stroke's name is " + name);
+				lineupBoxes[i] = new CheckBox(this);
+				lineupBoxes[i].setText(name);
+				//lineupBoxes[i].setText(l.getAthleteFromSeat(l.getNumOfSeats(), roster).getFirstInitLastName());
 				lineupBoxes[i].setTag(l);
 				lineups_checklist.addView(lineupBoxes[i]);
 				i++;
 			}
-			System.out.println("plm is null: "+(plm==null));
 		}
 		else {
 			// reinstantiate data structures
-			
+			roster      = (Roster) savedInstanceState.getSerializable(DataSaver.STATE_ROSTER);
+	        int[] boatIDs = savedInstanceState.getIntArray(DataSaver.STATE_BOAT_ID_ARRAY);
+	       // boatList = savedInstanceState.getSparseParcelableArray(DataSaver.STATE_BOATS);
+	      //  lineups     = savedInstanceState.getSparseParcelableArray(DataSaver.STATE_LINEUPS);
+	        lineupBoxes = (CheckBox[]) savedInstanceState.getSerializable(DataSaver.STATE_LINEUPS_CHECKBOXES);
 			// TODO ensure check boxes are kept in the right state
 		}
 
@@ -106,7 +122,7 @@ public class CrewSelectorActivity extends Activity {
 					Piece firstPiece = new Piece(listLineups, roster, boatList);
 					currentPractice.addPiece(firstPiece);
 					// write the practice to a file
-					DataSaver.writeObject(currentPractice, getString(R.string.PIECE_ID_FILE) + currentPracticeID, context);
+					DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
 					// save the piece in shared prefs
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putLong(getString(R.string.CURRENT_PIECE_ID), firstPiece.getPieceID());
@@ -118,6 +134,18 @@ public class CrewSelectorActivity extends Activity {
 				}
 			}
 		});
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	    // Save the current practice state TODO
+		savedInstanceState.putSerializable(DataSaver.STATE_ROSTER, roster);
+        //savedInstanceState.putSparseParcelableArray(DataSaver.STATE_BOATS, boatList);
+        //savedInstanceState.putSparseParcelableArray(DataSaver.STATE_LINEUPS_ARRAY, lineups);
+        //savedInstanceState.putSerializable(DataSaver.STATE_LINEUPS_CHECKBOXES, lineupBoxes);
+	    
+	    // Always call the superclass so it can save the view hierarchy state
+	    super.onSaveInstanceState(savedInstanceState);
 	}
 	
 	public void onCheckboxClicked(View view) {

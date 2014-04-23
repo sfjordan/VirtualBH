@@ -2,10 +2,14 @@ package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
+import android.annotation.SuppressLint;
 import android.util.SparseArray;
 
+@SuppressLint("UseSparseArrays")
 public class Piece implements Serializable {
 	/**
 	 * 
@@ -17,34 +21,34 @@ public class Piece implements Serializable {
 	private boolean timed;
 	private int distance;
 	private String direction;
-	private final SparseArray<Lineup> lineups;
-	private SparseArray<Long> times;
+	private final Map<Integer, Lineup> lineups;
+	private Map<Integer, Long> times;
 	private ArrayList<String> notes;
 	private String margin;
 	private long msCountdownTime;
 	
-	public Piece (Lineup[] lineups, Roster roster, SparseArray<Boat> boats) {
+	public Piece (Lineup[] lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
-		this.lineups = new SparseArray<Lineup>(lineups.length);
+		this.lineups = new HashMap<Integer, Lineup>(lineups.length);
 		for (Lineup l : lineups) {
-			this.lineups.append(l.getLineupID(), l);
+			this.lineups.put(l.getLineupID(), l);
 		}
-		times = new SparseArray<Long>(lineups.length);
+		times = new HashMap<Integer, Long>(lineups.length);
 	}
-	public Piece (ArrayList<Lineup> lineups, Roster roster, SparseArray<Boat> boats) {
+	public Piece (ArrayList<Lineup> lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
-		this.lineups = new SparseArray<Lineup>(lineups.size());
+		this.lineups = new HashMap<Integer, Lineup>(lineups.size());
 		for (Lineup l : lineups) {
-			this.lineups.append(l.getLineupID(), l);
+			this.lineups.put(l.getLineupID(), l);
 		}
-		times = new SparseArray<Long>(lineups.size());
+		times = new HashMap<Integer, Long>(lineups.size());
 	}
 	
 	
 	public Piece (Piece oldPiece) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
 		this.lineups = oldPiece.getLineups();
-		times = new SparseArray<Long>(lineups.size());
+		times = new HashMap<Integer, Long>(lineups.size());
 	}
 	public int getNumBoats() {
 		return lineups.size();
@@ -96,7 +100,7 @@ public class Piece implements Serializable {
 		this.direction = direction;
 	}
 
-	public SparseArray<Long> getTimes() {
+	public Map<Integer, Long> getTimes() {
 		return times;
 	}
 
@@ -120,7 +124,7 @@ public class Piece implements Serializable {
 		this.margin = margin;
 	}
 
-	public SparseArray<Lineup> getLineups() {
+	public Map<Integer, Lineup> getLineups() {
 		return lineups;
 	}
 	

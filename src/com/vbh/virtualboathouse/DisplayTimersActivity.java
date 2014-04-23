@@ -1,11 +1,15 @@
 package com.vbh.virtualboathouse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,12 +46,16 @@ public class DisplayTimersActivity extends Activity {
 		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+		Log.i("DisplayTimers", "practice file is null - " + (currentPractice == null));
 		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
 		currentPiece = currentPractice.getPiece(currentPieceID);
-		SparseArray<Lineup> lineups = currentPiece.getLineups();
+		Log.i("DisplayTimers", "piece is null - " + (currentPiece == null));
+		Map<Integer, Lineup> lineups = currentPiece.getLineups();
 		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
-		for (int i = 0; i < numTimers; i++) {
-			timers[i] = new Timer(this, timer_list, lineups.valueAt(i).getName());
+		int j = 0;
+		for (Integer lineupID : lineups.keySet()) {
+			timers[j] = new Timer(this, timer_list, lineups.get(lineupID).getName());
+			j++;
 		}
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);

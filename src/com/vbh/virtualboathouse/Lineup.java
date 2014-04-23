@@ -1,34 +1,38 @@
 package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
+import java.util.Map;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.SparseArray;
 
+import com.vbh.virtualboathouse.LineupModel.LineupFields;
 import com.vbh.virtualboathouse.PracticeLineupsModel.PracticeLineupsFields;
 
-public class Lineup implements Serializable {
+public class Lineup implements Serializable, Parcelable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2384016072304205878L;
 	
 	private Boat boat;
-	@SuppressWarnings("unused")
 	private Athlete coxswain;
 	private String[] athleteNames;
 	private int[] athleteID;
 	private String position;
 	private final int lineupID;
 	
-	public Lineup(PracticeLineupsModel plm, Roster roster, SparseArray<Boat> boats){
-		this.lineupID = plm.getPrivateKey();
-		PracticeLineupsFields plmf = plm.getPLFields();
-		int[] tempAthletes = plmf.getAthleteIDs();
-		this.position = plmf.getPosition();
-		this.boat = boats.get(plmf.getBoatID());
+	public Lineup(LineupModel lm, Roster roster, Map<Integer, Boat> boats){
+		this.lineupID = lm.getPrivateKey();
+		LineupFields lmf = lm.getLineupFields();
+		int[] tempAthletes = lmf.getAthleteIDs();
+		this.position = lmf.getPosition();
+		this.boat = boats.get(lmf.getBoatID());
 		if (boat.isCoxed()) {
 			this.coxswain = roster.getAthlete(tempAthletes[0]);
 			this.athleteNames = new String[tempAthletes.length - 1];
+			this.athleteID = new int[tempAthletes.length - 1];
 		    for (int i = 1; i < tempAthletes.length; i++) {
 		    	this.athleteID[i-1] = tempAthletes[i];
 		    	this.athleteNames[i-1] = roster.getAthlete(tempAthletes[i]).getFirstInitLastName();
@@ -37,6 +41,8 @@ public class Lineup implements Serializable {
 		else {
 			coxswain = null;
 			int i = 0;
+			this.athleteNames = new String[tempAthletes.length];
+			this.athleteID = new int[tempAthletes.length];
 			for (int athleteID : tempAthletes) {
 		    	this.athleteID[i] = athleteID;
 		    	this.athleteNames[i] = roster.getAthlete(athleteID).getFirstInitLastName();
@@ -62,7 +68,10 @@ public class Lineup implements Serializable {
 		return boat.getName();
 	}
 	public int getAthleteIDFromSeat(int seat) {
-		return athleteID[seat];
+		if (seat < 1 || seat > boat.getNumSeats()) {
+			return -1;
+		}
+		return athleteID[seat-1];
 	}
 	
 	public Athlete getAthleteFromSeat(int seat, Roster roster) {
@@ -78,5 +87,39 @@ public class Lineup implements Serializable {
 		//TODO add settings preference logic here!!!
 		return getNameForSeat(athleteNames.length);
 	}
-	
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeSerializable(boat); // TODO use parcelable for boat
+		dest.writeSerializable(coxswain); // TODO make athlete parcelable
+		dest.writeStringArray(athleteNames);
+		dest.writeIntArray(athleteID);
+		dest.writeString(position);
+		dest.writeInt(lineupID);
+	}
+	public static final Parcelable.Creator<Lineup> CREATOR = new Parcelable.Creator<Lineup>() {
+		public Lineup createFromParcel(Parcel pc) {
+			return new Lineup(pc);
+		}
+		public Lineup[] newArray(int size) {
+			return new Lineup[size];
+		}
+	};
+	public Lineup(Parcel pc) {
+		boat = (Boat) pc.readSerializable();
+		// pc.readParcelable(Boat.getClass());
+		coxswain = (Athlete) pc.readSerializable();
+		pc.readStringArray(athleteNames);
+		pc.readIntArray(athleteID);
+		position = pc.readString();
+		lineupID = pc.readInt();
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
