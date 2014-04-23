@@ -1,5 +1,8 @@
 package com.vbh.virtualboathouse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,52 +12,76 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.content.Intent;
 
+import com.mobeta.android.dslv.DragSortController;
+import com.mobeta.android.dslv.DragSortListView;
+
 public class ChangeLineupsActivity extends Activity {
 	
-	private Button getLineups;
-	private Button pickCrews;
+	DragSortListView listView;
+	ArrayAdapter<String> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_change_linups);
 
-		if (savedInstanceState == null) {
+		/*if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		}*/
 		
-		getLineups = (Button) findViewById(R.id.get_lineups_button);
-		getLineups.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(v == findViewById(R.id.get_lineups_button))
-					getAthletes();
-			}
-		});
-		pickCrews = (Button) findViewById(R.id.pick_crews_button);
-		pickCrews.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (v==findViewById(R.id.pick_crews_button))
-					pickCrews();
-			}
-		});
+		listView = (DragSortListView) findViewById(R.id.listview);
+	    String[] names = {"Sam", "Matt", "Ed", "Brian"};
+	    ArrayList<String> list = new ArrayList<String>(Arrays.asList(names));
+	    adapter = new ArrayAdapter<String>(this,
+	            R.layout.simple_list_item_1, list);
+	    listView.setAdapter(adapter);
+	    listView.setDropListener(onDrop);
+	    listView.setRemoveListener(onRemove);
+
+	    DragSortController controller = new DragSortController(listView);
+	    controller.setDragHandleId(R.id.imageView1);
+	            //controller.setClickRemoveId(R.id.);
+	    controller.setRemoveEnabled(false);
+	    controller.setSortEnabled(true);
+	    controller.setDragInitMode(1);
+	            //controller.setRemoveMode(removeMode);
+
+	    listView.setFloatViewManager(controller);
+	    listView.setOnTouchListener(controller);
+	    listView.setDragEnabled(true);
+		
+		
 	}
 	
-	private void getAthletes(){
-		DataRetriever dr = new DataRetriever(this);
-		dr.getAthletes();
-		
-	}
+	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()
+	{
+	    @Override
+	    public void drop(int from, int to)
+	    {
+	        if (from != to)
+	        {
+	            String item = adapter.getItem(from);
+	            adapter.remove(item);
+	            adapter.insert(item, to);
+	        }
+	    }
+	};
+
+	private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener()
+	{
+	    @Override
+	    public void remove(int which)
+	    {
+	        adapter.remove(adapter.getItem(which));
+	    }
+	};
 	
-	private void pickCrews() {
-		Intent displayCrewSelectorIntent = new Intent(this, CrewSelectorActivity.class);
-		startActivity(displayCrewSelectorIntent);
-	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,7 +106,7 @@ public class ChangeLineupsActivity extends Activity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	/*public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
 		}
@@ -91,6 +118,6 @@ public class ChangeLineupsActivity extends Activity {
 					container, false);
 			return rootView;
 		}
-	}
+	}*/
 
 }
