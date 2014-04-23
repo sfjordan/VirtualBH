@@ -49,7 +49,8 @@ public class Splashscreenactivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.change_lineups_button)){
-					launchChangeLineups();
+					//launchChangeLineups();
+					testChangeLineups();
 				}
 			}
 		});
@@ -101,8 +102,15 @@ public class Splashscreenactivity extends Activity {
 		startActivity(displayBoatPickersIntent);
 	}
 	private void testTimers(){
+		System.out.println("testing timers...");
 		Intent testTimersIntent = new Intent(this, DisplayTimersActivity.class);
 		startActivity(testTimersIntent);
+	}
+	
+	private void testChangeLineups(){
+		System.out.println("testing changeLineups...");
+		Intent testChangeLineups = new Intent(this, ListViewDraggingAnimation.class);
+		startActivity(testChangeLineups);
 	}
 	
 	@SuppressWarnings("unused")

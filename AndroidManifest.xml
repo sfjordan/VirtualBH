@@ -103,6 +103,10 @@
             android:name="com.vbh.virtualboathouse.PickNewPieceActivity"
             android:label="@string/title_activity_pick_new_piece" >
         </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.ListViewDraggingAnimation"
+            android:label="ListViewDraggingAnimation" >
+        </activity>
     </application>
 
 </manifest>
