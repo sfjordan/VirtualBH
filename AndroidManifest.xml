@@ -10,7 +10,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -106,6 +106,14 @@
         <activity
             android:name="com.vbh.virtualboathouse.ListViewDraggingAnimation"
             android:label="ListViewDraggingAnimation" >
+        </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.PickTypeOfSwap"
+            android:label="@string/title_activity_pick_type_of_swap"
+            android:parentActivityName="com.vbh.virtualboathouse.CrewSelectorActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vbh.virtualboathouse.CrewSelectorActivity" />
         </activity>
     </application>
 

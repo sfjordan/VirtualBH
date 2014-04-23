@@ -70,5 +70,6 @@
     <!-- Extras for intents -->
     <string name="CURRENT_NUM_BOATS">current_num_boats</string>
     <string name="title_activity_pick_new_piece">PickNewPieceActivity</string>
+    <string name="title_activity_pick_type_of_swap">PickTypeOfSwap</string>
 
 </resources>

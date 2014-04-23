@@ -18,7 +18,9 @@ package com.vbh.virtualboathouse;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,19 +36,36 @@ import java.util.Arrays;
 public class ListViewDraggingAnimation extends Activity {
 	
 	String[] names = {"Sam", "Ed", "Brian", "Matt"};
+	String[] names2 = {"Bob", "John", "Frank", "Steve"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+        
+        TextView firstCrewName = (TextView) findViewById(R.id.first_crew_name);
+        TextView secondCrewName = (TextView) findViewById(R.id.second_crew_name);
+        
+        firstCrewName.setText("Crew 1");
+        firstCrewName.setGravity(Gravity.CENTER);
+        secondCrewName.setText("crew 2");
+        secondCrewName.setGravity(Gravity.CENTER);
 
         ArrayList<String>list = new ArrayList<String>(Arrays.asList(names));
+        ArrayList<String>list2 = new ArrayList<String>(Arrays.asList(names2));
 
         StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.text_view, list);
         DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
+        
+        StableArrayAdapter adapter2 = new StableArrayAdapter(this, R.layout.text_view, list2);
+        DynamicListView listView2 = (DynamicListView) findViewById(R.id.listview2);
 
-        listView.setCheeseList(list);
+        listView.setList(list);
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        
+        listView2.setList(list2);
+        listView2.setAdapter(adapter2);
+        listView2.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 }

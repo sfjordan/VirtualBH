@@ -67,7 +67,7 @@ public class DynamicListView extends ListView {
     private final int MOVE_DURATION = 90;
     private final int LINE_THICKNESS = 5;
 
-    public ArrayList<String> mCheeseList;
+    public ArrayList<String> mList;
 
     private int mLastEventY = -1;
 
@@ -332,7 +332,7 @@ public class DynamicListView extends ListView {
                 return;
             }
 
-            swapElements(mCheeseList, originalItem, getPositionForView(switchView));
+            swapElements(mList, originalItem, getPositionForView(switchView));
 
             ((BaseAdapter) getAdapter()).notifyDataSetChanged();
 
@@ -500,8 +500,8 @@ public class DynamicListView extends ListView {
         return false;
     }
 
-    public void setCheeseList(ArrayList<String> cheeseList) {
-        mCheeseList = cheeseList;
+    public void setList(ArrayList<String> List) {
+        mList = List;
     }
 
     /**

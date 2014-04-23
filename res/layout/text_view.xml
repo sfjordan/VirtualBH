@@ -18,6 +18,7 @@
     android:layout_height="wrap_content"
     android:background="#FFF"
     android:textSize="@dimen/list_text_size"
+    android:drawableRight="@drawable/ic_draggable"
     android:gravity="center_vertical"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
