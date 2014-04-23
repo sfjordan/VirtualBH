@@ -16,6 +16,7 @@
 
 package com.vbh.virtualboathouse;
 
+import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -38,7 +39,7 @@ public class ListViewDraggingAnimation extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_view);
+        /*setContentView(R.layout.activity_list_view);
 
         ArrayList<String>list = new ArrayList<String>(Arrays.asList(names));
 
@@ -47,6 +48,6 @@ public class ListViewDraggingAnimation extends Activity {
 
         listView.setCheeseList(list);
         listView.setAdapter(adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);*/
     }
 }
