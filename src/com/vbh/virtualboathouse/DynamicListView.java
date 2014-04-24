@@ -67,7 +67,7 @@ public class DynamicListView extends ListView {
     private final int MOVE_DURATION = 125;
     private final int LINE_THICKNESS = 4;
 
-    public ArrayList<MyListItem> mList;
+    public ArrayList<AthleteListName> mList;
 
     private int mLastEventY = -1;
 
@@ -371,8 +371,8 @@ public class DynamicListView extends ListView {
         }
     }
 
-    private void swapElements(ArrayList<MyListItem> arrayList, int indexOne, int indexTwo) {
-        MyListItem temp = arrayList.get(indexOne);
+    private void swapElements(ArrayList<AthleteListName> arrayList, int indexOne, int indexTwo) {
+    	AthleteListName temp = arrayList.get(indexOne);
         arrayList.set(indexOne, arrayList.get(indexTwo));
         arrayList.set(indexTwo, temp);
     }
@@ -501,7 +501,7 @@ public class DynamicListView extends ListView {
         return false;
     }
 
-    public void setList(ArrayList<MyListItem> List) {
+    public void setList(ArrayList<AthleteListName> List) {
         mList = List;
     }
 

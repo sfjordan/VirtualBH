@@ -25,14 +25,14 @@ import android.widget.ArrayAdapter;
 import java.util.HashMap;
 import java.util.List;
 
-public class StableArrayAdapter extends ArrayAdapter<MyListItem> {
+public class StableArrayAdapter extends ArrayAdapter<AthleteListName> {
 
     final int INVALID_ID = -1;
 
-    HashMap<MyListItem, Integer> mIdMap = new HashMap<MyListItem, Integer>();
+    HashMap<AthleteListName, Integer> mIdMap = new HashMap<AthleteListName, Integer>();
     private LayoutInflater inflater;
 
-    public StableArrayAdapter(Context context, LayoutInflater inflater, List<MyListItem> objects) {
+    public StableArrayAdapter(Context context, LayoutInflater inflater, List<AthleteListName> objects) {
         super(context, 0, objects);
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(objects.get(i), i);

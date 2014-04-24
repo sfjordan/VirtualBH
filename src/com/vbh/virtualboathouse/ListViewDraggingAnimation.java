@@ -20,6 +20,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,8 +40,8 @@ import java.util.List;
  */
 public class ListViewDraggingAnimation extends Activity {
 	
-	String[] names = {"Sam", "Ed", "Brian", "Matt"};
-	String[] names2 = {"Bob", "John", "Frank", "Steve"};
+	private ArrayList<AthleteListName> items;
+	StableArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +49,21 @@ public class ListViewDraggingAnimation extends Activity {
         setContentView(R.layout.activity_list_view);
         
         LayoutInflater inflater = LayoutInflater.from(this);
-        ArrayList<MyListItem> items = new ArrayList<MyListItem>();
+        items = new ArrayList<AthleteListName>();
         
-        //items.add(new Header("Friday - November 30th 2012"));
-        items.add(new AthleteListName("", "", "Boat 1"));
+        items.add(new AthleteListName(null, null, "Boat 1"));
         items.add(new AthleteListName("Sam" , "Port", null));
         items.add(new AthleteListName("Matt", "Starboard",null));
         items.add(new AthleteListName("Ed" , "Port",null));
         items.add(new AthleteListName("Steve","Starboard", null));
          
-        //items.add(new Header("Saturday - December 1st 2012"));
-        items.add(new AthleteListName("", "", "Boat 2"));
+        items.add(new AthleteListName(null, null, "Boat 2"));
         items.add(new AthleteListName("Frank" , "Port",null));
         items.add(new AthleteListName("John", "Starboard",null));
         items.add(new AthleteListName("Bill" , "Port",null));
         items.add(new AthleteListName("Hafiiiiiz","Starboard",null));
 
-        StableArrayAdapter adapter = new StableArrayAdapter(this, inflater, items);
+        adapter = new StableArrayAdapter(this, inflater, items);
         DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
         
 
@@ -71,14 +72,17 @@ public class ListViewDraggingAnimation extends Activity {
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
         
-        /*long id = adapter.getItemId(0);
-        System.out.println("id: "+id);
-        if(firstCrewName !=null){
-        	System.out.println("view text: "+firstCrewName.getText());
-        	firstCrewName.setText("SUCCESS");
-        }
-        else System.out.println("firstCrewName is null");*/
-        
-        //TODO: add method to change view/make blue in DynamicListView.java?
+        Button button_done = (Button) findViewById(R.id.button_done);
+        button_done.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.button_done)){
+					for (int i = 0; i<items.size(); i++){
+						AthleteListName name = items.get(i);
+						if (name.isAthlete()) System.out.println(name.getName());
+					}
+				}
+			}
+		});
     }
 }

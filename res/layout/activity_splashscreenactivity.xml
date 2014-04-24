@@ -62,7 +62,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textSize="12sp"
-	        android:textColor="#708090"
+	        android:textColor="@color/text_gray"
 	        android:text="@string/last_updated_text">
 	   </TextView>
 	   <TextView
@@ -72,7 +72,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@+id/last_updated_textstub"
 	        android:textSize="12sp"
-	        android:textColor="#708090">
+	        android:textColor="@color/text_gray">
 	       
 	   </TextView>
 	   
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="14sp"
-        android:textColor="#708090"
+        android:textColor="@color/text_gray"
         android:text="@string/currently_loggedin_text">
    </TextView>
 
