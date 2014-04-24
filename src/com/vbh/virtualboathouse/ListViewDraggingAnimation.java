@@ -67,5 +67,7 @@ public class ListViewDraggingAnimation extends Activity {
         listView2.setList(list2);
         listView2.setAdapter(adapter2);
         listView2.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        
+        //TODO: add method to change view/make blue in DynamicListView.java?
     }
 }

@@ -34,11 +34,6 @@ public class StableArrayAdapter extends ArrayAdapter<String> {
             mIdMap.put(objects.get(i), i);
         }
     }
-    
-    public void addobject(Context context, int textViewResourceId, String object){
-    	mIdMap.put(object, (mIdMap.size()-1));
-    	
-    }
 
     @Override
     public long getItemId(int position) {
