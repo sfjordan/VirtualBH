@@ -68,22 +68,23 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         }*/
         else if(DisplayTimersActivity.save_times == v){
         	// get data 
-        	SharedPreferences sharedPref = this.getSharedPreferences(
-			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
-			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
-			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+        	SharedPreferences sharedPref = context.getSharedPreferences(
+			        context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+			currentPracticeID = sharedPref.getInt(context.getString(R.string.CURRENT_PRACTICE_ID), 8);
+			currentPractice = DataSaver.readObject(context.getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+			currentPieceID = sharedPref.getLong(context.getString(R.string.CURRENT_PIECE_ID), 8);
 			currentPiece = currentPractice.getPiece(currentPieceID);
         	// save times to current piece
 			Map<Integer, Lineup> lineups = currentPiece.getLineups();
-			int keyIndex = 0;
-        	for(Timer t : timers) {
-        		currentPiece.setTime(lineups.get(keyIndex).getLineupID(), t.getElapsedTime());
-        	}
+        	int j = 0;
+    		for (Integer lineupID : lineups.keySet()) {
+    			currentPiece.setTime(lineups.get(lineupID).getLineupID(), timers[j].getElapsedTime());
+    			j++;
+    		}
         	// save piece to practice
         	currentPractice.addPiece(currentPiece);
         	// write practice to file
-        	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+        	DataSaver.writeObject(currentPractice, context.getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
         	//TODO add redirect to new piece screen
         	pickNewPiece();
         	
@@ -98,9 +99,9 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
     }
 	
 	private void pickNewPiece(){
-		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
+		Intent pickNewPieceIntent = new Intent(context, PickNewPieceActivity.class);
 		pickNewPieceIntent.putExtra("FROM","timers"); 
-		startActivity(pickNewPieceIntent);
+		context.startActivity(pickNewPieceIntent);
 	}
 	
 	private boolean allStopped(){
