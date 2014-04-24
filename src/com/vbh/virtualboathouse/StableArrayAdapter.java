@@ -17,22 +17,50 @@
 package com.vbh.virtualboathouse;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class StableArrayAdapter extends ArrayAdapter<String> {
+public class StableArrayAdapter extends ArrayAdapter<MyListItem> {
 
     final int INVALID_ID = -1;
 
-    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+    HashMap<MyListItem, Integer> mIdMap = new HashMap<MyListItem, Integer>();
+    private LayoutInflater inflater;
 
-    public StableArrayAdapter(Context context, int textViewResourceId, List<String> objects) {
-        super(context, textViewResourceId, objects);
+    public StableArrayAdapter(Context context, LayoutInflater inflater, List<MyListItem> objects) {
+        super(context, 0, objects);
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(objects.get(i), i);
         }
+        this.inflater = inflater;
+    }
+    
+    public enum RowType {
+        // Here we have two items types, you can have as many as you like though
+        LIST_ITEM, HEADER_ITEM
+    }
+    @Override
+    public int getViewTypeCount() {
+        // Get the number of items in the enum
+        return RowType.values().length;
+ 
+    }
+    
+    @Override
+    public int getItemViewType(int position) {
+        // Use getViewType from the Item interface
+        return getItem(position).getViewType();
+    }
+    
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Use getView from the Item interface
+        return getItem(position).getView(inflater, convertView);
     }
 
     @Override
@@ -40,7 +68,7 @@ public class StableArrayAdapter extends ArrayAdapter<String> {
         if (position < 0 || position >= mIdMap.size()) {
             return INVALID_ID;
         }
-        String item = getItem(position);
+        MyListItem item = getItem(position);
         return mIdMap.get(item);
     }
 

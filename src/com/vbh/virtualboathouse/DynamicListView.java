@@ -67,7 +67,7 @@ public class DynamicListView extends ListView {
     private final int MOVE_DURATION = 125;
     private final int LINE_THICKNESS = 4;
 
-    public ArrayList<String> mList;
+    public ArrayList<MyListItem> mList;
 
     private int mLastEventY = -1;
 
@@ -205,6 +205,7 @@ public class DynamicListView extends ListView {
         mBelowItemId = adapter.getItemId(position + 1);
     }
 
+    	//TODO
     /** Retrieves the view in the list corresponding to itemID */
     public View getViewForID (long itemID) {
         int firstVisiblePosition = getFirstVisiblePosition();
@@ -370,8 +371,8 @@ public class DynamicListView extends ListView {
         }
     }
 
-    private void swapElements(ArrayList arrayList, int indexOne, int indexTwo) {
-        Object temp = arrayList.get(indexOne);
+    private void swapElements(ArrayList<MyListItem> arrayList, int indexOne, int indexTwo) {
+        MyListItem temp = arrayList.get(indexOne);
         arrayList.set(indexOne, arrayList.get(indexTwo));
         arrayList.set(indexTwo, temp);
     }
@@ -500,7 +501,7 @@ public class DynamicListView extends ListView {
         return false;
     }
 
-    public void setList(ArrayList<String> List) {
+    public void setList(ArrayList<MyListItem> List) {
         mList = List;
     }
 

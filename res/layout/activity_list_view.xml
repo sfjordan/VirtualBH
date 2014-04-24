@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     tools:context=".ListViewAnimations" >
     
-    <TextView 
+<!--     <TextView 
         android:id="@+id/first_crew_name"
         android:gravity="center"
         android:textColor="@android:color/white"
@@ -30,35 +30,14 @@
         android:background="#007fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        /> -->
 
         <com.vbh.virtualboathouse.DynamicListView
             android:id="@+id/listview"
             android:padding="8dp"
             android:background="#0000"
-            android:layout_below="@id/first_crew_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         
-        <TextView 
-        android:id="@+id/second_crew_name"
-        android:gravity="center"
-        android:background="#007fff"
-        android:textSize="20sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
-        android:layout_below="@id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-        
-        <com.vbh.virtualboathouse.DynamicListView
-            android:layout_below="@id/second_crew_name"
-            android:padding="8dp"
-            android:id="@+id/listview2"
-            android:background="#0000"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
 </RelativeLayout>

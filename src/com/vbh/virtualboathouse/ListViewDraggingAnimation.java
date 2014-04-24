@@ -19,11 +19,13 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This application creates a listview where the ordering of the data set
@@ -43,30 +45,39 @@ public class ListViewDraggingAnimation extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
         
-        TextView firstCrewName = (TextView) findViewById(R.id.first_crew_name);
-        TextView secondCrewName = (TextView) findViewById(R.id.second_crew_name);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        ArrayList<MyListItem> items = new ArrayList<MyListItem>();
         
-        firstCrewName.setText("Crew 1");
-        firstCrewName.setGravity(Gravity.CENTER);
-        secondCrewName.setText("Crew 2");
-        secondCrewName.setGravity(Gravity.CENTER);
+        //items.add(new Header("Friday - November 30th 2012"));
+        items.add(new AthleteListName("", "", "Boat 1"));
+        items.add(new AthleteListName("Sam" , "Port", null));
+        items.add(new AthleteListName("Matt", "Starboard",null));
+        items.add(new AthleteListName("Ed" , "Port",null));
+        items.add(new AthleteListName("Steve","Starboard", null));
+         
+        //items.add(new Header("Saturday - December 1st 2012"));
+        items.add(new AthleteListName("", "", "Boat 2"));
+        items.add(new AthleteListName("Frank" , "Port",null));
+        items.add(new AthleteListName("John", "Starboard",null));
+        items.add(new AthleteListName("Bill" , "Port",null));
+        items.add(new AthleteListName("Hafiiiiiz","Starboard",null));
 
-        ArrayList<String>list = new ArrayList<String>(Arrays.asList(names));
-        ArrayList<String>list2 = new ArrayList<String>(Arrays.asList(names2));
-
-        StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.text_view, list);
+        StableArrayAdapter adapter = new StableArrayAdapter(this, inflater, items);
         DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
         
-        StableArrayAdapter adapter2 = new StableArrayAdapter(this, R.layout.text_view, list2);
-        DynamicListView listView2 = (DynamicListView) findViewById(R.id.listview2);
 
-        listView.setList(list);
+        listView.setList(items);
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
-        listView2.setList(list2);
-        listView2.setAdapter(adapter2);
-        listView2.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        
+        /*long id = adapter.getItemId(0);
+        System.out.println("id: "+id);
+        if(firstCrewName !=null){
+        	System.out.println("view text: "+firstCrewName.getText());
+        	firstCrewName.setText("SUCCESS");
+        }
+        else System.out.println("firstCrewName is null");*/
         
         //TODO: add method to change view/make blue in DynamicListView.java?
     }
