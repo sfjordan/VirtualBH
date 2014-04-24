@@ -64,8 +64,8 @@ import java.util.ArrayList;
 public class DynamicListView extends ListView {
 
     private final int SMOOTH_SCROLL_AMOUNT_AT_EDGE = 15;
-    private final int MOVE_DURATION = 90;
-    private final int LINE_THICKNESS = 5;
+    private final int MOVE_DURATION = 125;
+    private final int LINE_THICKNESS = 4;
 
     public ArrayList<String> mList;
 

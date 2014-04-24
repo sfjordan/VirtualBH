@@ -48,7 +48,7 @@ public class ListViewDraggingAnimation extends Activity {
         
         firstCrewName.setText("Crew 1");
         firstCrewName.setGravity(Gravity.CENTER);
-        secondCrewName.setText("crew 2");
+        secondCrewName.setText("Crew 2");
         secondCrewName.setGravity(Gravity.CENTER);
 
         ArrayList<String>list = new ArrayList<String>(Arrays.asList(names));
