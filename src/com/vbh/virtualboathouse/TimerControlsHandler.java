@@ -32,6 +32,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 	}
 	
 	@Override
+	//note: something seems to have changed here. t.start/stop gives null pointers now :(
     public void onClick(View v) {
         if(DisplayTimersActivity.start_all == v) {
         	//set text to 'Stop All'
