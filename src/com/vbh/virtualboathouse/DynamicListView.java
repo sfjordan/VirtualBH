@@ -319,8 +319,10 @@ public class DynamicListView extends ListView {
         View mobileView = getViewForID(mMobileItemId);
         View aboveView = getViewForID(mAboveItemId);
 
-        boolean isBelow = (belowView != null) && (deltaYTotal > belowView.getTop());
-        boolean isAbove = (aboveView != null) && (deltaYTotal < aboveView.getTop());
+        boolean isBelow = (belowView != null) && deltaYTotal > 150 &&
+        		(deltaYTotal > (belowView.getTop()-belowView.getHeight()/1.8));
+        boolean isAbove = (aboveView != null) && deltaYTotal > 150 &&
+        		(deltaYTotal < aboveView.getTop()+(aboveView.getHeight()/1.8));
 
         if (isBelow || isAbove) {
 

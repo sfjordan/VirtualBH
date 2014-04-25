@@ -51,6 +51,7 @@ public class ListViewDraggingAnimation extends Activity {
         LayoutInflater inflater = LayoutInflater.from(this);
         items = new ArrayList<AthleteListName>();
         
+        //items.add(new AthleteListName(null,null,null));
         items.add(new AthleteListName(null, null, "Boat 1"));
         items.add(new AthleteListName("Sam" , "Port", null));
         items.add(new AthleteListName("Matt", "Starboard",null));

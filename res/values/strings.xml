@@ -52,12 +52,12 @@
     <string name="update_text">Update data</string>
     <string name="last_updated_text">"last updated: "</string>
     <string name="save_piece">save piece</string>
-    <string name="notes">Notes on piece...</string>
+    <string name="notes">Notes on piece&#8230;</string>
     <string name="direction">Enter direction of piece</string>
     <string name="new_piece">New Piece</string>
     <string name="finish_practice">Finish Practice</string>
-    <string name="dragging_explanation">To make a swap, hold and drag the atheltes to their new locations</string>
-
+    <string name="dragging_explanation">To make a swap, hold and drag the athletes to their new locations</string>
+	<string name="done">Done</string>
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
     <string name="CURRENT_PRACTICE_ID">CURRENT_PRACTICE_ID</string>
