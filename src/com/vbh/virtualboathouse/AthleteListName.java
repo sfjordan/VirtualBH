@@ -60,17 +60,12 @@ public class AthleteListName implements MyListItem {
         if(isAthlete()){
 	        TextView textname = (TextView) convertView.findViewById(R.id.list_content1);
 	        TextView textside = (TextView) convertView.findViewById(R.id.list_content2);
-	        TextView textheader = (TextView) convertView.findViewById(R.id.header);
-	        Log.i("TextView","textname: "+textname);
-	        Log.i("TextView","textside: "+textname);
-	        Log.i("TextView","textheader: "+textheader);
 	        textname.setText(name);
 	        textside.setText(side);
 	        textside.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_draggable, 0);
         }
         else{
         	TextView textheader = (TextView) convertView.findViewById(R.id.header);
-        	Log.i("TextView","textheader: "+textheader);
         	textheader.setText(title);
         }
         
