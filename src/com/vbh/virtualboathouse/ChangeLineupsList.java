@@ -38,7 +38,7 @@ import java.util.List;
  * moved around by tracking and following the movement of the user's finger.
  * When the item is released, it animates to its new position within the listview.
  */
-public class ListViewDraggingAnimation extends Activity {
+public class ChangeLineupsList extends Activity {
 	
 	private ArrayList<AthleteListName> items;
 	StableArrayAdapter adapter;
