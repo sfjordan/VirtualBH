@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,6 @@ public class LaunchActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
-		updateData();
 		Typeface type = Typeface.createFromAsset(getAssets(),"fonts/MyriadPro-Semibold.ttf"); 
 		TextView appTitle = (TextView)findViewById(R.id.app_title_header);
 		appTitle.setTypeface(type);
@@ -49,9 +49,18 @@ public class LaunchActivity extends Activity {
 	        			spEditor.putString(CurrentUser.API_KEY, cu.getAPIKey());
 	        			spEditor.putString(CurrentUser.USERNAME, cu.getUsername());
 	        			spEditor.commit();
-	        			// launch the main menu activity 
+	        			// launch the main menu activity
 	        			Intent splashscreenIntent = new Intent(getApplicationContext(), Splashscreenactivity.class);
+	        			if(updateData()) {
+	        				Log.i("launcher","putting extra true");
+	        				splashscreenIntent.putExtra("UPDATE_SUCCESS",true);
+	        			}
+	        			else {
+	        				Log.i("launcher","putting extra false");
+	        				splashscreenIntent.putExtra("UPDATE_SUCCESS",false);
+	        			}
 	        			startActivity(splashscreenIntent);
+	        			
 	        			
 	        		}
 	                finish();  // close this activity

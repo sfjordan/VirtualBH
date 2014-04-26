@@ -42,7 +42,18 @@ public class Splashscreenactivity extends Activity {
 		Button updateData = (Button) findViewById(R.id.update_data_button);
 		Button stroke = (Button) findViewById(R.id.stroke_button);
 		
+		Log.i("splashscreen","in splashscreen");
+		
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
+		Bundle b = getIntent().getExtras();
+		if (b!=null){
+			Log.i("splashscreen","b is not null:");
+			Boolean success = b.getBoolean("UPDATE_SUCCESS");
+			Log.i("splashscreen","update string: "+success);
+			if (success){
+				lastUpdated.setText("just now");
+			}
+		}
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
 			@Override

@@ -67,6 +67,10 @@ public class Lineup implements Serializable, Parcelable {
 	public String getBoatName() {
 		return boat.getName();
 	}
+	public String getCoxswainName(){
+		if (coxswain == null) return null;
+		else return coxswain.getName();
+	}
 	public int getAthleteIDFromSeat(int seat) {
 		if (seat < 1 || seat > boat.getNumSeats()) {
 			return -1;

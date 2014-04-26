@@ -17,7 +17,9 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +38,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import com.vbh.virtualboathouse.CrewSelectorActivity.PlaceholderFragment;
 
@@ -95,9 +98,34 @@ public class ChangeLineupsList extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.button_done)){
-					for (int i = 0; i<athleteList.size(); i++){
-						AthleteListName name = athleteList.get(i);
-						if (name.isAthlete()) System.out.println(name.getName());
+					if (isValid()){
+						saveData();
+						for (int i = 0; i<athleteList.size(); i++){
+							AthleteListName name = athleteList.get(i);
+							if (name.isAthlete()) System.out.println(name.getName());
+						}
+					}
+					else {
+						Log.i("changelineupslist","invalid lineup");
+			        	
+			        	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			        	    @Override
+			        	    public void onClick(DialogInterface dialog, int which) {
+			        	        switch (which){
+			        	        case DialogInterface.BUTTON_POSITIVE:
+			        	            //Yes button clicked
+			        	            break;
+
+			        	        case DialogInterface.BUTTON_NEGATIVE:
+			        	            //No button clicked
+			        	            break;
+			        	        }
+			        	    }
+			        	};
+
+			        	AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+			        	builder.setMessage(R.string.invalid_lineup_error_message).setPositiveButton("Yes", dialogClickListener)
+			        	    .setNegativeButton("No", dialogClickListener).show();
 					}
 				}
 			}
@@ -125,36 +153,39 @@ public class ChangeLineupsList extends Activity {
 		lineupIDs = new int[lm.length];
     }
     
-    private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){
-    	
-//    	int i = 0;
-//		for (LineupModel lineupModel : lm) {
-//			Lineup l = new Lineup(lineupModel, roster, boatList);
-//			lineups.put(l.getLineupID(), l);
-//			// uses stroke seat by default here
-//			// TODO implement adjustable setting
-//			int numSeats = l.getNumOfSeats();
-//			//Log.i("CrewSelector", "number of seats is " + numSeats);
-//			Athlete stroke = l.getAthleteFromSeat(numSeats, roster);
-//			//Log.i("CrewSelector", "Athlete is null " + (stroke == null));
-//			String name = stroke.getFirstInitLastName();
-//			//Log.i("CrewSelector", "Stroke's name is " + name);
-//			//lineupBoxes[i].setText(l.getAthleteFromSeat(l.getNumOfSeats(), roster).getFirstInitLastName());
-//			i++;
-//		}
-		
+    private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){	
 		for(LineupModel l : lm){
 			Lineup lineup = new Lineup(l, roster, boatList);
 			//lineups.put(l.getLineupID(), l);
-			athleteList.add(new AthleteListName(null,null,lineup.getBoatName()));
+			//set header:
+			if (lineup.getCoxswainName() == null)
+				athleteList.add(new AthleteListName(null,null,lineup.getBoatName()));
+			else athleteList.add(new AthleteListName(null,null,lineup.getCoxswainName()));
 			int[] athleteIDs = lineup.getAthleteIDs();
-			for (int a: athleteIDs){
-				Athlete ath = roster.getAthlete(a);
+			//now to flip the order:
+			Stack<Integer> IDs = new Stack<Integer>();
+			for(int a : athleteIDs){
+				IDs.push(a);
+			}
+			while(!IDs.isEmpty()){
+				Athlete ath = roster.getAthlete(IDs.pop());
 				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),null));
-				
 			}
 		}
     	return athleteList;    	
+    }
+    
+    public void saveData(){
+    	
+    }
+    
+    public boolean isValid(){
+    	boolean valid = false;
+    	return valid;
+    }
+    
+    public Context getContext(){
+    	return this;
     }
     
     
