@@ -119,7 +119,8 @@ public class Timer {
 	public void restart(long time, boolean state) {
 		th.setStoppedStatus(!state);
 		milli_chrono.restartTimer(state, time);
-		if (!state){
+		setStopped(!state);
+		if (isStopped()){
 			stop_button.setText(context.getResources().getString(R.string.button_clear));
 			stop_button.setTextColor(Color.parseColor("white"));
 		}
