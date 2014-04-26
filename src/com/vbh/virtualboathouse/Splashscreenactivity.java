@@ -1,6 +1,8 @@
 package com.vbh.virtualboathouse;
 
 
+import java.text.DecimalFormat;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,12 +24,15 @@ import android.widget.TextView;
 public class Splashscreenactivity extends Activity {
 	
 	private TextView lastUpdated;
+	private Context context;
+	
+	public final static int SPLASH_SCREEN_ACTIVITY = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splashscreenactivity);
-
+		context = this;
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -34,6 +40,8 @@ public class Splashscreenactivity extends Activity {
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button updateData = (Button) findViewById(R.id.update_data_button);
+		Button stroke = (Button) findViewById(R.id.stroke_button);
+		
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
@@ -64,6 +72,18 @@ public class Splashscreenactivity extends Activity {
 						lastUpdated.setText(currentDateString());
 						System.out.println("date: "+currentDateString());
 					}
+				}
+			}
+		});
+		
+		stroke.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (v==findViewById(R.id.stroke_button)) {
+					Intent displayTimersIntent = new Intent(context, DisplayTimersActivity.class);
+					displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), SPLASH_SCREEN_ACTIVITY);
+					displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), 3); 
+					startActivity(displayTimersIntent);
 				}
 			}
 		});

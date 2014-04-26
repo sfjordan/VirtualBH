@@ -41,22 +41,36 @@ public class DisplayTimersActivity extends Activity {
 		Intent intent = getIntent();
 		numTimers = intent.getIntExtra(getString(R.string.CURRENT_NUM_BOATS), 3);
 		timers = new Timer[numTimers];
+		Log.i("DisplayTimersActivity", "number of timers is " + numTimers);
+		int activityFrom = intent.getIntExtra(getString(R.string.ACTIVITY_FROM), 3);
+		
+		if (activityFrom == PickDistTimeActivity.PICK_DIST_ACTIVITY) {
 		// get data 
-    	SharedPreferences sharedPref = this.getSharedPreferences(
-		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
-		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
-		Log.i("DisplayTimers", "practice file is null - " + (currentPractice == null));
-		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
-		currentPiece = currentPractice.getPiece(currentPieceID);
-		Log.i("DisplayTimers", "piece is null - " + (currentPiece == null));
-		Map<Integer, Lineup> lineups = currentPiece.getLineups();
-		LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
-		int j = 0;
-		for (Integer lineupID : lineups.keySet()) {
-			timers[j] = new Timer(this, timer_list, lineups.get(lineupID).getName());
-			j++;
+	
+	    	SharedPreferences sharedPref = this.getSharedPreferences(
+			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+			Log.i("DisplayTimers", "practice file is null - " + (currentPractice == null));
+			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+			currentPiece = currentPractice.getPiece(currentPieceID);
+			Log.i("DisplayTimers", "piece is null - " + (currentPiece == null));
+			Map<Integer, Lineup> lineups = currentPiece.getLineups();
+			LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
+			int j = 0;
+			for (Integer lineupID : lineups.keySet()) {
+				timers[j] = new Timer(this, timer_list, lineups.get(lineupID).getName());
+				j++;
+			}
+		}	
+		else if (activityFrom == Splashscreenactivity.SPLASH_SCREEN_ACTIVITY) {
+			LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
+			int j = 0;
+			for (j = 0; j < timers.length; j++) {
+				timers[j] = new Timer(this, timer_list, "Boat " + (j+1));
+			}
 		}
+		
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
 		save_times = (Button)findViewById(R.id.save_times_button);

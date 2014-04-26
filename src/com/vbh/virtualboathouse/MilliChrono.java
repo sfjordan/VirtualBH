@@ -56,7 +56,7 @@ public class MilliChrono extends Chronometer {
     }
     public void setBase(long base) {
         mBase = base;
-        dispatchChronometerTick();
+        dispatchChronometerTickMC();
     }
 
     public long getBase() {
@@ -177,7 +177,7 @@ public class MilliChrono extends Chronometer {
             if (running) {
             	long now = SystemClock.elapsedRealtime() - mBase;
                 updateText(now);
-                dispatchChronometerTick();
+                dispatchChronometerTickMC();
                 mHandler.sendMessageDelayed(Message.obtain(mHandler, TICK_WHAT), 10);
             } else {
             	//timeElapsed = SystemClock.elapsedRealtime() - mBase;
@@ -192,13 +192,13 @@ public class MilliChrono extends Chronometer {
             if (mRunning) {
             	long now = SystemClock.elapsedRealtime() - mBase;
                 updateText(now);
-                dispatchChronometerTick();
+                dispatchChronometerTickMC();
                 sendMessageDelayed(Message.obtain(this , TICK_WHAT), 10);
             }
         }
     };
 
-    void dispatchChronometerTick() {
+    void dispatchChronometerTickMC() {
         if (mOnChronometerTickListener != null) {
             mOnChronometerTickListener.onChronometerTick(this);
         }

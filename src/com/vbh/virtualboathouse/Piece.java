@@ -17,8 +17,8 @@ public class Piece implements Serializable {
 	private static final long serialVersionUID = 6044365957538890403L;
 	
 	private final long pieceID;
-	private boolean countdown;
-	private boolean timed;
+	private boolean countdown; //timed piece
+	private boolean timed; //distance piece
 	private int distance;
 	private String direction;
 	private final Map<Integer, Lineup> lineups;
