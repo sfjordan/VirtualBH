@@ -47,8 +47,6 @@ public class CrewSelectorActivity extends Activity {
 		context = this;
 		lineups_checklist = (LinearLayout) findViewById(R.id.lineup_checklist);
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
 			// get the practice ID
 			SharedPreferences sharedPref = context.getSharedPreferences(
 			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);

@@ -32,6 +32,7 @@ public class PickDistTimeActivity extends Activity {
 	private Practice currentPractice;
 	private int currentPracticeID;
 	
+	public final static int PICK_DIST_ACTIVITY = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +148,8 @@ public class PickDistTimeActivity extends Activity {
 	}
 	private void displayTimers() {
 		Intent displayTimersIntent = new Intent(this, DisplayTimersActivity.class);
-		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), "2" /*currentPiece.getNumBoats()*/); 
+		displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_DIST_ACTIVITY);
+		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), currentPiece.getNumBoats()); 
 		startActivity(displayTimersIntent);
 	}
 	

@@ -26,6 +26,7 @@ public class Timer {
 		this.ll = ll;
 		this.name = name;
 		stopped = true;
+		boat_name = new TextView(context);
 		addComponents();
 		setHandlers();
 	}
@@ -49,10 +50,11 @@ public class Timer {
 	}
 	
 	private void setHandlers() {
-		th = new TimerHandler(this, start_button, stop_button, clear_button, milli_chrono);
+		th = new TimerHandler(this, start_button, stop_button, clear_button, milli_chrono, boat_name, name, context);
 		start_button.setOnClickListener(th);
 		stop_button.setOnClickListener(th);
 		clear_button.setOnClickListener(th);
+		boat_name.setOnClickListener(th);
 	}
 	
 	private void addComponents() {
@@ -62,7 +64,6 @@ public class Timer {
 		LinearLayout timer_and_buttons = new LinearLayout(context);
 		LinearLayout timer_buttons = new LinearLayout(context);
 		// set the TextView layout/text
-		boat_name = new TextView(context);
 		boat_name.setText(this.name);
 		boat_name.setTextSize(30);
 		boat_name.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.CENTER_VERTICAL);

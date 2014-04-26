@@ -56,6 +56,7 @@
     <string name="direction">Enter direction of piece</string>
     <string name="new_piece">New Piece</string>
     <string name="finish_practice">Finish Practice</string>
+    <string name="get_stroke_rate">Get Stroke Rate</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
@@ -71,5 +72,6 @@
     <string name="CURRENT_NUM_BOATS">current_num_boats</string>
     <string name="title_activity_pick_new_piece">PickNewPieceActivity</string>
     <string name="title_activity_pick_type_of_swap">PickTypeOfSwap</string>
-
+    <string name="ACTIVITY_FROM">activity_from</string>
+    
 </resources>
