@@ -23,6 +23,7 @@ public class LaunchActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
+		updateData();
 		Typeface type = Typeface.createFromAsset(getAssets(),"fonts/MyriadPro-Semibold.ttf"); 
 		TextView appTitle = (TextView)findViewById(R.id.app_title_header);
 		appTitle.setTypeface(type);
@@ -56,6 +57,26 @@ public class LaunchActivity extends Activity {
 	                finish();  // close this activity
 	            }
 	        }, LAUNCH_TIME_OUT);
+	}
+	
+	private boolean updateData() {
+		boolean success = true;
+		DataRetriever dr = new DataRetriever(this);
+		//dr.getAthletes();
+		//dr.getBoats();
+		dr.getAthletesAndBoats();
+
+		// get the id of most recent practice then get practice
+		// save id to sharedPrefs
+//		SharedPreferences sharedPref = this.getSharedPreferences(
+//		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+//		SharedPreferences.Editor editor = sharedPref.edit();
+//		editor.putInt(getString(R.string.CURRENT_PRACTICE_ID), rm.getPracticeID());
+//		editor.apply();
+		
+		//PracticeLineupsModel[] plm = DataSaver.readObjectArray(dr.LINEUP_DATA_FILENAME + rm.getPracticeID(), this);
+
+		return success;
 	}
 
 	@Override

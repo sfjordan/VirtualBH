@@ -56,13 +56,10 @@
     <string name="direction">Enter direction of piece</string>
     <string name="new_piece">New Piece</string>
     <string name="finish_practice">Finish Practice</string>
-<<<<<<< HEAD
     <string name="get_stroke_rate">Get Stroke Rate</string>
-
-=======
     <string name="dragging_explanation">To make a swap, hold and drag the athletes to their new locations</string>
 	<string name="done">Done</string>
->>>>>>> 6a6061d8e76961cf38d9ac2a648709f43c07d382
+
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
     <string name="CURRENT_PRACTICE_ID">CURRENT_PRACTICE_ID</string>
