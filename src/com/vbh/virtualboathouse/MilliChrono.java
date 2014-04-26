@@ -126,7 +126,6 @@ public class MilliChrono extends Chronometer {
     }
     
     public Boolean isZeroed(){
-    	Log.i("millichrono","timeElapsed is zero:"+(timeElapsed==0L));
     	return ((timeElapsed == 0L) && (!mStarted));
     }
 
