@@ -45,7 +45,6 @@ public class AthleteListName implements MyListItem {
  
     @Override
     public View getView(LayoutInflater inflater, View convertView) {
-    	Log.i("AthleteListName","name: "+name);
         if (convertView == null 
         		|| convertView.findViewById(R.id.list_content1)==null
         		|| convertView.findViewById(R.id.header)==null) {
@@ -68,18 +67,6 @@ public class AthleteListName implements MyListItem {
         	TextView textheader = (TextView) convertView.findViewById(R.id.header);
         	textheader.setText(title);
         }
-        
-//        if(isAthlete()){
-//	        
-//	        textheader.setText("	");
-//	        
-//        }
-//        else {
-//        	textname.setText("");
-//        	textside.setText("");
-//        	
-//        	
-//        }
  
         return convertView;
     }

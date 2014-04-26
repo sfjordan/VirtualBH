@@ -17,18 +17,27 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.vbh.virtualboathouse.CrewSelectorActivity.PlaceholderFragment;
 
 /**
  * This application creates a listview where the ordering of the data set
@@ -38,37 +47,45 @@ import java.util.List;
  * moved around by tracking and following the movement of the user's finger.
  * When the item is released, it animates to its new position within the listview.
  */
+
+
 public class ChangeLineupsList extends Activity {
 	
-	private ArrayList<AthleteListName> items;
+	private int currentPracticeID;
+	private Roster roster;
+	private Map<Integer, Boat> boatList;
+	private Map<Integer, Lineup> lineups;
+	private ArrayList<AthleteListName> athleteList;
+	private PracticeLineupsModel[] plm;
+	private LineupModel[] lm;
+	private String[] lineupNames;
+	private int[] lineupIDs;
 	StableArrayAdapter adapter;
+	Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+        context = this;
+		if (savedInstanceState == null) {
+//			getFragmentManager().beginTransaction()
+//					.add(R.id.container, new PlaceholderFragment()).commit();
+			getData();
+			
+		}
+		//roster.getAthlete(athleteID)
+        
+        
+        
         
         LayoutInflater inflater = LayoutInflater.from(this);
-        items = new ArrayList<AthleteListName>();
-        
-        //items.add(new AthleteListName(null,null,null));
-        items.add(new AthleteListName(null, null, "Boat 1"));
-        items.add(new AthleteListName("Sam" , "Port", null));
-        items.add(new AthleteListName("Matt", "Starboard",null));
-        items.add(new AthleteListName("Ed" , "Port",null));
-        items.add(new AthleteListName("Steve","Starboard", null));
-         
-        items.add(new AthleteListName(null, null, "Boat 2"));
-        items.add(new AthleteListName("Frank" , "Port",null));
-        items.add(new AthleteListName("John", "Starboard",null));
-        items.add(new AthleteListName("Bill" , "Port",null));
-        items.add(new AthleteListName("Hafiiiiiz","Starboard",null));
-
-        adapter = new StableArrayAdapter(this, inflater, items);
+        athleteList = buildList(new ArrayList<AthleteListName>());
+        adapter = new StableArrayAdapter(this, inflater, athleteList);
         DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
         
 
-        listView.setList(items);
+        listView.setList(athleteList);
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
@@ -78,12 +95,67 @@ public class ChangeLineupsList extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.button_done)){
-					for (int i = 0; i<items.size(); i++){
-						AthleteListName name = items.get(i);
+					for (int i = 0; i<athleteList.size(); i++){
+						AthleteListName name = athleteList.get(i);
 						if (name.isAthlete()) System.out.println(name.getName());
 					}
 				}
 			}
 		});
     }
+    
+    private void getData(){
+    	// get the practice ID
+		SharedPreferences sharedPref = context.getSharedPreferences(
+		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+		// currently, just get the most recent practice
+		lm = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
+		Log.i("changelineuplist", "lm is currently null: " + (lm==null));
+		DataRetriever dr = new DataRetriever(this);
+		plm = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
+		System.out.println("plm is null: "+(plm==null));
+		this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
+		Log.i("changelineuplist", "roster is currently null: " + (roster==null));
+		this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
+		Log.i("CrewSelector", "boatList is currently null: " + (boatList==null));
+	
+		lineups = new HashMap<Integer, Lineup>(lm.length);
+		lineupNames = new String[lm.length];
+		lineupIDs = new int[lm.length];
+    }
+    
+    private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){
+    	
+//    	int i = 0;
+//		for (LineupModel lineupModel : lm) {
+//			Lineup l = new Lineup(lineupModel, roster, boatList);
+//			lineups.put(l.getLineupID(), l);
+//			// uses stroke seat by default here
+//			// TODO implement adjustable setting
+//			int numSeats = l.getNumOfSeats();
+//			//Log.i("CrewSelector", "number of seats is " + numSeats);
+//			Athlete stroke = l.getAthleteFromSeat(numSeats, roster);
+//			//Log.i("CrewSelector", "Athlete is null " + (stroke == null));
+//			String name = stroke.getFirstInitLastName();
+//			//Log.i("CrewSelector", "Stroke's name is " + name);
+//			//lineupBoxes[i].setText(l.getAthleteFromSeat(l.getNumOfSeats(), roster).getFirstInitLastName());
+//			i++;
+//		}
+		
+		for(LineupModel l : lm){
+			Lineup lineup = new Lineup(l, roster, boatList);
+			//lineups.put(l.getLineupID(), l);
+			athleteList.add(new AthleteListName(null,null,lineup.getBoatName()));
+			int[] athleteIDs = lineup.getAthleteIDs();
+			for (int a: athleteIDs){
+				Athlete ath = roster.getAthlete(a);
+				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),null));
+				
+			}
+		}
+    	return athleteList;    	
+    }
+    
+    
 }

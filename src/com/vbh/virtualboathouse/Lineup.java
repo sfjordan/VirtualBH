@@ -74,6 +74,10 @@ public class Lineup implements Serializable, Parcelable {
 		return athleteID[seat-1];
 	}
 	
+	public int[] getAthleteIDs(){
+		return athleteID;
+	}
+	
 	public Athlete getAthleteFromSeat(int seat, Roster roster) {
 		return roster.getAthlete(getAthleteIDFromSeat(seat));
 	}
