@@ -19,11 +19,16 @@ package com.vbh.virtualboathouse;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This application creates a listview where the ordering of the data set
@@ -33,39 +38,52 @@ import java.util.Arrays;
  * moved around by tracking and following the movement of the user's finger.
  * When the item is released, it animates to its new position within the listview.
  */
-public class ListViewDraggingAnimation extends Activity {
+public class ChangeLineupsList extends Activity {
 	
-	String[] names = {"Sam", "Ed", "Brian", "Matt"};
-	String[] names2 = {"Bob", "John", "Frank", "Steve"};
+	private ArrayList<AthleteListName> items;
+	StableArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
         
-        TextView firstCrewName = (TextView) findViewById(R.id.first_crew_name);
-        TextView secondCrewName = (TextView) findViewById(R.id.second_crew_name);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        items = new ArrayList<AthleteListName>();
         
-        firstCrewName.setText("Crew 1");
-        firstCrewName.setGravity(Gravity.CENTER);
-        secondCrewName.setText("crew 2");
-        secondCrewName.setGravity(Gravity.CENTER);
+        //items.add(new AthleteListName(null,null,null));
+        items.add(new AthleteListName(null, null, "Boat 1"));
+        items.add(new AthleteListName("Sam" , "Port", null));
+        items.add(new AthleteListName("Matt", "Starboard",null));
+        items.add(new AthleteListName("Ed" , "Port",null));
+        items.add(new AthleteListName("Steve","Starboard", null));
+         
+        items.add(new AthleteListName(null, null, "Boat 2"));
+        items.add(new AthleteListName("Frank" , "Port",null));
+        items.add(new AthleteListName("John", "Starboard",null));
+        items.add(new AthleteListName("Bill" , "Port",null));
+        items.add(new AthleteListName("Hafiiiiiz","Starboard",null));
 
-        ArrayList<String>list = new ArrayList<String>(Arrays.asList(names));
-        ArrayList<String>list2 = new ArrayList<String>(Arrays.asList(names2));
-
-        StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.text_view, list);
+        adapter = new StableArrayAdapter(this, inflater, items);
         DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
         
-        StableArrayAdapter adapter2 = new StableArrayAdapter(this, R.layout.text_view, list2);
-        DynamicListView listView2 = (DynamicListView) findViewById(R.id.listview2);
 
-        listView.setList(list);
+        listView.setList(items);
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
-        listView2.setList(list2);
-        listView2.setAdapter(adapter2);
-        listView2.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        
+        Button button_done = (Button) findViewById(R.id.button_done);
+        button_done.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v){
+				if (v==findViewById(R.id.button_done)){
+					for (int i = 0; i<items.size(); i++){
+						AthleteListName name = items.get(i);
+						if (name.isAthlete()) System.out.println(name.getName());
+					}
+				}
+			}
+		});
     }
 }

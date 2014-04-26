@@ -21,44 +21,35 @@
     tools:context=".ListViewAnimations" >
     
     <TextView 
-        android:id="@+id/first_crew_name"
+        android:id="@+id/explanation_text"
         android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:background="#007fff"
+        android:textColor="@color/text_gray"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:text="@string/dragging_explanation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    
+    <Button
+        android:id="@+id/button_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/explanation_text"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="@string/done"
+        android:textColor="@android:color/white" />
 
-        <com.vbh.virtualboathouse.DynamicListView
-            android:id="@+id/listview"
-            android:padding="8dp"
-            android:background="#0000"
-            android:layout_below="@id/first_crew_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        
-        <TextView 
-        android:id="@+id/second_crew_name"
-        android:gravity="center"
-        android:background="#007fff"
-        android:textSize="20sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
-        android:layout_below="@id/listview"
+    <com.vbh.virtualboathouse.DynamicListView
+        android:id="@+id/listview"
+        android:layout_below="@id/button_done"
+        android:padding="8dp"
+        android:background="#0000"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
+
         
-        <com.vbh.virtualboathouse.DynamicListView
-            android:layout_below="@id/second_crew_name"
-            android:padding="8dp"
-            android:id="@+id/listview2"
-            android:background="#0000"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
 </RelativeLayout>

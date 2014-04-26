@@ -64,10 +64,10 @@ import java.util.ArrayList;
 public class DynamicListView extends ListView {
 
     private final int SMOOTH_SCROLL_AMOUNT_AT_EDGE = 15;
-    private final int MOVE_DURATION = 90;
-    private final int LINE_THICKNESS = 5;
+    private final int MOVE_DURATION = 125;
+    private final int LINE_THICKNESS = 4;
 
-    public ArrayList<String> mList;
+    public ArrayList<AthleteListName> mList;
 
     private int mLastEventY = -1;
 
@@ -205,6 +205,7 @@ public class DynamicListView extends ListView {
         mBelowItemId = adapter.getItemId(position + 1);
     }
 
+    	//TODO
     /** Retrieves the view in the list corresponding to itemID */
     public View getViewForID (long itemID) {
         int firstVisiblePosition = getFirstVisiblePosition();
@@ -318,8 +319,10 @@ public class DynamicListView extends ListView {
         View mobileView = getViewForID(mMobileItemId);
         View aboveView = getViewForID(mAboveItemId);
 
-        boolean isBelow = (belowView != null) && (deltaYTotal > belowView.getTop());
-        boolean isAbove = (aboveView != null) && (deltaYTotal < aboveView.getTop());
+        boolean isBelow = (belowView != null) && deltaYTotal > 150 &&
+        		(deltaYTotal > (belowView.getTop()-belowView.getHeight()/1.8));
+        boolean isAbove = (aboveView != null) && deltaYTotal > 150 &&
+        		(deltaYTotal < aboveView.getTop()+(aboveView.getHeight()/1.8));
 
         if (isBelow || isAbove) {
 
@@ -370,8 +373,8 @@ public class DynamicListView extends ListView {
         }
     }
 
-    private void swapElements(ArrayList arrayList, int indexOne, int indexTwo) {
-        Object temp = arrayList.get(indexOne);
+    private void swapElements(ArrayList<AthleteListName> arrayList, int indexOne, int indexTwo) {
+    	AthleteListName temp = arrayList.get(indexOne);
         arrayList.set(indexOne, arrayList.get(indexTwo));
         arrayList.set(indexTwo, temp);
     }
@@ -500,7 +503,7 @@ public class DynamicListView extends ListView {
         return false;
     }
 
-    public void setList(ArrayList<String> List) {
+    public void setList(ArrayList<AthleteListName> List) {
         mList = List;
     }
 

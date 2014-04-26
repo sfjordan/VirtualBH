@@ -129,7 +129,7 @@ public class Splashscreenactivity extends Activity {
 	
 	private void testChangeLineups(){
 		System.out.println("testing changeLineups...");
-		Intent testChangeLineups = new Intent(this, ListViewDraggingAnimation.class);
+		Intent testChangeLineups = new Intent(this, ChangeLineupsList.class);
 		startActivity(testChangeLineups);
 	}
 	

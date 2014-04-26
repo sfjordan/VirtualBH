@@ -104,8 +104,12 @@
             android:label="@string/title_activity_pick_new_piece" >
         </activity>
         <activity
-            android:name="com.vbh.virtualboathouse.ListViewDraggingAnimation"
-            android:label="ListViewDraggingAnimation" >
+            android:name="com.vbh.virtualboathouse.ChangeLineupsList"
+            android:label="@string/title_activity_change_linups"
+            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickTypeOfSwap"

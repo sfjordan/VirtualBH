@@ -33,7 +33,7 @@
                 android:layout_below="@+id/enter_distance"
                 android:layout_marginLeft="16dp"
                 android:text="@string/meters"
-                android:textColor="#708090"
+                android:textColor="@color/text_gray"
                 android:textSize="14sp" />
 
         <TextView
@@ -97,7 +97,7 @@
                 android:layout_below="@+id/enter_sec_time"
                 android:layout_marginLeft="16dp"
                 android:text="@string/seconds"
-                android:textColor="#708090"
+                android:textColor="@color/text_gray"
                 android:textSize="14sp" />
 
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_below="@+id/enter_min_time"
                 android:layout_marginRight="16dp"
                 android:text="@string/minutes"
-                android:textColor="#708090"
+                android:textColor="@color/text_gray"
                 android:textSize="14sp" />
         </RelativeLayout>
 
