@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Chronometer;
+
 import java.text.DecimalFormat;
 
 @SuppressLint("HandlerLeak")
@@ -121,6 +123,11 @@ public class MilliChrono extends Chronometer {
     	timeElapsed = 0L;
     	mStarted = false;
     	updateText(timeElapsed);
+    }
+    
+    public Boolean isZeroed(){
+    	Log.i("millichrono","timeElapsed is zero:"+(timeElapsed==0L));
+    	return ((timeElapsed == 0L) && (!mStarted));
     }
 
 

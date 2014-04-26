@@ -58,7 +58,7 @@ public class TimerHandler extends Activity implements OnClickListener {
         	if (stopped) {
         		stopped = false;
         		t.setStopped(false);
-		    	clock.setBase(SystemClock.elapsedRealtime());
+;		    	clock.setBase(SystemClock.elapsedRealtime());
 		    	clock.start();
 		    	//set stop button text to stop
 		    	stop.setText("Stop");
