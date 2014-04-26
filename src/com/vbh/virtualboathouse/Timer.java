@@ -15,7 +15,7 @@ public class Timer {
 	public Button start_button;
 	public Button clear_button;
 	public TextView boat_name;
-	public boolean stopped;
+	private boolean stopped;
 	private Context context;
 	private String name;
 	private TimerHandler th;
@@ -32,6 +32,14 @@ public class Timer {
 	}
 	public long getElapsedTime() {
 		return milli_chrono.getElapsedTime();
+	}
+	
+	public Boolean isStopped(){
+		return stopped;
+	}
+	
+	public void setStopped(Boolean b){
+		stopped = b;
 	}
 	
 	public void start() {

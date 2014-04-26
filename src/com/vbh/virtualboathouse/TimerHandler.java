@@ -57,6 +57,7 @@ public class TimerHandler extends Activity implements OnClickListener {
         {
         	if (stopped) {
         		stopped = false;
+        		t.setStopped(false);
 		    	clock.setBase(SystemClock.elapsedRealtime());
 		    	clock.start();
 		    	//set stop button text to stop
@@ -68,7 +69,7 @@ public class TimerHandler extends Activity implements OnClickListener {
 		    if (!stopped) {
 			    clock.stop();
 		    	stopped = true;
-		    	t.stopped = true;
+		    	t.setStopped(true);
 		    	//set stop button text to clear 
 		    	stop.setText("Clear");
 				stop.setTextColor(Color.parseColor("white"));
@@ -98,7 +99,7 @@ public class TimerHandler extends Activity implements OnClickListener {
 				strokeRate = strokeRate/strokeCount;
 				DecimalFormat df = new DecimalFormat("###0.0");
 				boatName.setText(Html.fromHtml("<big>"+df.format(strokeRate)+"</big>"
-						+"<br>"+"<small><font color=\"gray\">spm</font></small>"));
+						+"<br>"+"<small><font color=\"gray\">SPM</font></small>"));
 				//boatName.setTextSize(40);
 				numClicks = 0;
 				for(long l : times)

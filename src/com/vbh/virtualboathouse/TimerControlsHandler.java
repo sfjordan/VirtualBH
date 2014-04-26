@@ -44,7 +44,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         }
         else if(DisplayTimersActivity.stop_all == v){
         	for(Timer t : timers) {
-        		if (!t.stopped)
+        		if (!t.isStopped())
         			t.stop();
         	}
         }
@@ -90,10 +90,10 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         	pickNewPiece();
         	
         	// display saved message
-        	AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-        	builder.setMessage(R.string.dialog_message);
-        	AlertDialog saveDialog = builder.create();
-        	saveDialog.show();
+//        	AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+//        	builder.setMessage(R.string.dialog_message);
+//        	AlertDialog saveDialog = builder.create();
+//        	saveDialog.show();
         	
         	
         }
@@ -108,7 +108,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 	private boolean allStopped(){
 		boolean allstopped = true;
 		for (Timer t : timers){
-			if (!t.stopped)
+			if (!t.isStopped())
 				allstopped = false;
 		}
 		System.out.println("allstopped: "+allstopped);
