@@ -101,6 +101,7 @@ public class ChangeLineupsList extends Activity {
 				if (v==findViewById(R.id.button_done)){
 					if (isValidLineup()){
 						saveData();
+						//continue to wherever you need to go
 						for (int i = 0; i<athleteList.size(); i++){
 							AthleteListName name = athleteList.get(i);
 							if (name.isAthlete()) System.out.println(name.getName());
@@ -115,6 +116,13 @@ public class ChangeLineupsList extends Activity {
 			        	        switch (which){
 			        	        case DialogInterface.BUTTON_POSITIVE:
 			        	            //Yes button clicked
+			        	        	saveData();
+			        	        	//continue to wherever you need to go
+									for (int i = 0; i<athleteList.size(); i++){
+										AthleteListName name = athleteList.get(i);
+										if (name.isAthlete()) System.out.println(name.getName());
+									}
+			        	        	
 			        	            break;
 
 			        	        case DialogInterface.BUTTON_NEGATIVE:

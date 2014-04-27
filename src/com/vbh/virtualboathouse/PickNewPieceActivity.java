@@ -36,7 +36,7 @@ public class PickNewPieceActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		RelativeLayout rl = (RelativeLayout)findViewById(R.id.relative_container);
+		RelativeLayout rl = (RelativeLayout)findViewById(R.id.container);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button newPiece = (Button) findViewById(R.id.new_piece_button);
 		Button finishPractice = (Button) findViewById(R.id.finish_practice_button);
