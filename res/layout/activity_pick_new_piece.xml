@@ -11,7 +11,7 @@
         android:id="@+id/direction_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_margin="20dip"
         android:layout_alignParentTop="true"
         android:ems="10"
         android:gravity="center|bottom"
@@ -20,48 +20,97 @@
 
         <requestFocus />
     </EditText>
+    
+    <TextView
+        android:id="@+id/and_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/direction_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:text="@string/and_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
 
     <EditText
         android:id="@+id/notes_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/direction_text"
-        android:layout_below="@id/direction_text"
+        android:layout_below="@id/and_text"
+        android:layout_marginBottom="20dip"
         android:ems="10"
-        android:gravity="top|left"
+        android:gravity="center"
         android:hint="@string/notes"
-        android:inputType="textAutoCorrect"
-        android:maxLines="8"
+        android:inputType="textAutoCorrect|textMultiLine"
+        android:maxLines="5"
         android:minLines="3"
         android:scrollbars="vertical" >
     </EditText>
+    
+    <TextView
+        android:id="@+id/then_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notes_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:text="@string/then_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/change_lineups_button"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/notes_text"
+        android:layout_below="@id/then_text"
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
+        android:layout_marginBottom="8dip"
+        android:layout_centerHorizontal="true"
         android:text="@string/button_change_lineups"
         android:textColor="@android:color/white" />
+    
+    <TextView
+        android:id="@+id/or_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/change_lineups_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dip"
+        android:text="@string/or_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/new_piece_button"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/change_lineups_button"
+        android:layout_below="@id/or_text"
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
+        android:layout_marginBottom="10dip"
+        android:layout_centerHorizontal="true"
         android:text="@string/new_piece"
         android:textColor="@android:color/white" />
+    
+    <TextView
+        android:id="@+id/or_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_piece_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:text="@string/or_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/finish_practice_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/or_text2"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginBottom="20dip"
         android:text="@string/finish_practice"
         android:textColor="@android:color/white" />
 
+    
 </RelativeLayout>

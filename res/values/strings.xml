@@ -53,7 +53,7 @@
     <string name="update_text">Update data</string>
     <string name="last_updated_text">"last updated: "</string>
     <string name="save_piece">save piece</string>
-    <string name="notes">Notes on piece&#8230;</string>
+    <string name="notes">Enter notes on piece&#8230;</string>
     <string name="direction">Enter direction of piece</string>
     <string name="new_piece">New Piece</string>
     <string name="finish_practice">Finish Practice</string>
@@ -62,6 +62,8 @@
 	<string name="done">Done</string>
 	<string name="just_now">just now</string>
 	<string name="strokes_per_minute">SPM</string>
+	<string name="then_text">Then</string>
+	<string name="and_text">and</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
@@ -75,7 +77,7 @@
 
     <!-- Extras for intents -->
     <string name="CURRENT_NUM_BOATS">current_num_boats</string>
-    <string name="title_activity_pick_new_piece">PickNewPieceActivity</string>
+    <string name="title_activity_pick_new_piece">Enter piece details</string>
     <string name="title_activity_pick_type_of_swap">PickTypeOfSwap</string>
     <string name="ACTIVITY_FROM">activity_from</string>
     
