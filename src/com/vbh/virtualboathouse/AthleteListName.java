@@ -12,18 +12,30 @@ public class AthleteListName implements MyListItem {
     private final String         name;
     private final String         side;
     private final String		 title;
+    private final Integer				ID;
+    private final Integer 			numOfSeats;
     
  
-    public AthleteListName(String name, String side, String title) {
+    public AthleteListName(String name, String side, Integer ID, String title, Integer numOfSeats) {
         this.name = name;
         this.side = side;
+        this.ID = ID;
         this.title = title;
+        this.numOfSeats = numOfSeats;
     }
     
     
     
     public String getName(){
     	return name;
+    }
+    
+    public Integer getNumOfSeats(){
+    	return numOfSeats;
+    }
+    
+    public Integer getID(){
+    	return ID;
     }
     
     public Boolean isAthlete(){

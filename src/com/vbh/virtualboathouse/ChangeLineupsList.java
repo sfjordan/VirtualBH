@@ -63,6 +63,7 @@ public class ChangeLineupsList extends Activity {
 	private LineupModel[] lm;
 	private String[] lineupNames;
 	private int[] lineupIDs;
+	private int numLineups;
 	StableArrayAdapter adapter;
 	Context context;
 
@@ -98,7 +99,7 @@ public class ChangeLineupsList extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.button_done)){
-					if (isValid()){
+					if (isValidLineup()){
 						saveData();
 						for (int i = 0; i<athleteList.size(); i++){
 							AthleteListName name = athleteList.get(i);
@@ -153,14 +154,15 @@ public class ChangeLineupsList extends Activity {
 		lineupIDs = new int[lm.length];
     }
     
-    private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){	
+    private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){
+    	numLineups = 0;
 		for(LineupModel l : lm){
 			Lineup lineup = new Lineup(l, roster, boatList);
 			//lineups.put(l.getLineupID(), l);
 			//set header:
 			if (lineup.getCoxswainName() == null)
-				athleteList.add(new AthleteListName(null,null,lineup.getBoatName()));
-			else athleteList.add(new AthleteListName(null,null,lineup.getCoxswainName()));
+				athleteList.add(new AthleteListName(null,null,null,lineup.getBoatName(),lineup.getNumOfSeats()));
+			else athleteList.add(new AthleteListName(null,null,null,lineup.getCoxswainName(),lineup.getNumOfSeats()));
 			int[] athleteIDs = lineup.getAthleteIDs();
 			//now to flip the order:
 			Stack<Integer> IDs = new Stack<Integer>();
@@ -168,23 +170,74 @@ public class ChangeLineupsList extends Activity {
 				IDs.push(a);
 			}
 			while(!IDs.isEmpty()){
-				Athlete ath = roster.getAthlete(IDs.pop());
-				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),null));
+				int id = IDs.pop();
+				Athlete ath = roster.getAthlete(id);
+				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null));
 			}
+			numLineups++;
 		}
     	return athleteList;    	
     }
     
-    public void saveData(){
+    private void saveData(){
     	
     }
     
-    public boolean isValid(){
-    	boolean valid = false;
+    private boolean isValidLineup(){
+    	boolean valid = true;
+    	int n = 0;
+    	int numPorts = 0,numStars = 0,numBoth = 0,numOfSeats = 0;
+    	for (AthleteListName aln : athleteList) {
+    		if(!aln.isAthlete()) {
+    			Log.i("isValid","numPorts: "+numPorts);
+    	    	Log.i("isValid","numStars: "+numStars);
+    	    	Log.i("isValid","numBoth: "+numBoth);
+    	    	Log.i("isValid","numOfSeats: "+numOfSeats);
+    			if(numOfSeats !=0)n++;
+    			Log.i("isValid","lineup num: "+n);
+    			if(!possibleLineup(numPorts, numStars, numBoth, numOfSeats)) valid = false;
+    			Log.i("aln if loop","aln title: "+aln.getTitle());
+    			numPorts = 0;
+    			numStars = 0;
+    			numBoth = 0;
+    			numOfSeats = aln.getNumOfSeats();
+    		}
+    		else{
+    			Log.i("aln else loop","aln name: "+aln.getName());
+	    		if (aln.getSide()!=null && aln.getSide().equalsIgnoreCase("port")) numPorts++;
+	    		if (aln.getSide()!=null && aln.getSide().equalsIgnoreCase("starboard")) numStars++;
+	    		if (aln.getSide()!=null && aln.getSide().equalsIgnoreCase("both")) numBoth++;
+    			
+    		}
+    	}
+    	Log.i("isValid","numPorts: "+numPorts);
+    	Log.i("isValid","numStars: "+numStars);
+    	Log.i("isValid","numBoth: "+numBoth);
+    	Log.i("isValid","numOfSeats: "+numOfSeats);
+    	Log.i("isValid","lineup num: "+n);
+    	if(!possibleLineup(numPorts, numStars, numBoth,numOfSeats)) valid = false;
+    	Log.i("isValid","valid: "+valid);
+    	Log.i("isValid","returning: "+valid);
     	return valid;
     }
     
-    public Context getContext(){
+    private Boolean possibleLineup(int numPorts, int numStars, int numBoth, int numSeats){
+    	Boolean possible = true;
+    	if(numPorts+numStars+numBoth != numSeats) possible=false;
+    	if(numSeats == 1) {
+    		Log.i("possibleLineup","possible: "+possible);
+    		return possible;
+    	}
+    	int lesser = Math.min(numPorts, numStars);
+    	int greater = Math.max(numPorts, numStars);
+    	if (lesser!=greater){
+    		if (lesser + numBoth < greater) possible=false;
+    	}
+    	Log.i("possibleLineup","possible: "+possible);
+    	return possible;
+    }
+    
+    private Context getContext(){
     	return this;
     }
     
