@@ -52,7 +52,7 @@ public class Splashscreenactivity extends Activity {
 			Boolean success = b.getBoolean("UPDATE_SUCCESS");
 			Log.i("splashscreen","update string: "+success);
 			if (success){
-				lastUpdated.setText("just now");
+				lastUpdated.setText(getString(R.string.just_now));
 			}
 		}
 		//icons are 35dp, 5dp padding

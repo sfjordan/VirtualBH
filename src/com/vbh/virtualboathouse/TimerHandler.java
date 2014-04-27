@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -98,8 +99,10 @@ public class TimerHandler extends Activity implements OnClickListener {
 				}
 				strokeRate = strokeRate/strokeCount;
 				DecimalFormat df = new DecimalFormat("###0.0");
-				boatName.setText(Html.fromHtml("<big>"+df.format(strokeRate)+"</big>"
-						+"<br>"+"<small><font color=\"gray\">SPM</font></small>"));
+				boatName.setText(
+						Html.fromHtml("<big>"+df.format(strokeRate)+"</big>"
+						+"<br>"+"<small><font color=\"gray\">"
+						+c.getResources().getString(R.string.strokes_per_minute)+"</font></small>"));
 				//boatName.setTextSize(40);
 				numClicks = 0;
 				for(long l : times)

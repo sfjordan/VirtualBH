@@ -60,6 +60,8 @@
     <string name="get_stroke_rate">Get Stroke Rate</string>
     <string name="dragging_explanation">To make a swap, hold and drag the athletes to their new locations</string>
 	<string name="done">Done</string>
+	<string name="just_now">just now</string>
+	<string name="strokes_per_minute">SPM</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
