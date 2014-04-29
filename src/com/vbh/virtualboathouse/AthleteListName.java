@@ -12,15 +12,17 @@ public class AthleteListName implements MyListItem {
     private final String         name;
     private final String         side;
     private final String		 title;
-    private final Integer				ID;
-    private final Integer 			numOfSeats;
+    private final Integer		 athID;
+    private final Integer		 boatID;
+    private final Integer 		 numOfSeats;
     
  
-    public AthleteListName(String name, String side, Integer ID, String title, Integer numOfSeats) {
+    public AthleteListName(String name, String side, Integer athID, String title, Integer boatID, Integer numOfSeats) {
         this.name = name;
         this.side = side;
-        this.ID = ID;
+        this.athID = athID;
         this.title = title;
+        this.boatID = boatID;
         this.numOfSeats = numOfSeats;
     }
     
@@ -34,8 +36,12 @@ public class AthleteListName implements MyListItem {
     	return numOfSeats;
     }
     
-    public Integer getID(){
-    	return ID;
+    public Integer getathID(){
+    	return athID;
+    }
+    
+    public Integer getboatID(){
+    	return boatID;
     }
     
     public Boolean isAthlete(){

@@ -23,6 +23,7 @@ public class Lineup implements Serializable, Parcelable {
 	private String[] athleteNames;
 	private int[] athleteID; // from bow to stern (0=bow, 1=2-seat, etc.)
 	private int[] allAthleteID; // includes the coxswain and is from stern to bow (0=cox, 1=stroke, 2=7-seat, etc.)
+	private int lineupHash;
 	private String position;
 	private final long lineupID;
 	
@@ -30,7 +31,7 @@ public class Lineup implements Serializable, Parcelable {
 		//this.lineupID = lm.getPrivateKey();
 		this.lineupID = UUID.randomUUID().getLeastSignificantBits();
 		LineupFields lmf = lm.getLineupFields();
-		int[] allAthleteID = lmf.getAthleteIDs();
+		allAthleteID = lmf.getAthleteIDs();
 		this.position = lmf.getPosition();
 		this.boat = boats.get(lmf.getBoatID());
 		if (boat.isCoxed()) {
@@ -53,6 +54,7 @@ public class Lineup implements Serializable, Parcelable {
 		    	i--;
 		    }
 		}
+		lineupHash = athleteID.hashCode();
 	}
 	
 	public int getBoatID() {

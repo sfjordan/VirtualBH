@@ -55,6 +55,7 @@ import com.vbh.virtualboathouse.CrewSelectorActivity.PlaceholderFragment;
 public class ChangeLineupsList extends Activity {
 	
 	private int currentPracticeID;
+	private Practice currentPractice;
 	private Roster roster;
 	private Map<Integer, Boat> boatList;
 	private Map<Integer, Lineup> lineups;
@@ -146,16 +147,21 @@ public class ChangeLineupsList extends Activity {
 		SharedPreferences sharedPref = context.getSharedPreferences(
 		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+		// get the current practice from a file
+		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+		// get the roster and boatlist
+		boatList = DataSaver.readObject(context.getString(R.string.BOATS_FILE), context);
+		// TODO check for null
+		Log.i("changelineuplist", "boatList is currently null: " + (boatList==null));
+		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
+		// TODO check for null
+		Log.i("changelineuplist", "roster is currently null: " + (roster==null));
 		// currently, just get the most recent practice
 		lm = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
 		Log.i("changelineuplist", "lm is currently null: " + (lm==null));
 		DataRetriever dr = new DataRetriever(this);
-		plm = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
-		System.out.println("plm is null: "+(plm==null));
-		this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
-		Log.i("changelineuplist", "roster is currently null: " + (roster==null));
-		this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
-		Log.i("CrewSelector", "boatList is currently null: " + (boatList==null));
+		//plm = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
+		//System.out.println("plm is null: "+(plm==null));
 	
 		lineups = new HashMap<Integer, Lineup>(lm.length);
 		lineupNames = new String[lm.length];
@@ -169,8 +175,8 @@ public class ChangeLineupsList extends Activity {
 			//lineups.put(l.getLineupID(), l);
 			//set header:
 			if (lineup.getCoxswainName() == null)
-				athleteList.add(new AthleteListName(null,null,null,lineup.getBoatName(),lineup.getNumOfSeats()));
-			else athleteList.add(new AthleteListName(null,null,null,lineup.getCoxswainName(),lineup.getNumOfSeats()));
+				athleteList.add(new AthleteListName(null,null,null,lineup.getBoatName(),lineup.getBoatID(),lineup.getNumOfSeats()));
+			else athleteList.add(new AthleteListName(null,null,null,lineup.getCoxswainName(),lineup.getBoatID(),lineup.getNumOfSeats()));
 			int[] athleteIDs = lineup.getAthleteIDs();
 			//now to flip the order:
 			Stack<Integer> IDs = new Stack<Integer>();
@@ -180,7 +186,7 @@ public class ChangeLineupsList extends Activity {
 			while(!IDs.isEmpty()){
 				int id = IDs.pop();
 				Athlete ath = roster.getAthlete(id);
-				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null));
+				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null,null));
 			}
 			numLineups++;
 		}
@@ -188,6 +194,10 @@ public class ChangeLineupsList extends Activity {
     }
     
     private void saveData() {
+    	//clearCurrentLineups
+    	currentPractice.clearCurrentLineups();
+    	//check against list of known lineups (hashes?)
+    	//add new lineups if needed
     	
     }
     

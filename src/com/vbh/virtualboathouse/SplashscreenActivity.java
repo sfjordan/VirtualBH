@@ -102,10 +102,11 @@ public class SplashscreenActivity extends Activity {
 		
 		
 		SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
-		TextView tv = (TextView) findViewById(R.id.textView1);
+		TextView tv = (TextView) findViewById(R.id.username_text);
 		tv.setText(sp.getString(CurrentUser.USERNAME, "admin"));
-		TextView tv1 = (TextView) findViewById(R.id.textView2);
-		tv1.setText(sp.getString(CurrentUser.API_KEY, "failed"));
+		//enable for debugging only, displays API key
+//		TextView tv1 = (TextView) findViewById(R.id.textView2);
+//		tv1.setText(sp.getString(CurrentUser.API_KEY, "failed"));
 	}
 
 	private boolean updateData() {
