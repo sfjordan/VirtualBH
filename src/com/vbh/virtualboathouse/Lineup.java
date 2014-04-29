@@ -67,6 +67,10 @@ public class Lineup implements Serializable, Parcelable {
 		return athleteNames.length;
 	}
 	
+	public int getLineupHash(){
+		return lineupHash;
+	}
+	
 	public String getNameForSeat(int seat) {
 		return athleteNames[seat -1];
 	}
