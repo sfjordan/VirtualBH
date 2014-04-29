@@ -42,9 +42,9 @@ public class DisplayTimersActivity extends Activity {
 		numTimers = intent.getIntExtra(getString(R.string.CURRENT_NUM_BOATS), 3);
 		timers = new Timer[numTimers];
 		Log.i("DisplayTimersActivity", "number of timers is " + numTimers);
-		int activityFrom = intent.getIntExtra(getString(R.string.ACTIVITY_FROM), 3);
+		String activityFrom = intent.getStringExtra(getString(R.string.ACTIVITY_FROM));
 		
-		if (activityFrom == PickDistTimeActivity.PICK_DIST_ACTIVITY) {
+		if (activityFrom.equals(PickDistTimeActivity.PICK_DIST_ACTIVITY)) {
 		// get data 
 	
 	    	SharedPreferences sharedPref = this.getSharedPreferences(
@@ -63,7 +63,7 @@ public class DisplayTimersActivity extends Activity {
 				j++;
 			}
 		}	
-		else if (activityFrom == Splashscreenactivity.SPLASH_SCREEN_ACTIVITY) {
+		else if (activityFrom.equals(SplashscreenActivity.SPLASH_SCREEN_ACTIVITY)) {
 			LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 			int j = 0;
 			for (j = 0; j < timers.length; j++) {

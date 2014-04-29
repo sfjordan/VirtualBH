@@ -304,7 +304,7 @@ public class LoginActivity extends Activity {
 					spEditor.putString(CurrentUser.USERNAME, cu.getUsername());
 					spEditor.commit();
 					// launch the main menu activity 
-					Intent splashscreenIntent = new Intent(getApplicationContext(), Splashscreenactivity.class);
+					Intent splashscreenIntent = new Intent(getApplicationContext(), SplashscreenActivity.class);
 					startActivity(splashscreenIntent);
 				}
 			} else {

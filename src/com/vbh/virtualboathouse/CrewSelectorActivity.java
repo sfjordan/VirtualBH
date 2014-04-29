@@ -39,6 +39,8 @@ public class CrewSelectorActivity extends Activity {
 	
 	private int currentPracticeID;
 	
+	public final static String CREW_SELECTOR_ACTIVITY = "CrewSelectorActivity";
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +168,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	private void launchPickDistTime(){
 		Intent pickDistTimeIntent = new Intent(this, PickDistTimeActivity.class);
+		pickDistTimeIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 		startActivity(pickDistTimeIntent);
 	}
 

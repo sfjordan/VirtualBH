@@ -22,12 +22,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Splashscreenactivity extends Activity {
+public class SplashscreenActivity extends Activity {
 	
 	private TextView lastUpdated;
 	private Context context;
 	
-	public final static int SPLASH_SCREEN_ACTIVITY = 2;
+	public final static String SPLASH_SCREEN_ACTIVITY = "SplashscreenActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

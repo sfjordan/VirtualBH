@@ -64,6 +64,7 @@
 	<string name="strokes_per_minute">SPM</string>
 	<string name="then_text">Then</string>
 	<string name="and_text">and</string>
+	<string name="cancel_text">Cancel</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>

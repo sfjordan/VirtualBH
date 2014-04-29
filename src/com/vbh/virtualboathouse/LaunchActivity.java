@@ -50,7 +50,7 @@ public class LaunchActivity extends Activity {
 	        			spEditor.putString(CurrentUser.USERNAME, cu.getUsername());
 	        			spEditor.commit();
 	        			// launch the main menu activity
-	        			Intent splashscreenIntent = new Intent(getApplicationContext(), Splashscreenactivity.class);
+	        			Intent splashscreenIntent = new Intent(getApplicationContext(), SplashscreenActivity.class);
 	        			if(updateData()) {
 	        				Log.i("launcher","putting extra true");
 	        				splashscreenIntent.putExtra("UPDATE_SUCCESS",true);
