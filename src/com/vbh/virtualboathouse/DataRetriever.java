@@ -171,12 +171,12 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    			Lineup l = uploadPractice.getLineup(lineupID);
 		    			ReturnedLineupModel rlm = new ReturnedLineupModel(l.getAllAthleteIDs(), l.getPosition(), l.getBoatID(), webPieceID);
 		    			String lineupString = gson.toJson(rlm);
-		    			performHTTPRequest(PIECE_URL, "lineup", lineupString);
+		    			performHTTPRequest(SAVE_LINEUP_URL, "lineup", lineupString);
 		    			// TODO logic for a countdown piece
 		    			
 		    			ReturnedResultsModel rrm = new ReturnedResultsModel(l.getAllAthleteIDs(), p.getDistance(), p.getDateString(), p.getTime(lineupID), webPieceID); 
 		    			String resultString = gson.toJson(rrm);
-		    			performHTTPRequest(PIECE_URL, "results", resultString);
+		    			performHTTPRequest(SAVE_RESULT_URL, "results", resultString);
 		    		}
 		    	}
 		    	sharedPref.edit().remove(context.getString(R.string.PRACTICE_TO_UPLOAD_ID)).apply();
