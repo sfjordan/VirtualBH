@@ -43,6 +43,9 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	private final String LINEUP_URL   = "/lineups/";
 	private final String RECENT_PRACTICE_URL = "https://cos333.herokuapp.com/json/practice/recent";
 	private final String RECENT_LINEUPS_URL = "https://cos333.herokuapp.com/json/lineups/recent";
+	private final String PIECE_URL = "https://cos333.herokuapp.com/json/pieces/add";
+	private final String SAVE_LINEUP_URL = "https://cos333.herokuapp.com/json/lineups/add";
+	private final String SAVE_RESULT_URL = "https://cos333.herokuapp.com/json/results/add";
 	
 	public final String ATHLETE_DATA_FILENAME  = "athleteModelData";
 	public final String BOAT_DATA_FILENAME     = "boatModelData";
@@ -150,8 +153,34 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 //		    if (dataReturned == null) return null;
 //		    data.add(dataReturned);
 		    Log.i("DataRetriever", "all data successfully pulled ");
-		    
-		    
+		    // save data
+		    // TODO check if there is data to upload from a file (aka support multiple practices)
+		    SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		    int uploadID = sharedPref.getInt(context.getString(R.string.PRACTICE_TO_UPLOAD_ID), -1);
+		    if (uploadID != -1) {
+		    	Practice uploadPractice = DataSaver.readObject(context.getString(R.string.PRACTICE_FILE) + uploadID, context);
+		    	Map<Long, Piece> pieces = uploadPractice.getPieces();
+		    	for (Long pID : pieces.keySet()) {
+		    		Piece p = pieces.get(pID);
+		    		PieceModel pm = new PieceModel(uploadID, p.getPieceID(), p.getDateString());
+		    		String pieceStr = gson.toJson(pm);
+		    		ReturnedPieceModel rpm = gson.fromJson(performHTTPRequest(PIECE_URL, "piece", pieceStr), ReturnedPieceModel.class);
+		    		int webPieceID = rpm.getPieceID();
+		    		// save the lineups and results
+		    		for (Long lineupID : p.getLineups()) {
+		    			Lineup l = uploadPractice.getLineup(lineupID);
+		    			ReturnedLineupModel rlm = new ReturnedLineupModel(l.getAllAthleteIDs(), l.getPosition(), l.getBoatID(), webPieceID);
+		    			String lineupString = gson.toJson(rlm);
+		    			performHTTPRequest(PIECE_URL, "lineup", lineupString);
+		    			// TODO logic for a countdown piece
+		    			
+		    			ReturnedResultsModel rrm = new ReturnedResultsModel(l.getAllAthleteIDs(), p.getDistance(), p.getDateString(), p.getTime(lineupID), webPieceID); 
+		    			String resultString = gson.toJson(rrm);
+		    			performHTTPRequest(PIECE_URL, "results", resultString);
+		    		}
+		    	}
+		    	sharedPref.edit().remove(context.getString(R.string.PRACTICE_TO_UPLOAD_ID)).apply();
+		    }
 		}
 		
 	    return data;
@@ -180,6 +209,37 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			return null;
 		}
 		try {
+			return inputStreamToString(response.getEntity().getContent());
+		} catch (IllegalStateException e1) {
+			return null;
+		} catch (IOException e1) {
+			return null; }
+    }
+    private String performHTTPRequest(String url, String dataIdentifier, String dataToPost) {
+    	HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("api_key", apiKey));
+        nameValuePairs.add(new BasicNameValuePair(dataIdentifier, dataToPost));
+        try {
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		HttpResponse response;
+		try {
+	        // Execute HTTP Get Request
+			response = httpclient.execute(httpPost);	
+		} catch (ClientProtocolException e) {
+	       return null;
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		} catch (IOException e) {
+			return null;
+		}
+		try {
+			if(response == null) return null;
 			return inputStreamToString(response.getEntity().getContent());
 		} catch (IllegalStateException e1) {
 			return null;
@@ -226,7 +286,6 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    			//plm = gson.fromJson(data.get(3), PracticeLineupsModel[].class);
 	    			Log.i("DataRetriever", "recent lineup data successfully converted from JSON ");
 	    			buildPractice(am, bm, lm);
-	    		
 	    	}
 	    	saveData();
 	    } catch (Exception e) {
@@ -276,7 +335,6 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			case PRACTICE_LINEUP: success = DataSaver.writeObjectArray(this.plm, LINEUP_DATA_FILENAME + currentPracticeID, context);
 			case RECENT_PRACTICE: success = true;
 			case ATHLETES_BOATS: 
-	    		
 	    		// save roster and boat list to files
 	         	success = DataSaver.writeObject(boatList, context.getString(R.string.BOATS_FILE), context);
 	    		if (!success) return false;

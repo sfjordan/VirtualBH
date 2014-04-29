@@ -38,13 +38,9 @@ public class CrewSelectorActivity extends Activity {
 	private CheckBox[] lineupBoxes;
 	
 	private int currentPracticeID;
-<<<<<<< HEAD
-	private Practice currentPractice;
-=======
-	
+	private Practice currentPractice;	
 	public final static String CREW_SELECTOR_ACTIVITY = "CrewSelectorActivity";
-	
->>>>>>> 1fb691f4dcbeb241c81a4313a5d5cab47bb087cc
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +55,11 @@ public class CrewSelectorActivity extends Activity {
 			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 			// get the current practice from a file
 			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+			// get the roster and boatlist
+			boatList = DataSaver.readObject(context.getString(R.string.BOATS_FILE), context);
+			// TODO check for null
+    		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
+    		// TODO check for null
 			
 			lineups = currentPractice.getLineups();
 			String[] lineupNames = new String[lineups.size()];
@@ -84,10 +85,10 @@ public class CrewSelectorActivity extends Activity {
 			}
 		}
 		else {
+			// TODO bundling!!!!
 			// reinstantiate data structures
 			roster      = (Roster) savedInstanceState.getSerializable(DataSaver.STATE_ROSTER);
-	        int[] boatIDs = savedInstanceState.getIntArray(DataSaver.STATE_BOAT_ID_ARRAY);
-	       // boatList = savedInstanceState.getSparseParcelableArray(DataSaver.STATE_BOATS);
+	        boatList = (HashMap<Integer, Boat>) savedInstanceState.getSerializable(DataSaver.STATE_BOATS);
 	      //  lineups     = savedInstanceState.getSparseParcelableArray(DataSaver.STATE_LINEUPS);
 	        lineupBoxes = (CheckBox[]) savedInstanceState.getSerializable(DataSaver.STATE_LINEUPS_CHECKBOXES);
 			// TODO ensure check boxes are kept in the right state

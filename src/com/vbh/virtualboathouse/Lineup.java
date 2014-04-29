@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.vbh.virtualboathouse.LineupModel.LineupFields;
@@ -20,7 +21,8 @@ public class Lineup implements Serializable, Parcelable {
 	private Boat boat;
 	private Athlete coxswain;
 	private String[] athleteNames;
-	private int[] athleteID;
+	private int[] athleteID; // from bow to stern (0=bow, 1=2-seat, etc.)
+	private int[] allAthleteID; // includes the coxswain and is from stern to bow (0=cox, 1=stroke, 2=7-seat, etc.)
 	private String position;
 	private final long lineupID;
 	
@@ -28,31 +30,34 @@ public class Lineup implements Serializable, Parcelable {
 		//this.lineupID = lm.getPrivateKey();
 		this.lineupID = UUID.randomUUID().getLeastSignificantBits();
 		LineupFields lmf = lm.getLineupFields();
-		int[] tempAthletes = lmf.getAthleteIDs();
+		int[] allAthleteID = lmf.getAthleteIDs();
 		this.position = lmf.getPosition();
 		this.boat = boats.get(lmf.getBoatID());
 		if (boat.isCoxed()) {
-			this.coxswain = roster.getAthlete(tempAthletes[0]);
-			this.athleteNames = new String[tempAthletes.length - 1];
-			this.athleteID = new int[tempAthletes.length - 1];
-		    for (int i = 1; i < tempAthletes.length; i++) {
-		    	this.athleteID[i-1] = tempAthletes[i];
-		    	this.athleteNames[i-1] = roster.getAthlete(tempAthletes[i]).getFirstInitLastName();
+			this.coxswain = roster.getAthlete(allAthleteID[0]);
+			this.athleteNames = new String[allAthleteID.length - 1];
+			this.athleteID = new int[allAthleteID.length - 1];
+		    for (int i = allAthleteID.length-1; i > 0; i--) {
+		    	this.athleteID[i-1] = allAthleteID[i];
+		    	this.athleteNames[i-1] = roster.getAthlete(allAthleteID[i]).getFirstInitLastName();
 		    }
 		}
 		else {
 			coxswain = null;
-			int i = 0;
-			this.athleteNames = new String[tempAthletes.length];
-			this.athleteID = new int[tempAthletes.length];
-			for (int athleteID : tempAthletes) {
+			int i = allAthleteID.length - 1;
+			this.athleteNames = new String[allAthleteID.length];
+			this.athleteID = new int[allAthleteID.length];
+			for (int athleteID : allAthleteID) {
 		    	this.athleteID[i] = athleteID;
 		    	this.athleteNames[i] = roster.getAthlete(athleteID).getFirstInitLastName();
-		    	i++;
+		    	i--;
 		    }
 		}
 	}
 	
+	public int getBoatID() {
+		return boat.getBoatID();
+	}
 	public long getLineupID() {
 		return lineupID;
 	}
@@ -83,9 +88,13 @@ public class Lineup implements Serializable, Parcelable {
 	public int[] getAthleteIDs(){
 		return athleteID;
 	}
+	public int[] getAllAthleteIDs() {
+		return allAthleteID;
+	}
 	
 	public Athlete getAthleteFromSeat(int seat, Roster roster) {
-		return roster.getAthlete(getAthleteIDFromSeat(seat));
+		int id = getAthleteIDFromSeat(seat);
+		return roster.getAthlete(id);
 	}
 	/**
 	 * This will eventually use the current settings to display the name of boat based on the user's preferences

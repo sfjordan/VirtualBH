@@ -44,7 +44,7 @@ public class PickNewPieceActivity extends Activity {
 		Button finishPractice = (Button) findViewById(R.id.finish_practice_button);
 		
 		// pull information about the current practice/last piece
-		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE); // TODO make sure this is saved on flip or recreated
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
@@ -116,6 +116,7 @@ public class PickNewPieceActivity extends Activity {
     	currentPractice.addPiece(currentPiece);
     	// write practice to file
     	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+    	sharedPref.edit().putInt(this.getString(R.string.PRACTICE_TO_UPLOAD_ID), currentPracticeID).apply();
 		//TODO confirmation dialog
 	
 		Intent finishPracticeIntent = new Intent(this, SplashscreenActivity.class);

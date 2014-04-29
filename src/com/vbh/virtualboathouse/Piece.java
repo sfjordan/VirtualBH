@@ -1,7 +1,9 @@
 package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +28,8 @@ public class Piece implements Serializable {
 	private ArrayList<String> notes;
 	private String margin;
 	private long msCountdownTime;
+	private final long msTime;
+	private final Date date;
 	
 	public Piece (Lineup[] lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
@@ -34,6 +38,8 @@ public class Piece implements Serializable {
 			this.lineups.add(l.getLineupID());
 		}
 		times = new HashMap<Long, Long>(lineups.length);
+		msTime = System.currentTimeMillis();
+		date = new Date(msTime);
 	}
 	public Piece (ArrayList<Long> lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
@@ -42,6 +48,8 @@ public class Piece implements Serializable {
 			this.lineups.add(id);
 		}
 		times = new HashMap<Long, Long>(lineups.size());
+		msTime = System.currentTimeMillis();
+		date = new Date(msTime);
 	}
 	
 	
@@ -49,7 +57,20 @@ public class Piece implements Serializable {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
 		this.lineups = oldPiece.getLineups();
 		times = new HashMap<Long, Long>(lineups.size());
+		msTime = System.currentTimeMillis();
+		date = new Date(msTime);
 	}
+	public long getMsTime() {
+		return msTime;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public String getDateString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		return sdf.format(date);
+	}
+	
 	public int getNumBoats() {
 		return lineups.size();
 	}
@@ -102,6 +123,9 @@ public class Piece implements Serializable {
 
 	public Map<Long, Long> getTimes() {
 		return times;
+	}
+	public long getTime(long lineupID) {
+		return times.get(lineupID);
 	}
 
 	public void setTime(long lineupID, long time) {
