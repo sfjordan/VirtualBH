@@ -187,7 +187,7 @@ public class ChangeLineupsList extends Activity {
     	return athleteList;    	
     }
     
-    private void saveData(){
+    private void saveData() {
     	
     }
     

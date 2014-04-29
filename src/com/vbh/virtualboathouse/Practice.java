@@ -18,16 +18,51 @@ public class Practice implements Serializable {
 	private String windNotes;
 	private String weather;
 	private int temperature;
-	private final long practiceID;
+	private final int practiceID;
 	private final long msTime;
 	private final Date date;
+	private Map<Long, Lineup> practiceLineups; // all the lineups that have been used during this practice
+	private Map<Long, Lineup> currentLineups; // the current lineups on the water
 	
 	public Practice(int practiceID) {
 		this.practiceID = practiceID;
 		msTime = System.currentTimeMillis();
 		date = new Date(msTime);
 		pieces = new HashMap<Long, Piece>();
+		practiceLineups = new HashMap<Long, Lineup>();
+		currentLineups = new HashMap<Long, Lineup>();
 	}
+	
+	// these are for adjusting the lineups for the whole practice 
+	public void addLineup(Lineup l) {
+		practiceLineups.put(l.getLineupID(), l);
+	}
+	
+	public Map<Long, Lineup> getLineups() {
+		return practiceLineups;
+	}
+	
+	public Lineup getLineup(long id) {
+		return practiceLineups.get(id);
+	}
+	
+	// these are for adjusting the current Lineups on the water
+	public void clearCurrentLineups() {
+		for (Long id : currentLineups.keySet()) {
+			currentLineups.remove(id);
+		}
+	}
+	public void addCurrentLineup(Lineup l) {
+		practiceLineups.put(l.getLineupID(), l);
+		currentLineups.put(l.getLineupID(), l);
+	}
+	public Map<Long, Lineup> getCurrentLineups() {
+		return currentLineups;
+	}
+	public Lineup getCurrentLineup(long id) {
+		return currentLineups.get(id);
+	}
+	
 	
 	public long getMsTime() {
 		return msTime;
@@ -37,7 +72,7 @@ public class Practice implements Serializable {
 		return date;
 	}
 
-	public long getPracticeID() {
+	public int getPracticeID() {
 		return practiceID;
 	}
 	

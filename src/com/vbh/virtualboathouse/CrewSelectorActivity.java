@@ -34,11 +34,11 @@ public class CrewSelectorActivity extends Activity {
 	
 	private Roster roster;
 	private Map<Integer, Boat> boatList;
-	private Map<Integer, Lineup> lineups;
+	private Map<Long, Lineup> lineups;
 	private CheckBox[] lineupBoxes;
 	
 	private int currentPracticeID;
-	
+	private Practice currentPractice;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +51,16 @@ public class CrewSelectorActivity extends Activity {
 			SharedPreferences sharedPref = context.getSharedPreferences(
 			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
-			// currently, just get the most recent practice
-			LineupModel lm[] = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
-			Log.i("CrewSelector", "lm is currently null: " + (lm==null));
-			DataRetriever dr = new DataRetriever(this);
-			PracticeLineupsModel plm[] = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
-			System.out.println("plm is null: "+(plm==null));
-			this.roster = DataSaver.readObject(getString(R.string.ROSTER_FILE), this);
-			Log.i("CrewSelector", "roster is currently null: " + (roster==null));
-			this.boatList = DataSaver.readObject(getString(R.string.BOATS_FILE), this);
-			Log.i("CrewSelector", "boatList is currently null: " + (boatList==null));
-
-			lineups = new HashMap<Integer, Lineup>(lm.length);
-			String[] lineupNames = new String[lm.length];
-			int[] lineupIDs = new int[lm.length];
+			// get the current practice from a file
+			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+			
+			lineups = currentPractice.getLineups();
+			String[] lineupNames = new String[lineups.size()];
+			int[] lineupIDs = new int[lineups.size()];
 			int i = 0;
 			lineupBoxes = new CheckBox[lineupNames.length];
-			for (LineupModel lineupModel : lm) {
-				Lineup l = new Lineup(lineupModel, roster, boatList);
-				lineups.put(l.getLineupID(), l);
+			for (Long id : lineups.keySet()) {
+				Lineup l = lineups.get(id);
 				// uses stroke seat by default here
 				// TODO implement adjustable setting
 				int numSeats = l.getNumOfSeats();
@@ -109,24 +100,18 @@ public class CrewSelectorActivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.go_button)){
 					// get the selected IDs
-					ArrayList<Lineup> listLineups = new ArrayList<Lineup>();
+					ArrayList<Long> listLineupIDs = new ArrayList<Long>();
 					for (int i = 0; i < lineupBoxes.length; i++) {
-						if (lineupBoxes[i].isChecked()) 
-							listLineups.add((Lineup) lineupBoxes[i].getTag());
+						if (lineupBoxes[i].isChecked()) {
+							Lineup l = (Lineup) lineupBoxes[i].getTag();
+							currentPractice.addCurrentLineup(l);
+							listLineupIDs.add(l.getLineupID());
+						}
 					}
-					int numOfLineups = 3;
-					Lineup[] lineups = new Lineup[numOfLineups];
-					
-					//TODO
-					//NOTE: this block generates a null pointer atm 
-					// get the practice ID
 					SharedPreferences sharedPref = context.getSharedPreferences(
 					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-					int currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
-					// create the practice
-					Practice currentPractice = new Practice(currentPracticeID);
 					// add a piece
-					Piece firstPiece = new Piece(listLineups, roster, boatList);
+					Piece firstPiece = new Piece(listLineupIDs, roster, boatList);
 					currentPractice.addPiece(firstPiece);
 					// write the practice to a file
 					DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);

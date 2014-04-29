@@ -1,5 +1,6 @@
 package com.vbh.virtualboathouse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,11 +56,11 @@ public class DisplayTimersActivity extends Activity {
 			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
 			currentPiece = currentPractice.getPiece(currentPieceID);
 			Log.i("DisplayTimers", "piece is null - " + (currentPiece == null));
-			Map<Integer, Lineup> lineups = currentPiece.getLineups();
+			ArrayList<Long> lineups = currentPiece.getLineups();
 			LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 			int j = 0;
-			for (Integer lineupID : lineups.keySet()) {
-				timers[j] = new Timer(this, timer_list, lineups.get(lineupID).getName());
+			for (Long lineupID : lineups) {
+				timers[j] = new Timer(this, timer_list, currentPractice.getLineup(lineupID).getName());
 				j++;
 			}
 		}	

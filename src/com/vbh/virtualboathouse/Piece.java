@@ -21,34 +21,34 @@ public class Piece implements Serializable {
 	private boolean timed; //distance piece
 	private int distance;
 	private String direction;
-	private final Map<Integer, Lineup> lineups;
-	private Map<Integer, Long> times;
+	private final ArrayList<Long> lineups;
+	private Map<Long, Long> times;
 	private ArrayList<String> notes;
 	private String margin;
 	private long msCountdownTime;
 	
 	public Piece (Lineup[] lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
-		this.lineups = new HashMap<Integer, Lineup>(lineups.length);
+		this.lineups = new ArrayList<Long>(lineups.length);
 		for (Lineup l : lineups) {
-			this.lineups.put(l.getLineupID(), l);
+			this.lineups.add(l.getLineupID());
 		}
-		times = new HashMap<Integer, Long>(lineups.length);
+		times = new HashMap<Long, Long>(lineups.length);
 	}
-	public Piece (ArrayList<Lineup> lineups, Roster roster, Map<Integer, Boat> boats) {
+	public Piece (ArrayList<Long> lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
-		this.lineups = new HashMap<Integer, Lineup>(lineups.size());
-		for (Lineup l : lineups) {
-			this.lineups.put(l.getLineupID(), l);
+		this.lineups = new ArrayList<Long>(lineups.size());
+		for (Long id : lineups) {
+			this.lineups.add(id);
 		}
-		times = new HashMap<Integer, Long>(lineups.size());
+		times = new HashMap<Long, Long>(lineups.size());
 	}
 	
 	
 	public Piece (Piece oldPiece) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
 		this.lineups = oldPiece.getLineups();
-		times = new HashMap<Integer, Long>(lineups.size());
+		times = new HashMap<Long, Long>(lineups.size());
 	}
 	public int getNumBoats() {
 		return lineups.size();
@@ -100,11 +100,11 @@ public class Piece implements Serializable {
 		this.direction = direction;
 	}
 
-	public Map<Integer, Long> getTimes() {
+	public Map<Long, Long> getTimes() {
 		return times;
 	}
 
-	public void setTime(int lineupID, long time) {
+	public void setTime(long lineupID, long time) {
 		times.put(lineupID, time);
 	}
 
@@ -124,7 +124,7 @@ public class Piece implements Serializable {
 		this.margin = margin;
 	}
 
-	public Map<Integer, Lineup> getLineups() {
+	public ArrayList<Long> getLineups() {
 		return lineups;
 	}
 	

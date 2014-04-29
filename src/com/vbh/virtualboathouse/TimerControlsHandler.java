@@ -1,5 +1,6 @@
 package com.vbh.virtualboathouse;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import android.app.Activity;
@@ -76,10 +77,10 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 			currentPieceID = sharedPref.getLong(context.getString(R.string.CURRENT_PIECE_ID), 8);
 			currentPiece = currentPractice.getPiece(currentPieceID);
         	// save times to current piece
-			Map<Integer, Lineup> lineups = currentPiece.getLineups();
+			ArrayList<Long> lineups = currentPiece.getLineups();
         	int j = 0;
-    		for (Integer lineupID : lineups.keySet()) {
-    			currentPiece.setTime(lineups.get(lineupID).getLineupID(), timers[j].getElapsedTime());
+    		for (Long lineupID : lineups) {
+    			currentPiece.setTime(lineupID, timers[j].getElapsedTime());
     			j++;
     		}
         	// save piece to practice

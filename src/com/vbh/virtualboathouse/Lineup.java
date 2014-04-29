@@ -2,6 +2,7 @@ package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.UUID;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,10 +22,11 @@ public class Lineup implements Serializable, Parcelable {
 	private String[] athleteNames;
 	private int[] athleteID;
 	private String position;
-	private final int lineupID;
+	private final long lineupID;
 	
 	public Lineup(LineupModel lm, Roster roster, Map<Integer, Boat> boats){
-		this.lineupID = lm.getPrivateKey();
+		//this.lineupID = lm.getPrivateKey();
+		this.lineupID = UUID.randomUUID().getLeastSignificantBits();
 		LineupFields lmf = lm.getLineupFields();
 		int[] tempAthletes = lmf.getAthleteIDs();
 		this.position = lmf.getPosition();
@@ -51,7 +53,7 @@ public class Lineup implements Serializable, Parcelable {
 		}
 	}
 	
-	public int getLineupID() {
+	public long getLineupID() {
 		return lineupID;
 	}
 	public int getNumOfSeats() {
@@ -104,7 +106,7 @@ public class Lineup implements Serializable, Parcelable {
 		dest.writeStringArray(athleteNames);
 		dest.writeIntArray(athleteID);
 		dest.writeString(position);
-		dest.writeInt(lineupID);
+		dest.writeLong(lineupID);
 	}
 	public static final Parcelable.Creator<Lineup> CREATOR = new Parcelable.Creator<Lineup>() {
 		public Lineup createFromParcel(Parcel pc) {
@@ -121,7 +123,7 @@ public class Lineup implements Serializable, Parcelable {
 		pc.readStringArray(athleteNames);
 		pc.readIntArray(athleteID);
 		position = pc.readString();
-		lineupID = pc.readInt();
+		lineupID = pc.readLong();
 	}
 
 	@Override
