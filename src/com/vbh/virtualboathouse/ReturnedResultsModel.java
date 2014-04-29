@@ -8,15 +8,15 @@ public class ReturnedResultsModel {
 	private int[] athleteIDs;
 	@SerializedName("distance")
 	private int distance;
-	@SerializedName("datetime")
-	private String dateTime;
 	@SerializedName("time")
 	private long time;
 	@SerializedName("piece")
 	private int piece;
+	@SerializedName("datetime")
+	private long dateTime;
 	
 	
-	public ReturnedResultsModel(int[] athleteIDs, int distance, String dateTime, long time, int piece) {
+	public ReturnedResultsModel(int[] athleteIDs, int distance, long dateTime, long time, int piece) {
 		this.athleteIDs = athleteIDs;
 		this.distance = distance;
 		this.dateTime = dateTime;
@@ -43,10 +43,10 @@ public class ReturnedResultsModel {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	public String getDateTime() {
+	public long getDateTime() {
 		return dateTime;
 	}
-	public void setDateTime(String dateTime) {
+	public void setDateTime(long dateTime) {
 		this.dateTime = dateTime;
 	}
 	public int getPiece() {

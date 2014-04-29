@@ -1,6 +1,7 @@
 package com.vbh.virtualboathouse;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,6 +37,7 @@ public class TimerHandler extends Activity implements OnClickListener {
 	private Handler h;
 	private String boatNameString;
 	private Context c;
+	private ArrayList<String> notes;
 	
 	public TimerHandler(Timer t, Button start, Button stop, Button clear, MilliChrono clock, TextView boatName, String boatNameString, Context c) {
 		this.start = start;
@@ -47,6 +49,11 @@ public class TimerHandler extends Activity implements OnClickListener {
 		this.boatNameString = boatNameString;
 		this.c = c;
 		h = new Handler();
+		notes = new ArrayList<String>();
+	}
+	
+	public String getBoatNameString() {
+		return boatNameString;
 	}
 	
 	public void setStoppedStatus(boolean stopped) {
@@ -99,11 +106,11 @@ public class TimerHandler extends Activity implements OnClickListener {
 				}
 				strokeRate = strokeRate/strokeCount;
 				DecimalFormat df = new DecimalFormat("###0.0");
+				String strStrokeRate = df.format(strokeRate);
 				boatName.setText(
-						Html.fromHtml("<big>"+df.format(strokeRate)+"</big>"
+						Html.fromHtml("<big>"+strStrokeRate+"</big>"
 						+"<br>"+"<small><font color=\"gray\">"
 						+c.getResources().getString(R.string.strokes_per_minute)+"</font></small>"));
-				//boatName.setTextSize(40);
 				numClicks = 0;
 				for(long l : times)
 					l = 0;
@@ -117,6 +124,9 @@ public class TimerHandler extends Activity implements OnClickListener {
 					}
 				};
 				h.postDelayed(name, 4000);
+				long timeElapsed = clock.getElapsedTime();
+				String note = timeToString(timeElapsed) + " @ " + strStrokeRate +"spm";
+				notes.add(note);
 			}
         }
         /*else if(clear == v){
@@ -124,6 +134,31 @@ public class TimerHandler extends Activity implements OnClickListener {
         		clock.clear();
         	}
         }*/
+    }
+    public String timeToString(long time) {
+    	DecimalFormat df = new DecimalFormat("00");
+        
+        int hours = (int)(time / (3600 * 1000));
+        int remaining = (int)(time % (3600 * 1000));
+        
+        int minutes = (int)(remaining / (60 * 1000));
+        remaining = (int)(remaining % (60 * 1000));
+        
+        int seconds = (int)(remaining / 1000);
+        
+        String text = "";
+        
+        if (hours > 0) {
+        	text += df.format(hours) + ":";
+        }
+        
+       	text += df.format(minutes) + ":";
+       	text += df.format(seconds);
+       	return text;
+    }
+    
+    public ArrayList<String> getNotes() {
+    	return notes;
     }
 
 }
