@@ -178,16 +178,20 @@ public class ChangeLineupsList extends Activity {
 				athleteList.add(new AthleteListName(null,null,null,lineup.getBoatName(),lineup.getBoatID(),lineup.getNumOfSeats()));
 			else athleteList.add(new AthleteListName(null,null,null,lineup.getCoxswainName(),lineup.getBoatID(),lineup.getNumOfSeats()));
 			int[] athleteIDs = lineup.getAthleteIDs();
+			for(int a: athleteIDs){
+				Athlete ath = roster.getAthlete(a);
+				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),a,null,null,null));
+			}
 			//now to flip the order:
-			Stack<Integer> IDs = new Stack<Integer>();
-			for(int a : athleteIDs){
-				IDs.push(a);
-			}
-			while(!IDs.isEmpty()){
-				int id = IDs.pop();
-				Athlete ath = roster.getAthlete(id);
-				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null,null));
-			}
+//			Stack<Integer> IDs = new Stack<Integer>();
+//			for(int a : athleteIDs){
+//				IDs.push(a);
+//			}
+//			while(!IDs.isEmpty()){
+//				int id = IDs.pop();
+//				Athlete ath = roster.getAthlete(id);
+//				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null,null));
+//			}
 			numLineups++;
 		}
     	return athleteList;    	
