@@ -26,6 +26,8 @@ public class PickNewPieceActivity extends Activity {
 	private int currentPracticeID;
 	private SharedPreferences sharedPref;
 	
+	public final static String PICK_NEW_PIECE_ACTIVITY = "PickNewPieceActivity";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,7 +90,7 @@ public class PickNewPieceActivity extends Activity {
 	
 	private void ChangeLineups() {
 		//TODO: make actually do something other than return to splashscreen
-		Intent changeLineupsIntent = new Intent(this, Splashscreenactivity.class);
+		Intent changeLineupsIntent = new Intent(this, SplashscreenActivity.class);
 		startActivity(changeLineupsIntent);
 	}
 	
@@ -105,6 +107,7 @@ public class PickNewPieceActivity extends Activity {
     	sharedPref.edit().putLong(getString(R.string.CURRENT_PIECE_ID), currentPieceID).apply();
     	// new activity
 		Intent newPieceIntent = new Intent(this, PickDistTimeActivity.class);
+		newPieceIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_NEW_PIECE_ACTIVITY);
 		startActivity(newPieceIntent);
 	}
 	
@@ -115,7 +118,7 @@ public class PickNewPieceActivity extends Activity {
     	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 		//TODO confirmation dialog
 	
-		Intent finishPracticeIntent = new Intent(this, Splashscreenactivity.class);
+		Intent finishPracticeIntent = new Intent(this, SplashscreenActivity.class);
 		startActivity(finishPracticeIntent);
 	}
 	

@@ -134,6 +134,25 @@
             android:layout_marginTop="36dp"
             android:text="@string/enter_distance"
             android:textSize="20sp" />
+        
+        <TextView
+            android:id="@+id/small_or_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/goPickPiece"
+            android:text="@string/or_text" />
+        
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/small_or_text"
+            android:layout_centerHorizontal="true"
+            android:text="@string/cancel_text"
+            android:textColor="@android:color/white" />
+
     </RelativeLayout>
 
 </ScrollView>

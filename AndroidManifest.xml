@@ -37,7 +37,7 @@
                 android:value="com.vbh.virtualboathouse.LaunchActivity" />
         </activity>
         <activity
-            android:name="com.vbh.virtualboathouse.Splashscreenactivity"
+            android:name="com.vbh.virtualboathouse.SplashscreenActivity"
             android:label="@string/title_activity_splashscreenactivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -78,7 +78,7 @@
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsActivity"
             android:label="@string/title_activity_change_linups"
-            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.SplashscreenActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
@@ -94,7 +94,7 @@
         <activity
             android:name="com.vbh.virtualboathouse.CrewSelectorActivity"
             android:label="@string/title_activity_crew_selector"
-            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.SplashscreenActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
@@ -106,7 +106,7 @@
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsList"
             android:label="@string/title_activity_change_linups"
-            android:parentActivityName="com.vbh.virtualboathouse.Splashscreenactivity" >
+            android:parentActivityName="com.vbh.virtualboathouse.SplashscreenActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />

@@ -31,13 +31,16 @@ public class PickDistTimeActivity extends Activity {
 	private Piece currentPiece;
 	private Practice currentPractice;
 	private int currentPracticeID;
+	private String activityFrom;
 	
-	public final static int PICK_DIST_ACTIVITY = 1;
+	public final static String PICK_DIST_ACTIVITY = "PickDistTimeActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pick_dist_time);
+		
+		activityFrom = getIntent().getStringExtra(getString(R.string.ACTIVITY_FROM));
 
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -59,6 +62,7 @@ public class PickDistTimeActivity extends Activity {
 		}
 		
 		goPickPiece = (Button) findViewById(R.id.goPickPiece);
+		Button cancelButton = (Button) findViewById(R.id.cancel_button);
 		distanceEdit = (EditText) findViewById(R.id.enter_distance);
 		timeMinEdit = (EditText) findViewById(R.id.enter_min_time);
 		timeSecEdit = (EditText) findViewById(R.id.enter_sec_time);
@@ -86,6 +90,21 @@ public class PickDistTimeActivity extends Activity {
 					}
 				}
 			});
+		cancelButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v){
+				if(v==findViewById(R.id.cancel_button)){
+					if(activityFrom.equals("CrewSelectorActivity")){
+						//go to crew selector
+						selectCrews();
+					}
+					else if(activityFrom.equals("PickNewPieceActivity")){
+						//go to picknewpiece
+						pickNewPiece();
+					}
+				}
+			}
+		});
 		
 	}
 	
@@ -151,6 +170,18 @@ public class PickDistTimeActivity extends Activity {
 		displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_DIST_ACTIVITY);
 		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), currentPiece.getNumBoats()); 
 		startActivity(displayTimersIntent);
+	}
+	
+	private void selectCrews(){
+		Intent crewSelectorIntent = new Intent(this, CrewSelectorActivity.class);
+		startActivity(crewSelectorIntent);
+		
+	}
+	
+	private void pickNewPiece(){
+		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
+		startActivity(pickNewPieceIntent);
+		
 	}
 	
 	private Context getContext(){

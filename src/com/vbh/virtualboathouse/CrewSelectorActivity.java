@@ -38,7 +38,13 @@ public class CrewSelectorActivity extends Activity {
 	private CheckBox[] lineupBoxes;
 	
 	private int currentPracticeID;
+<<<<<<< HEAD
 	private Practice currentPractice;
+=======
+	
+	public final static String CREW_SELECTOR_ACTIVITY = "CrewSelectorActivity";
+	
+>>>>>>> 1fb691f4dcbeb241c81a4313a5d5cab47bb087cc
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +157,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	private void launchPickDistTime(){
 		Intent pickDistTimeIntent = new Intent(this, PickDistTimeActivity.class);
+		pickDistTimeIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 		startActivity(pickDistTimeIntent);
 	}
 
