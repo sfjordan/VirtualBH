@@ -29,6 +29,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	private Button go_button;
 	private LinearLayout lineups_checklist;
+	private String fromstr;
 
 	private Context context;
 	
@@ -96,8 +97,7 @@ public class CrewSelectorActivity extends Activity {
 		
 		Bundle b = getIntent().getExtras();
 		if (b!=null){
-			String fromstr = b.getString("FROM");
-			System.out.println("fromStr: "+fromstr);
+			fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
 		}
 
 	    
@@ -129,7 +129,10 @@ public class CrewSelectorActivity extends Activity {
 					ArrayList<Long> pieceIDs = new ArrayList<Long>();
 					pieceIDs.add(firstPiece.getPieceID());
 					DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);
-					launchPickDistTime();
+					if (fromstr.equals("recordTimes"))
+						launchPickDistTime();
+					else if (fromstr.equals("changeLineups"))
+						changeLineups();
 				}
 			}
 		});
@@ -154,6 +157,13 @@ public class CrewSelectorActivity extends Activity {
 	    switch(view.getId()) {
 	       // TODO logic to decide on which text box
 	    }
+	}
+	
+	public void changeLineups(){
+		Intent changeLineupsIntent = new Intent(this, ChangeLineupsList.class);
+		changeLineupsIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
+		startActivity(changeLineupsIntent);
+		
 	}
 	
 	private void launchPickDistTime(){

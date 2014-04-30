@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,6 +72,8 @@ public class ChangeLineupsList extends Activity {
 	private int numLineups;
 	StableArrayAdapter adapter;
 	Context context;
+	
+	private String fromstr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +86,12 @@ public class ChangeLineupsList extends Activity {
 			getData();
 			
 		}
-		//roster.getAthlete(athleteID)
         
         
-        
+		Bundle b = getIntent().getExtras();
+		if (b!=null){
+			fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
+		}
         
         LayoutInflater inflater = LayoutInflater.from(this);
         athleteList = buildList(new ArrayList<AthleteListName>());
@@ -106,16 +111,18 @@ public class ChangeLineupsList extends Activity {
 				if (v==findViewById(R.id.button_done)){
 					if (isValidLineup()){
 						saveData();
-						//continue to wherever you need to go
-						
 						Iterator<Entry<Long, Lineup>> allLineups = currentPractice.getCurrentLineups().entrySet().iterator();
         		    	while(allLineups.hasNext()){
         		    		allLineups.next().getValue().printLineup();			        		    		
         		    	}
-						/*for (int i = 0; i<athleteList.size(); i++){
-							AthleteListName name = athleteList.get(i);
-							if (name.isAthlete()) System.out.println(name.getName());
-						}*/
+        		    	//continue to wherever you need to go
+        		    	if(fromstr.equals("PickNewPieceActivity")){
+        		    		launchPickNewPiece();        		    		
+        		    	}
+        		    	else if(fromstr.equals("CrewSelectorActivity")){
+        		    		launchSplashscreen();
+        		    	}
+        		    	
 					}
 					else {
 						Log.i("changelineupslist","invalid lineup");
@@ -132,10 +139,12 @@ public class ChangeLineupsList extends Activity {
 			        		    		allLineups.next().getValue().printLineup();			        		    		
 			        		    	}
 			        	        	//continue to wherever you need to go
-									/*for (int i = 0; i<athleteList.size(); i++){
-										AthleteListName name = athleteList.get(i);
-										if (name.isAthlete()) System.out.println(name.getName());
-									}*/
+			        		    	if(fromstr.equals("PickNewPieceActivity")){
+			        		    		launchPickNewPiece();        		    		
+			        		    	}
+			        		    	else if(fromstr.equals("CrewSelectorActivity")){
+			        		    		launchSplashscreen();
+			        		    	}
 			        	        	
 			        	            break;
 
@@ -352,5 +361,13 @@ public class ChangeLineupsList extends Activity {
     	return this;
     }
     
+    private void launchPickNewPiece(){
+    	Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
+		startActivity(pickNewPieceIntent);
+    }
     
+    private void launchSplashscreen(){
+    	Intent splashscreenIntent = new Intent(this, SplashscreenActivity.class);
+		startActivity(splashscreenIntent);
+    } 
 }

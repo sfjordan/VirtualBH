@@ -90,7 +90,8 @@ public class PickNewPieceActivity extends Activity {
 	
 	private void ChangeLineups() {
 		//TODO: make actually do something other than return to splashscreen
-		Intent changeLineupsIntent = new Intent(this, SplashscreenActivity.class);
+		Intent changeLineupsIntent = new Intent(this, ChangeLineupsList.class);
+		changeLineupsIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_NEW_PIECE_ACTIVITY);
 		startActivity(changeLineupsIntent);
 	}
 	

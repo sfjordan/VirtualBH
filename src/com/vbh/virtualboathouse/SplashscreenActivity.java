@@ -69,8 +69,8 @@ public class SplashscreenActivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if (v==findViewById(R.id.change_lineups_button)){
-					//launchChangeLineups();
-					testChangeLineups();
+					launchChangeLineups();
+					//testChangeLineups();
 				}
 			}
 		});
@@ -131,7 +131,7 @@ public class SplashscreenActivity extends Activity {
 	
 	private void launchBoatPickers() {
 		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
-		displayBoatPickersIntent.putExtra("FROM","recordTimes");
+		displayBoatPickersIntent.putExtra(getString(R.string.ACTIVITY_FROM),"recordTimes");
 		startActivity(displayBoatPickersIntent);
 	}
 	private void testTimers(){
@@ -155,7 +155,7 @@ public class SplashscreenActivity extends Activity {
 	
 	private void launchChangeLineups(){
 		Intent changeLineupsIntent = new Intent(this, CrewSelectorActivity.class);
-		changeLineupsIntent.putExtra("FROM","changeLineups");
+		changeLineupsIntent.putExtra(getString(R.string.ACTIVITY_FROM),"changeLineups");
 		startActivity(changeLineupsIntent);
 		
 	}

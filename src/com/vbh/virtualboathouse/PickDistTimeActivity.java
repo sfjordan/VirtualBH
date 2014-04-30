@@ -174,6 +174,7 @@ public class PickDistTimeActivity extends Activity {
 	
 	private void selectCrews(){
 		Intent crewSelectorIntent = new Intent(this, CrewSelectorActivity.class);
+		crewSelectorIntent.putExtra(getString(R.string.ACTIVITY_FROM),"recordTimes");
 		startActivity(crewSelectorIntent);
 		
 	}
