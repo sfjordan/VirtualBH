@@ -175,6 +175,11 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    		// save the lineups and results
 		    		for (Long lineupID : p.getLineups()) {
 		    			Lineup l = uploadPractice.getLineup(lineupID);
+		    			String ids = "";
+		    			for(int id : l.getAllAthleteIDs()) {
+		    				ids += id + ", ";
+		    			}
+		    			Log.i("DataRetriever", "The athletes are: " + ids);
 		    			ReturnedLineupModel rlm = new ReturnedLineupModel(l.getAllAthleteIDs(), l.getPosition(), l.getBoatID(), webPieceID);
 		    			String lineupString = gson.toJson(rlm);
 		    			Log.i("DataRetriever", "gson: " + lineupString);

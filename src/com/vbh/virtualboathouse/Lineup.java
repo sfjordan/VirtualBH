@@ -31,16 +31,12 @@ public class Lineup implements Serializable, Parcelable {
 		//this.lineupID = lm.getPrivateKey();
 		this.lineupID = UUID.randomUUID().getLeastSignificantBits();
 		LineupFields lmf = lm.getLineupFields();
-<<<<<<< HEAD
-		int[] allAthleteID = new int[lmf.getAthleteIDs().length];
+		this.allAthleteID = new int[lmf.getAthleteIDs().length];
 		int k = 0;
 		for(int id : lmf.getAthleteIDs()) {
-			allAthleteID[k] = id;
+			this.allAthleteID[k] = id;
 			k++;
 		}
-=======
-		allAthleteID = lmf.getAthleteIDs();
->>>>>>> 7f2affb6d576490886e4c4ff0d52a74a35ec7270
 		this.position = lmf.getPosition();
 		this.boat = boats.get(lmf.getBoatID());
 		if (boat.isCoxed()) {
