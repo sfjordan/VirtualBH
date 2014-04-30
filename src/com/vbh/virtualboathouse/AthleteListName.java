@@ -15,20 +15,30 @@ public class AthleteListName implements MyListItem {
     private final Integer		 athID;
     private final Integer		 boatID;
     private final Integer 		 numOfSeats;
+    private final String		 position;
     
  
-    public AthleteListName(String name, String side, Integer athID, String title, Integer boatID, Integer numOfSeats) {
-        this.name = name;
-        this.side = side;
+    public AthleteListName(Integer athID, String title, Integer boatID, Integer numOfSeats, String position) {
+        this.name = null;
+        this.side = null;
         this.athID = athID;
         this.title = title;
         this.boatID = boatID;
         this.numOfSeats = numOfSeats;
+        this.position = position;
     }
     
-    
-    
-    public String getName(){
+    public AthleteListName(String name, String side, Integer athID){
+    	this.name = name;
+    	this.side = side;
+    	this.athID = athID;
+    	this.title = null;
+    	this.boatID = null;
+    	this.numOfSeats = null;
+    	this.position = null;
+    }
+
+	public String getName(){
     	return name;
     }
     
@@ -53,6 +63,10 @@ public class AthleteListName implements MyListItem {
     }
     public String getTitle(){
     	return title;
+    }
+    
+    public String getPosition(){
+    	return position;
     }
  
     @Override

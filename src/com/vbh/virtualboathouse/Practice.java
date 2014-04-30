@@ -48,9 +48,7 @@ public class Practice implements Serializable {
 	
 	// these are for adjusting the current Lineups on the water
 	public void clearCurrentLineups() {
-		for (Long id : currentLineups.keySet()) {
-			currentLineups.remove(id);
-		}
+		currentLineups = new HashMap<Long, Lineup>();
 	}
 	public void addCurrentLineup(Lineup l) {
 		practiceLineups.put(l.getLineupID(), l);
