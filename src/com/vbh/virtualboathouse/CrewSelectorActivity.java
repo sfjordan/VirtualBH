@@ -73,9 +73,9 @@ public class CrewSelectorActivity extends Activity {
 				// TODO implement adjustable setting
 				int numSeats = l.getNumOfSeats();
 				Log.i("CrewSelector", "number of seats is " + numSeats);
-				Athlete stroke = l.getAthleteFromSeat(numSeats, roster);
+				Athlete stroke = l.getAthleteFromSeat(0,roster);
 				Log.i("CrewSelector", "Athlete is null " + (stroke == null));
-				String name = stroke.getFirstInitLastName();
+				String name = l.getStrokeInitLast();
 				Log.i("CrewSelector", "Stroke's name is " + name);
 				lineupBoxes[i] = new CheckBox(this);
 				lineupBoxes[i].setText(name);

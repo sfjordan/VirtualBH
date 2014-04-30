@@ -111,9 +111,9 @@ public class ChangeLineupsList extends Activity {
 				if (v==findViewById(R.id.button_done)){
 					if (isValidLineup()){
 						saveData();
-						Iterator<Entry<Long, Lineup>> allLineups = currentPractice.getCurrentLineups().entrySet().iterator();
-        		    	while(allLineups.hasNext()){
-        		    		allLineups.next().getValue().printLineup();			        		    		
+						Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+        		    	while(currentLineups.hasNext()){
+        		    		currentLineups.next().getValue().printLineup();			        		    		
         		    	}
         		    	//continue to wherever you need to go
         		    	if(fromstr.equals("PickNewPieceActivity")){
@@ -125,6 +125,13 @@ public class ChangeLineupsList extends Activity {
         		    	
 					}
 					else {
+						Log.i("changelineupslist","invalid lineup");
+						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+			        	builder.setMessage(R.string.invalid_lineup_error_message);
+			        	AlertDialog invalidLineupDialog = builder.create();
+			        	invalidLineupDialog.show();
+					}
+					/*else {
 						Log.i("changelineupslist","invalid lineup");
 			        	
 			        	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -158,7 +165,7 @@ public class ChangeLineupsList extends Activity {
 			        	AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 			        	builder.setMessage(R.string.invalid_lineup_error_message).setPositiveButton("Yes", dialogClickListener)
 			        	    .setNegativeButton("No", dialogClickListener).show();
-					}
+					}*/
 				}
 			}
 		});
@@ -192,13 +199,14 @@ public class ChangeLineupsList extends Activity {
     
     private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){
     	numLineups = 0;
-		for(LineupModel l : lm){
-			Lineup lineup = new Lineup(l, roster, boatList);
+    	Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+		while(currentLineups.hasNext()){
+			Lineup lineup = currentLineups.next().getValue();
 			lineup.printLineup();
 			//lineups.put(l.getLineupID(), l);
 			//set header:
 			//Log.i("buildlist","Cox name: "+lineup.getCoxswainName()+" and id: "+lineup.getCoxwainID());
-			if (lineup.getCoxswainName() == null)
+			if (!lineup.isCoxed())
 				athleteList.add(new AthleteListName(null, lineup.getBoatName(),lineup.getBoatID(),lineup.getNumOfSeats(),lineup.getPosition()));
 			else athleteList.add(new AthleteListName(lineup.getCoxswainID(),lineup.getCoxswainName(),lineup.getBoatID(),lineup.getNumOfSeats(),lineup.getPosition()));
 			int[] athleteIDs = lineup.getAthleteIDs();
@@ -258,6 +266,7 @@ public class ChangeLineupsList extends Activity {
 	    		lineupsToSave.add(newlineup);
 	    	}
 	    	else lineupsToSave.add(matchedLineup);
+	    	matchedLineup = null;
     	}
     	//add new lineups if needed
     	Log.i("saveData",n+" new lineups to save");
@@ -270,6 +279,9 @@ public class ChangeLineupsList extends Activity {
     	int n = 0;
     	int numPorts = 0,numStars = 0,numBoth = 0,numOfSeats = 0;
     	for (AthleteListName aln : athleteList) {
+    		//TODO
+//    		if(n==0 && aln.isAthlete())
+//    			valid = false;
     		if(!aln.isAthlete()) {
     			/*Log.i("isValid","numPorts: "+numPorts);
     	    	Log.i("isValid","numStars: "+numStars);

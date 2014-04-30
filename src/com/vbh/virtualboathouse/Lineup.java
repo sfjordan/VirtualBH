@@ -138,6 +138,10 @@ public class Lineup implements Serializable, Parcelable {
 		}
 	}
 	
+	public boolean isCoxed(){
+		return boat.isCoxed();
+	}
+	
 	public int getBoatID() {
 		return boat.getBoatID();
 	}
@@ -159,6 +163,12 @@ public class Lineup implements Serializable, Parcelable {
 	public String getCoxswainName(){
 		if (coxswain == null) return null;
 		else return coxswain.getName();
+	}
+	
+	public String getStrokeInitLast(){
+		if (athleteID.length == 0)
+			return "";
+		else return roster.getAthlete(athleteID[0]).getFirstInitLastName();
 	}
 	
 	public int getCoxswainID(){

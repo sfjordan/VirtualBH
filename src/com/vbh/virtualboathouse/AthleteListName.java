@@ -41,6 +41,10 @@ public class AthleteListName implements MyListItem {
 	public String getName(){
     	return name;
     }
+	
+	public Boolean isCoxed(){
+		return (!isAthlete() && athID!=null);
+	}
     
     public Integer getNumOfSeats(){
     	return numOfSeats;
