@@ -200,7 +200,7 @@ public class Lineup implements Serializable, Parcelable {
 	 */
 	public String getName() {
 		//TODO add settings preference logic here!!!
-		return getNameForSeat(athleteNames.length);
+		return getStrokeInitLast();
 	}
 
 	@Override

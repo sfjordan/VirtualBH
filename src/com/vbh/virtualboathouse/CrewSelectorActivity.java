@@ -61,6 +61,8 @@ public class CrewSelectorActivity extends Activity {
 			// TODO check for null
     		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
     		// TODO check for null
+    		
+    		currentPractice.clearCurrentLineups();
 			
 			lineups = currentPractice.getLineups();
 			String[] lineupNames = new String[lineups.size()];
@@ -73,9 +75,7 @@ public class CrewSelectorActivity extends Activity {
 				// TODO implement adjustable setting
 				int numSeats = l.getNumOfSeats();
 				Log.i("CrewSelector", "number of seats is " + numSeats);
-				Athlete stroke = l.getAthleteFromSeat(0,roster);
-				Log.i("CrewSelector", "Athlete is null " + (stroke == null));
-				String name = l.getStrokeInitLast();
+				String name = l.getName();
 				Log.i("CrewSelector", "Stroke's name is " + name);
 				lineupBoxes[i] = new CheckBox(this);
 				lineupBoxes[i].setText(name);
@@ -109,8 +109,11 @@ public class CrewSelectorActivity extends Activity {
 					// get the selected IDs
 					ArrayList<Long> listLineupIDs = new ArrayList<Long>();
 					for (int i = 0; i < lineupBoxes.length; i++) {
+						Log.i("crewselector","lineupBoxes["+i+"].isChecked(): "+lineupBoxes[i].isChecked());
 						if (lineupBoxes[i].isChecked()) {
 							Lineup l = (Lineup) lineupBoxes[i].getTag();
+							Log.i("crewselector","adding this lineup to currentlineups:");
+							l.printLineup();
 							currentPractice.addCurrentLineup(l);
 							listLineupIDs.add(l.getLineupID());
 						}
