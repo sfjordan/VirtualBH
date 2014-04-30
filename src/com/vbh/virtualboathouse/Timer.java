@@ -1,5 +1,7 @@
 package com.vbh.virtualboathouse;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -30,6 +32,13 @@ public class Timer {
 		addComponents();
 		setHandlers();
 	}
+	public ArrayList<String> getStrokeNotes() {
+		return th.getNotes();
+	}
+	public String getBoatNameString() {
+		return th.getBoatNameString();
+	}
+	
 	public long getElapsedTime() {
 		return milli_chrono.getElapsedTime();
 	}

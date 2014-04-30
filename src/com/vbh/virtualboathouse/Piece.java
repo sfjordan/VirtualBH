@@ -26,6 +26,7 @@ public class Piece implements Serializable {
 	private final ArrayList<Long> lineups;
 	private Map<Long, Long> times;
 	private ArrayList<String> notes;
+	private ArrayList<String> strokeRatingNotes;
 	private String margin;
 	private long msCountdownTime;
 	private final long msTime;
@@ -40,6 +41,8 @@ public class Piece implements Serializable {
 		times = new HashMap<Long, Long>(lineups.length);
 		msTime = System.currentTimeMillis();
 		date = new Date(msTime);
+		notes = new ArrayList<String>();
+		strokeRatingNotes = new ArrayList<String>();
 	}
 	public Piece (ArrayList<Long> lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
@@ -50,6 +53,8 @@ public class Piece implements Serializable {
 		times = new HashMap<Long, Long>(lineups.size());
 		msTime = System.currentTimeMillis();
 		date = new Date(msTime);
+		notes = new ArrayList<String>();
+		strokeRatingNotes = new ArrayList<String>();
 	}
 	
 	
@@ -59,6 +64,8 @@ public class Piece implements Serializable {
 		times = new HashMap<Long, Long>(lineups.size());
 		msTime = System.currentTimeMillis();
 		date = new Date(msTime);
+		notes = oldPiece.getNotes();
+		strokeRatingNotes = oldPiece.getStrokeRatingNotes();
 	}
 	public long getMsTime() {
 		return msTime;
@@ -66,9 +73,8 @@ public class Piece implements Serializable {
 	public Date getDate() {
 		return date;
 	}
-	public String getDateString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-		return sdf.format(date);
+	public long getDateSeconds() {
+		return msTime/1000;
 	}
 	
 	public int getNumBoats() {
@@ -135,9 +141,15 @@ public class Piece implements Serializable {
 	public ArrayList<String> getNotes() {
 		return notes;
 	}
+	public ArrayList<String> getStrokeRatingNotes() {
+		return strokeRatingNotes;
+	}
 
 	public void addNotes(String note) {
 		this.notes.add(note);
+	}
+	public void addStrokeRatingNotes(String note) {
+		this.strokeRatingNotes.add(note);
 	}
 
 	public String getMargin() {

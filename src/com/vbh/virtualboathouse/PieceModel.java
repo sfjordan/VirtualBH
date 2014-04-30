@@ -10,10 +10,10 @@ public class PieceModel {
 	private String name;
 	
 	@SerializedName("datetime")
-	private String dateTime;
+	private long dateTime;
 
 	
-	public PieceModel(int practiceID, long pieceID, String dateTime) {
+	public PieceModel(int practiceID, long pieceID, long dateTime) {
 		this.practiceID = practiceID;
 		name = Long.toString(pieceID);
 		this.dateTime = dateTime;
@@ -34,11 +34,11 @@ public class PieceModel {
 		this.name = name;
 	}
 
-	public String getDateTime() {
+	public long getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(String dateTime) {
+	public void setDateTime(long dateTime) {
 		this.dateTime = dateTime;
 	}
 
