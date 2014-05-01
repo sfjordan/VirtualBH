@@ -185,7 +185,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    			Log.i("DataRetriever", "gson: " + lineupString);
 		    			performHTTPRequest(SAVE_LINEUP_URL, "lineup", lineupString);
 		    			// TODO logic for a countdown piece
-		    			ReturnedResultsModel rrm = new ReturnedResultsModel(l.getAllAthleteIDs(), p.getDistance(), p.getDateSeconds(), p.getTime(lineupID)/1000, webPieceID); 
+		    			ReturnedResultsModel rrm = new ReturnedResultsModel(l.getAllAthleteIDs(), p.getDistance(), p.getDateSeconds(), p.getTime(lineupID), webPieceID); 
 		    			String resultString = gson.toJson(rrm);
 		    			Log.i("DataRetriever", "gson: " + resultString);
 		    			String resp = performHTTPRequest(SAVE_RESULT_URL, "result", resultString);
