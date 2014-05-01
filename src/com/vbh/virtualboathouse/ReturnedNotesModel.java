@@ -6,8 +6,8 @@ public class ReturnedNotesModel {
 
 	@SerializedName("type")
 	private String type;
-	@SerializedName("piece")
-	private int piece;
+	@SerializedName("id")
+	private int id;
 	@SerializedName("subject")
 	private String subject;
 	@SerializedName("text")
@@ -16,7 +16,7 @@ public class ReturnedNotesModel {
 	
 	public ReturnedNotesModel(String type, int pieceID, String subject, String text) {
 		this.type    = type;
-		this.piece   = pieceID;
+		this.id   = pieceID;
 		this.subject = subject;
 		this.text    = text;
 	}

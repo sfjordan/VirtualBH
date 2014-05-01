@@ -185,10 +185,11 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    			Log.i("DataRetriever", "gson: " + lineupString);
 		    			performHTTPRequest(SAVE_LINEUP_URL, "lineup", lineupString);
 		    			// TODO logic for a countdown piece
-		    			ReturnedResultsModel rrm = new ReturnedResultsModel(l.getAllAthleteIDs(), p.getDistance(), p.getDateSeconds(), p.getTime(lineupID), webPieceID); 
+		    			ReturnedResultsModel rrm = new ReturnedResultsModel(l.getAllAthleteIDs(), p.getDistance(), p.getDateSeconds(), p.getTime(lineupID)/1000, webPieceID); 
 		    			String resultString = gson.toJson(rrm);
 		    			Log.i("DataRetriever", "gson: " + resultString);
-		    			performHTTPRequest(SAVE_RESULT_URL, "results", resultString);
+		    			String resp = performHTTPRequest(SAVE_RESULT_URL, "result", resultString);
+		    			Log.i("DataRetriever", "response: " + resp);
 		    		}
 		    		// save the notes for the piece
 		    		ArrayList<String> notes = p.getNotes();
@@ -197,7 +198,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    			ReturnedNotesModel rnm = new ReturnedNotesModel("piece", webPieceID, "Coach's Notes", notesString);
 		    			String noteString = gson.toJson(rnm);
 		    			Log.i("DataRetriever", "gson notes: " + noteString);
-		    			performHTTPRequest(SAVE_NOTE_URL, "note", noteString);
+		    			String resp = performHTTPRequest(SAVE_NOTE_URL, "note", noteString);
+		    			Log.i("DataRetriever", "response: " + resp);
 		    		}
 		    		// save the stroke ratings for the piece
 		    		notes = p.getStrokeRatingNotes();
@@ -206,7 +208,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    			ReturnedNotesModel rnm = new ReturnedNotesModel("piece", webPieceID, "Stroke Ratings", notesString);
 		    			String noteString = gson.toJson(rnm);
 		    			Log.i("DataRetriever", "gson notes: " + noteString);
-		    			performHTTPRequest(SAVE_NOTE_URL, "note", noteString);
+		    			String resp = performHTTPRequest(SAVE_NOTE_URL, "note", noteString);
+		    			Log.i("DataRetriever", "response: " + resp);
 		    		}
 		    	}
 		    	sharedPref.edit().remove(context.getString(R.string.PRACTICE_TO_UPLOAD_ID)).apply();
@@ -317,6 +320,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    			Log.i("DataRetriever", "recent lineup data successfully converted from JSON ");
 	    			
 	    	}
+	    	Log.i("DataRetriever", "buildpractice about to be launched");
 	    	buildPractice(am, bm, lm);
 	    	saveData();
 	    } catch (Exception e) {
@@ -351,6 +355,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		roster = new Roster(am);
 		// build current practice
 		practice = new Practice(currentPracticeID);
+		Log.i("DataRetriever", "practice object has been created");
 		for (LineupModel lineupModel : lm) {
 			Lineup l = new Lineup(lineupModel, roster, boatList);
 			practice.addCurrentLineup(l);
@@ -373,6 +378,9 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    		success = DataSaver.writeObject(roster, context.getString(R.string.ROSTER_FILE), context);
 	    		if (!success) return false;
 	    		// save practice to file
+	    		if (practice != null) success =false;
+	    		else success = true;
+	    		Log.i("DataRetriever", "practice object is null - " + success);
 	    		success = DataSaver.writeObject(practice, context.getString(R.string.PRACTICE_FILE) + practice.getPracticeID(), context);
 	    		if (!success) return false;
 	    	    Log.i("DataRetriever", "all data successfully saved to files ");
