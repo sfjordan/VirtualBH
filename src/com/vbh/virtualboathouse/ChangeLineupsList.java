@@ -280,8 +280,6 @@ public class ChangeLineupsList extends Activity {
     	int numPorts = 0,numStars = 0,numBoth = 0,numOfSeats = 0;
     	for (AthleteListName aln : athleteList) {
     		//TODO
-//    		if(n==0 && aln.isAthlete())
-//    			valid = false;
     		if(!aln.isAthlete()) {
     			/*Log.i("isValid","numPorts: "+numPorts);
     	    	Log.i("isValid","numStars: "+numStars);

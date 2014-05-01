@@ -94,13 +94,15 @@ public class PickDistTimeActivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if(v==findViewById(R.id.cancel_button)){
-					if(activityFrom.equals("CrewSelectorActivity")){
+					if (activityFrom != null){
+						if (activityFrom.equals("PickNewPieceActivity")){
+							//go to picknewpiece
+							pickNewPiece();
+						}
+					}
+					else{
 						//go to crew selector
 						selectCrews();
-					}
-					else if(activityFrom.equals("PickNewPieceActivity")){
-						//go to picknewpiece
-						pickNewPiece();
 					}
 				}
 			}
