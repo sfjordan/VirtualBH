@@ -58,7 +58,7 @@ public class SplashscreenActivity extends Activity {
 		}
 		else {
 			lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
-			lastUpdated.setText(getString(R.string.just_now));
+			lastUpdated.setText(getString(R.string.last_updated_text) + getString(R.string.just_now));
 		}
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
