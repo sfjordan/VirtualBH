@@ -185,16 +185,6 @@ public class ChangeLineupsList extends Activity {
 		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
 		// TODO check for null
 		Log.i("changelineuplist", "roster is currently null: " + (roster==null));
-		// currently, just get the most recent practice
-		lm = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
-		Log.i("changelineuplist", "lm is currently null: " + (lm==null));
-		DataRetriever dr = new DataRetriever(this);
-		//plm = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
-		//System.out.println("plm is null: "+(plm==null));
-	
-		lineups = new HashMap<Integer, Lineup>(lm.length);
-		lineupNames = new String[lm.length];
-		lineupIDs = new int[lm.length];
     }
     
     private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){
@@ -203,9 +193,6 @@ public class ChangeLineupsList extends Activity {
 		while(currentLineups.hasNext()){
 			Lineup lineup = currentLineups.next().getValue();
 			lineup.printLineup();
-			//lineups.put(l.getLineupID(), l);
-			//set header:
-			//Log.i("buildlist","Cox name: "+lineup.getCoxswainName()+" and id: "+lineup.getCoxwainID());
 			if (!lineup.isCoxed())
 				athleteList.add(new AthleteListName(null, lineup.getBoatName(),lineup.getBoatID(),lineup.getNumOfSeats(),lineup.getPosition()));
 			else athleteList.add(new AthleteListName(lineup.getCoxswainID(),lineup.getCoxswainName(),lineup.getBoatID(),lineup.getNumOfSeats(),lineup.getPosition()));
@@ -214,29 +201,8 @@ public class ChangeLineupsList extends Activity {
 				Athlete ath = roster.getAthlete(a);
 				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),a));
 			}
-			//now to flip the order:
-			/*Stack<Integer> IDs = new Stack<Integer>();
-			for(int a : athleteIDs){
-				IDs.push(a);
-			}
-			while(!IDs.isEmpty()){
-				int id = IDs.pop();
-				Athlete ath = roster.getAthlete(id);
-				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null,null));
-			}*/
 			numLineups++;
 		}
-		/*athleteList.add(new AthleteListName(null,null,null,"boat",null,8));
-		athleteList.add(new AthleteListName("S.Jordan", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("M.drabick", "starboard",8,null,null,null));
-		athleteList.add(new AthleteListName("E.Walker", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("bob", "starboard",8,null,null,null));
-		
-		athleteList.add(new AthleteListName(null,null,null,"boat 2",null,8));
-		athleteList.add(new AthleteListName("frank", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("john", "starboard",8,null,null,null));
-		athleteList.add(new AthleteListName("jack", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("smith", "starboard",8,null,null,null));*/
     	return athleteList;    	
     }
     
@@ -272,6 +238,8 @@ public class ChangeLineupsList extends Activity {
     	Log.i("saveData",n+" new lineups to save");
     	for (Lineup l: lineupsToSave)
     		currentPractice.addCurrentLineup(l);
+    	// write practice to file
+    	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
     }
     
     private boolean isValidLineup(){

@@ -2,7 +2,9 @@ package com.vbh.virtualboathouse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -61,6 +63,12 @@ public class CrewSelectorActivity extends Activity {
 			// TODO check for null
     		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
     		// TODO check for null
+    		
+    		Log.i("crewselector","current lineups are:");
+    		Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+	    	while(currentLineups.hasNext()){
+	    		currentLineups.next().getValue().printLineup();			        		    		
+	    	}
     		
     		currentPractice.clearCurrentLineups();
 			

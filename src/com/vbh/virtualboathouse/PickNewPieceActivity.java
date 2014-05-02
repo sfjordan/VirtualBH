@@ -63,7 +63,6 @@ public class PickNewPieceActivity extends Activity {
         	marginText.requestFocus();
         	
         }
-        else System.out.println("Error in picknewpiece, shouldn't be here");
         //set onclicks
         changeLineups.setOnClickListener(new OnClickListener() {
 			@Override

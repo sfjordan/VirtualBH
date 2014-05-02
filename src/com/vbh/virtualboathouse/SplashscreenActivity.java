@@ -26,6 +26,7 @@ public class SplashscreenActivity extends Activity {
 	
 	private TextView lastUpdated;
 	private Context context;
+	private SharedPreferences sharedPref;
 	
 	public final static String SPLASH_SCREEN_ACTIVITY = "SplashscreenActivity";
 
@@ -46,6 +47,7 @@ public class SplashscreenActivity extends Activity {
 		Log.i("splashscreen","in splashscreen");
 		
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
+		//if sharedpref is false, leave blank? else make red "unsynced data" or something
 		Bundle b = getIntent().getExtras();
 		if (b!=null){
 			Log.i("splashscreen","b is not null:");
@@ -81,6 +83,7 @@ public class SplashscreenActivity extends Activity {
 					//launchDataUpdater();
 					boolean success = updateData();
 					if (success) {
+						sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
 						lastUpdated.setText(currentDateString());
 						System.out.println("date: "+currentDateString());
 					}

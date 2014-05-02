@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.SharedPreferences;
+
 public class Practice implements Serializable {
 	
 	/**
@@ -24,6 +26,8 @@ public class Practice implements Serializable {
 	private Map<Long, Lineup> practiceLineups; // all the lineups that have been used during this practice
 	private Map<Long, Lineup> currentLineups; // the current lineups on the water
 	
+	private SharedPreferences sharedPref;
+	
 	public Practice(int practiceID) {
 		this.practiceID = practiceID;
 		msTime = System.currentTimeMillis();
@@ -36,6 +40,7 @@ public class Practice implements Serializable {
 	// these are for adjusting the lineups for the whole practice 
 	public void addLineup(Lineup l) {
 		practiceLineups.put(l.getLineupID(), l);
+		notifyDataChange();
 	}
 	
 	public Map<Long, Lineup> getLineups() {
@@ -53,6 +58,7 @@ public class Practice implements Serializable {
 	public void addCurrentLineup(Lineup l) {
 		practiceLineups.put(l.getLineupID(), l);
 		currentLineups.put(l.getLineupID(), l);
+		notifyDataChange();
 	}
 	public Map<Long, Lineup> getCurrentLineups() {
 		return currentLineups;
@@ -76,6 +82,7 @@ public class Practice implements Serializable {
 	
 	public void addPiece(Piece piece) {
 		pieces.put(piece.getPieceID(), piece);
+		notifyDataChange();
 	}
 	public Piece getPiece(long pieceID) {
 		return pieces.get(pieceID);
@@ -83,6 +90,7 @@ public class Practice implements Serializable {
 	
 	public void addNote(String note) {
 		notes.add(note);
+		notifyDataChange();
 	}
 	
 	public int getWindSpeed() {
@@ -91,6 +99,7 @@ public class Practice implements Serializable {
 
 	public void setWindSpeed(int windSpeed) {
 		this.windSpeed = windSpeed;
+		notifyDataChange();
 	}
 
 	public String getWindNotes() {
@@ -99,6 +108,7 @@ public class Practice implements Serializable {
 
 	public void setWindNotes(String windNotes) {
 		this.windNotes = windNotes;
+		notifyDataChange();
 	}
 
 	public String getWeather() {
@@ -107,6 +117,7 @@ public class Practice implements Serializable {
 
 	public void setWeather(String weather) {
 		this.weather = weather;
+		notifyDataChange();
 	}
 
 	public int getTemperature() {
@@ -115,6 +126,7 @@ public class Practice implements Serializable {
 
 	public void setTemperature(int temperature) {
 		this.temperature = temperature;
+		notifyDataChange();
 	}
 
 	public Map<Long, Piece> getPieces() {
@@ -123,6 +135,10 @@ public class Practice implements Serializable {
 
 	public ArrayList<String> getNotes() {
 		return notes;
+	}
+	
+	public void notifyDataChange(){
+		sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
 	}
 	
 	

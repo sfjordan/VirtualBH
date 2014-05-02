@@ -71,6 +71,7 @@
     <string name="CURRENT_PRACTICE_ID">CURRENT_PRACTICE_ID</string>
     <string name="CURRENT_PIECE_ID">CURRENT_PIECE_ID</string>
     <string name="PRACTICE_TO_UPLOAD_ID">PRACTICE_TO_UPLOAD_ID</string>
+    <string name="DATA_SET_CHANGED">DATA_SET_CHANGED</string>
     <string name="ROSTER_FILE">com.vbh.virtualboathouse.RosterData</string>
     <string name="BOATS_FILE">com.vbh.virtualboathouse.BoatData</string>
     <string name="PIECE_ID_FILE">com.vbh.virtualboathouse.PieceIDData</string>

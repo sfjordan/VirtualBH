@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 public class LaunchActivity extends Activity {
 	private static int LAUNCH_TIME_OUT = 2000;
+	private SharedPreferences sharedPref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,14 +53,13 @@ public class LaunchActivity extends Activity {
 	        			// launch the main menu activity
 	        			Intent splashscreenIntent = new Intent(getApplicationContext(), SplashscreenActivity.class);
 	        			//TODO check if user is already logged in/already have API key
-	        			if(updateData()) {
-	        				Log.i("launcher","putting extra true");
-	        				splashscreenIntent.putExtra("UPDATE_SUCCESS",true);
+	        			/*if(updateData()) {
+	        				sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
 	        			}
 	        			else {
-	        				Log.i("launcher","putting extra false");
-	        				splashscreenIntent.putExtra("UPDATE_SUCCESS",false);
-	        			}
+	        				sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
+	        			}*/
+	        			sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
 	        			startActivity(splashscreenIntent);
 	        			
 	        			

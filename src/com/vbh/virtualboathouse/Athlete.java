@@ -70,6 +70,8 @@ public class Athlete implements Serializable {
 	public String getRole() {
 		return role;
 	}
-	
+	public Boolean isCoxswain(){
+		return getSide().equalsIgnoreCase("na");
+	}
 	
 }
