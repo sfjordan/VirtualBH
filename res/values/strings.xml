@@ -50,7 +50,7 @@
     <string name="title_activity_pick_boats">Set Up Number of Boats</string>
     <string name="title_activity_crew_selector">Select Crews</string>
     <string name="select_crews_text">Select Crews</string>
-    <string name="update_text">Update data</string>
+    <string name="update_text">Sync data</string>
     <string name="last_updated_text">"last updated: "</string>
     <string name="save_piece">save piece</string>
     <string name="notes">Enter notes on piece&#8230;</string>
@@ -65,6 +65,7 @@
 	<string name="then_text">Then</string>
 	<string name="and_text">and</string>
 	<string name="cancel_text">Cancel</string>
+	<string name="need_to_sync">Changes to be synced</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>

@@ -74,6 +74,7 @@ public class ChangeLineupsList extends Activity {
 	Context context;
 	
 	private String fromstr;
+	private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +174,7 @@ public class ChangeLineupsList extends Activity {
     
     private void getData(){
     	// get the practice ID
-		SharedPreferences sharedPref = context.getSharedPreferences(
+		sharedPref = context.getSharedPreferences(
 		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 		// get the current practice from a file
@@ -238,6 +239,8 @@ public class ChangeLineupsList extends Activity {
     	Log.i("saveData",n+" new lineups to save");
     	for (Lineup l: lineupsToSave)
     		currentPractice.addCurrentLineup(l);
+    	if (n > 0)
+    		sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
     	// write practice to file
     	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
     }

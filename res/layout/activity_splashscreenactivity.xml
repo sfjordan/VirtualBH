@@ -71,21 +71,12 @@
         android:layout_height="wrap_content" 
         android:layout_gravity="center_horizontal">
     
-	    <TextView 
-	        android:id="@+id/last_updated_textstub"
-	        android:layout_gravity="center_horizontal"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="12sp"
-	        android:textColor="@color/text_gray"
-	        android:text="@string/last_updated_text">
-	   </TextView>
+
 	   <TextView
 	       android:id="@+id/date_textstub"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@+id/last_updated_textstub"
 	        android:textSize="12sp"
 	        android:textColor="@color/text_gray">
 	       

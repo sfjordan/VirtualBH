@@ -53,7 +53,7 @@ public class PickNewPieceActivity extends Activity {
         if (currentPiece.isTimed()) {
         	//nothing, apparently
         }
-        else if (currentPiece.isCountdown()){
+        /*else if (currentPiece.isCountdown()){
         	//create margin text field
         	EditText marginText = new EditText(this);
         	marginText.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -62,7 +62,7 @@ public class PickNewPieceActivity extends Activity {
         	rl.addView(marginText);
         	marginText.requestFocus();
         	
-        }
+        }*/
         //set onclicks
         changeLineups.setOnClickListener(new OnClickListener() {
 			@Override
@@ -105,6 +105,7 @@ public class PickNewPieceActivity extends Activity {
     	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
     	// update sharedPrefs - note the apply() at the end, not saved otherwise.
     	sharedPref.edit().putLong(getString(R.string.CURRENT_PIECE_ID), currentPieceID).apply();
+    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
     	// new activity
 		Intent newPieceIntent = new Intent(this, PickDistTimeActivity.class);
 		newPieceIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_NEW_PIECE_ACTIVITY);
@@ -117,6 +118,7 @@ public class PickNewPieceActivity extends Activity {
     	// write practice to file
     	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
     	sharedPref.edit().putInt(this.getString(R.string.PRACTICE_TO_UPLOAD_ID), currentPracticeID).apply();
+    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
 		//TODO confirmation dialog
 	
 		Intent finishPracticeIntent = new Intent(this, SplashscreenActivity.class);

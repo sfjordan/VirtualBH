@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class SplashscreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splashscreenactivity);
+		sharedPref = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
 		context = this;
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -48,14 +50,15 @@ public class SplashscreenActivity extends Activity {
 		
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
 		//if sharedpref is false, leave blank? else make red "unsynced data" or something
-		Bundle b = getIntent().getExtras();
-		if (b!=null){
-			Log.i("splashscreen","b is not null:");
-			Boolean success = b.getBoolean("UPDATE_SUCCESS");
-			Log.i("splashscreen","update string: "+success);
-			if (success){
-				lastUpdated.setText(getString(R.string.just_now));
-			}
+		Boolean dataChanged = sharedPref.getBoolean("DATA_SET_CHANGED", true);
+		if (dataChanged){
+			//make red and notify user
+			lastUpdated.setTextColor(Color.RED);
+			lastUpdated.setText(getString(R.string.need_to_sync));
+		}
+		else {
+			lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
+			lastUpdated.setText(getString(R.string.just_now));
 		}
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
@@ -84,8 +87,9 @@ public class SplashscreenActivity extends Activity {
 					boolean success = updateData();
 					if (success) {
 						sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
-						lastUpdated.setText(currentDateString());
-						System.out.println("date: "+currentDateString());
+						//lastUpdatedStub.setText(getString(R.string.last_updated_text));
+						lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
+						lastUpdated.setText(getString(R.string.last_updated_text) + currentDateString());
 					}
 				}
 			}
