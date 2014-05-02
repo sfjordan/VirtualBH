@@ -28,6 +28,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -75,6 +78,8 @@ public class ChangeLineupsList extends Activity {
 	
 	private String fromstr;
 	private SharedPreferences sharedPref;
+	private TextView instructions;
+	private Button button_done;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,12 @@ public class ChangeLineupsList extends Activity {
 			getData();
 			
 		}
+		button_done = (Button) findViewById(R.id.button_done);
+		button_done.setVisibility(View.INVISIBLE);
+		instructions = (TextView) findViewById(R.id.explanation_text);
+		fadeSwap();
+		
+		
         
         
 		Bundle b = getIntent().getExtras();
@@ -104,8 +115,6 @@ public class ChangeLineupsList extends Activity {
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
-        
-        Button button_done = (Button) findViewById(R.id.button_done);
         button_done.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v){
@@ -303,6 +312,8 @@ public class ChangeLineupsList extends Activity {
     
     private LinkedList<Lineup> makeLineups(){
     	LinkedList<Lineup> lineups = new LinkedList<Lineup>();
+    	if (athleteList.isEmpty())
+    		return lineups;
     	LinkedList<LinkedList<AthleteListName>> separatedAthleteLists = new LinkedList<LinkedList<AthleteListName>>();
     	LinkedList<AthleteListName> ll = null;
     	for (AthleteListName aln : athleteList) {
@@ -336,6 +347,43 @@ public class ChangeLineupsList extends Activity {
     		lineups.add(new Lineup(llaln, roster, boatList));
     	}
     	return lineups;
+    }
+    
+    private void fadeSwap(){
+    	// fade out instructions view nicely after 5 seconds
+		AlphaAnimation alphaAnim = new AlphaAnimation(1.0f,0.0f);
+		alphaAnim.setStartOffset(5000);                        // start in 5 seconds
+		alphaAnim.setDuration(400);
+		alphaAnim.setAnimationListener(new AnimationListener()
+		{
+			 public void onAnimationEnd(Animation animation)
+			 {
+			   // make invisible when animation completes, you could also remove the view from the layout
+				 instructions.setVisibility(View.INVISIBLE);
+				 button_done.setVisibility(View.VISIBLE);
+				 
+			 }
+	
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				//do nothing
+				
+			}
+	
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				// do nothing
+				
+			}
+		});
+
+		instructions.setAnimation(alphaAnim);
+    }
+    
+    private TextView getInstructionsTextView(){
+    	return instructions;
     }
     
     private Context getContext(){

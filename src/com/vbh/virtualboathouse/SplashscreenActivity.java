@@ -51,6 +51,7 @@ public class SplashscreenActivity extends Activity {
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
 		//if sharedpref is false, leave blank? else make red "unsynced data" or something
 		Boolean dataChanged = sharedPref.getBoolean("DATA_SET_CHANGED", true);
+		Log.i("splashscreen","datachanged: "+dataChanged);
 		if (dataChanged){
 			//make red and notify user
 			lastUpdated.setTextColor(Color.RED);
