@@ -66,6 +66,7 @@
 	<string name="and_text">and</string>
 	<string name="cancel_text">Cancel</string>
 	<string name="need_to_sync">Changes to be synced</string>
+	<string name="no_selected_crews">There are no crews selected. To get stroke rates and times for unsaved boats, enter the number of boats below:</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>

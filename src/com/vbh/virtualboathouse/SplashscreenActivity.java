@@ -44,7 +44,7 @@ public class SplashscreenActivity extends Activity {
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button updateData = (Button) findViewById(R.id.update_data_button);
-		Button stroke = (Button) findViewById(R.id.stroke_button);
+		//Button stroke = (Button) findViewById(R.id.stroke_button);
 		
 		Log.i("splashscreen","in splashscreen");
 		
@@ -96,7 +96,7 @@ public class SplashscreenActivity extends Activity {
 			}
 		});
 		
-		stroke.setOnClickListener(new OnClickListener() {
+		/*stroke.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (v==findViewById(R.id.stroke_button)) {
@@ -106,7 +106,7 @@ public class SplashscreenActivity extends Activity {
 					startActivity(displayTimersIntent);
 				}
 			}
-		});
+		});*/
 		
 		
 		SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
