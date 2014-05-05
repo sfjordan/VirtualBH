@@ -136,7 +136,7 @@ public class CrewSelectorActivity extends Activity {
 							listLineupIDs.add(l.getLineupID());
 						}
 					}
-					if (numChecked == 0){
+					if (numChecked == 0 && fromstr.equals("recordTimes")){
 						//dialog to get number of boats, continue straight to timers
 						final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 						LinearLayout layout = new LinearLayout(getContext());
