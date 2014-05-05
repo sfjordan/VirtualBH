@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class Practice implements Serializable {
 	
 	/**
@@ -23,6 +26,7 @@ public class Practice implements Serializable {
 	private final Date date;
 	private Map<Long, Lineup> practiceLineups; // all the lineups that have been used during this practice
 	private Map<Long, Lineup> currentLineups; // the current lineups on the water
+	
 	
 	public Practice(int practiceID) {
 		this.practiceID = practiceID;

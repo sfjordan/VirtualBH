@@ -56,7 +56,7 @@
         android:layout_height="10dp">
     </View>
     
-    <Button
+    <!-- <Button
         android:id="@+id/stroke_button"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
@@ -64,28 +64,19 @@
         android:layout_weight="1"
         android:padding="20dp"
         android:text="@string/get_stroke_rate"
-        android:textSize="20sp" />
+        android:textSize="20sp" /> -->
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:layout_gravity="center_horizontal">
     
-	    <TextView 
-	        android:id="@+id/last_updated_textstub"
-	        android:layout_gravity="center_horizontal"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="12sp"
-	        android:textColor="@color/text_gray"
-	        android:text="@string/last_updated_text">
-	   </TextView>
+
 	   <TextView
 	       android:id="@+id/date_textstub"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@+id/last_updated_textstub"
 	        android:textSize="12sp"
 	        android:textColor="@color/text_gray">
 	       

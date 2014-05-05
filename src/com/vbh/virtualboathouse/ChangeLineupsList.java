@@ -28,6 +28,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -74,6 +77,9 @@ public class ChangeLineupsList extends Activity {
 	Context context;
 	
 	private String fromstr;
+	private SharedPreferences sharedPref;
+	private TextView instructions;
+	private Button button_done;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +92,12 @@ public class ChangeLineupsList extends Activity {
 			getData();
 			
 		}
+		button_done = (Button) findViewById(R.id.button_done);
+		button_done.setVisibility(View.INVISIBLE);
+		instructions = (TextView) findViewById(R.id.explanation_text);
+		fadeSwap();
+		
+		
         
         
 		Bundle b = getIntent().getExtras();
@@ -103,8 +115,6 @@ public class ChangeLineupsList extends Activity {
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         
-        
-        Button button_done = (Button) findViewById(R.id.button_done);
         button_done.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v){
@@ -173,7 +183,7 @@ public class ChangeLineupsList extends Activity {
     
     private void getData(){
     	// get the practice ID
-		SharedPreferences sharedPref = context.getSharedPreferences(
+		sharedPref = context.getSharedPreferences(
 		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 		// get the current practice from a file
@@ -185,16 +195,6 @@ public class ChangeLineupsList extends Activity {
 		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
 		// TODO check for null
 		Log.i("changelineuplist", "roster is currently null: " + (roster==null));
-		// currently, just get the most recent practice
-		lm = DataSaver.readObjectArray(getString(R.string.RECENT_LINEUP_FILE), this);
-		Log.i("changelineuplist", "lm is currently null: " + (lm==null));
-		DataRetriever dr = new DataRetriever(this);
-		//plm = DataSaver.readObjectArray(dr.RECENT_PRACTICE_DATA_FILENAME + currentPracticeID , this);
-		//System.out.println("plm is null: "+(plm==null));
-	
-		lineups = new HashMap<Integer, Lineup>(lm.length);
-		lineupNames = new String[lm.length];
-		lineupIDs = new int[lm.length];
     }
     
     private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){
@@ -203,9 +203,6 @@ public class ChangeLineupsList extends Activity {
 		while(currentLineups.hasNext()){
 			Lineup lineup = currentLineups.next().getValue();
 			lineup.printLineup();
-			//lineups.put(l.getLineupID(), l);
-			//set header:
-			//Log.i("buildlist","Cox name: "+lineup.getCoxswainName()+" and id: "+lineup.getCoxwainID());
 			if (!lineup.isCoxed())
 				athleteList.add(new AthleteListName(null, lineup.getBoatName(),lineup.getBoatID(),lineup.getNumOfSeats(),lineup.getPosition()));
 			else athleteList.add(new AthleteListName(lineup.getCoxswainID(),lineup.getCoxswainName(),lineup.getBoatID(),lineup.getNumOfSeats(),lineup.getPosition()));
@@ -214,29 +211,8 @@ public class ChangeLineupsList extends Activity {
 				Athlete ath = roster.getAthlete(a);
 				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),a));
 			}
-			//now to flip the order:
-			/*Stack<Integer> IDs = new Stack<Integer>();
-			for(int a : athleteIDs){
-				IDs.push(a);
-			}
-			while(!IDs.isEmpty()){
-				int id = IDs.pop();
-				Athlete ath = roster.getAthlete(id);
-				athleteList.add(new AthleteListName(ath.getFirstInitLastName(),ath.getSide(),id,null,null,null));
-			}*/
 			numLineups++;
 		}
-		/*athleteList.add(new AthleteListName(null,null,null,"boat",null,8));
-		athleteList.add(new AthleteListName("S.Jordan", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("M.drabick", "starboard",8,null,null,null));
-		athleteList.add(new AthleteListName("E.Walker", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("bob", "starboard",8,null,null,null));
-		
-		athleteList.add(new AthleteListName(null,null,null,"boat 2",null,8));
-		athleteList.add(new AthleteListName("frank", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("john", "starboard",8,null,null,null));
-		athleteList.add(new AthleteListName("jack", "port",8,null,null,null));
-		athleteList.add(new AthleteListName("smith", "starboard",8,null,null,null));*/
     	return athleteList;    	
     }
     
@@ -272,6 +248,10 @@ public class ChangeLineupsList extends Activity {
     	Log.i("saveData",n+" new lineups to save");
     	for (Lineup l: lineupsToSave)
     		currentPractice.addCurrentLineup(l);
+    	if (n > 0)
+    		sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
+    	// write practice to file
+    	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
     }
     
     private boolean isValidLineup(){
@@ -332,6 +312,8 @@ public class ChangeLineupsList extends Activity {
     
     private LinkedList<Lineup> makeLineups(){
     	LinkedList<Lineup> lineups = new LinkedList<Lineup>();
+    	if (athleteList.isEmpty())
+    		return lineups;
     	LinkedList<LinkedList<AthleteListName>> separatedAthleteLists = new LinkedList<LinkedList<AthleteListName>>();
     	LinkedList<AthleteListName> ll = null;
     	for (AthleteListName aln : athleteList) {
@@ -365,6 +347,43 @@ public class ChangeLineupsList extends Activity {
     		lineups.add(new Lineup(llaln, roster, boatList));
     	}
     	return lineups;
+    }
+    
+    private void fadeSwap(){
+    	// fade out instructions view nicely after 5 seconds
+		AlphaAnimation alphaAnim = new AlphaAnimation(1.0f,0.0f);
+		alphaAnim.setStartOffset(5000);                        // start in 5 seconds
+		alphaAnim.setDuration(400);
+		alphaAnim.setAnimationListener(new AnimationListener()
+		{
+			 public void onAnimationEnd(Animation animation)
+			 {
+			   // make invisible when animation completes, you could also remove the view from the layout
+				 instructions.setVisibility(View.INVISIBLE);
+				 button_done.setVisibility(View.VISIBLE);
+				 
+			 }
+	
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				//do nothing
+				
+			}
+	
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				// do nothing
+				
+			}
+		});
+
+		instructions.setAnimation(alphaAnim);
+    }
+    
+    private TextView getInstructionsTextView(){
+    	return instructions;
     }
     
     private Context getContext(){

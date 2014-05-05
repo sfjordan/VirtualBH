@@ -43,10 +43,13 @@ public class Lineup implements Serializable, Parcelable {
 		this.position = lmf.getPosition();
 		this.boat = boats.get(lmf.getBoatID());
 		if (boat.isCoxed()) {
-			this.coxswain = roster.getAthlete(allAthleteID[0]);
 			this.athleteNames = new String[allAthleteID.length - 1];
 			this.athleteID = new int[allAthleteID.length - 1];
 		    for (int i = allAthleteID.length-1; i > 0; i--) {
+		    	if (roster.getAthlete(allAthleteID[i]).isCoxswain()){
+		    		Log.i("lineup","ath is cox, name: "+roster.getAthlete(allAthleteID[i]).getFirstInitLastName());
+		    		this.coxswain = roster.getAthlete(allAthleteID[i]);
+		    	}
 		    	this.athleteID[i-1] = allAthleteID[i];
 		    	this.athleteNames[i-1] = roster.getAthlete(allAthleteID[i]).getFirstInitLastName();
 		    }
@@ -88,9 +91,6 @@ public class Lineup implements Serializable, Parcelable {
 				n++;
 			}
 		}
-		/*for(int i = 0; i < allAthleteID.length; i++){
-			allAthleteID[i]=lineup.pop().getathID();
-		}*/
 		//build athleteID
 		//build athleteNames
 		//set coxwain

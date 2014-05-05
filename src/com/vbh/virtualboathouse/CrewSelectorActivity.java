@@ -2,27 +2,37 @@ package com.vbh.virtualboathouse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.os.Build;
 
 public class CrewSelectorActivity extends Activity {
@@ -61,6 +71,12 @@ public class CrewSelectorActivity extends Activity {
 			// TODO check for null
     		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
     		// TODO check for null
+    		
+    		Log.i("crewselector","current lineups are:");
+    		Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+	    	while(currentLineups.hasNext()){
+	    		currentLineups.next().getValue().printLineup();			        		    		
+	    	}
     		
     		currentPractice.clearCurrentLineups();
 			
@@ -108,9 +124,11 @@ public class CrewSelectorActivity extends Activity {
 				if (v==findViewById(R.id.go_button)){
 					// get the selected IDs
 					ArrayList<Long> listLineupIDs = new ArrayList<Long>();
+					int numChecked = 0;
 					for (int i = 0; i < lineupBoxes.length; i++) {
 						Log.i("crewselector","lineupBoxes["+i+"].isChecked(): "+lineupBoxes[i].isChecked());
 						if (lineupBoxes[i].isChecked()) {
+							numChecked++;
 							Lineup l = (Lineup) lineupBoxes[i].getTag();
 							Log.i("crewselector","adding this lineup to currentlineups:");
 							l.printLineup();
@@ -118,24 +136,66 @@ public class CrewSelectorActivity extends Activity {
 							listLineupIDs.add(l.getLineupID());
 						}
 					}
-					SharedPreferences sharedPref = context.getSharedPreferences(
-					        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-					// add a piece
-					Piece firstPiece = new Piece(listLineupIDs, roster, boatList);
-					currentPractice.addPiece(firstPiece);
-					// write the practice to a file
-					DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
-					// save the piece in shared prefs
-					SharedPreferences.Editor editor = sharedPref.edit();
-					editor.putLong(getString(R.string.CURRENT_PIECE_ID), firstPiece.getPieceID());
-					editor.apply();
-					ArrayList<Long> pieceIDs = new ArrayList<Long>();
-					pieceIDs.add(firstPiece.getPieceID());
-					DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);
-					if (fromstr.equals("recordTimes"))
-						launchPickDistTime();
-					else if (fromstr.equals("changeLineups"))
-						changeLineups();
+					if (numChecked == 0){
+						//dialog to get number of boats, continue straight to timers
+						final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+						LinearLayout layout = new LinearLayout(getContext());
+						layout.setOrientation(LinearLayout.VERTICAL);
+
+						final TextView titleBox = new TextView(getContext());
+						titleBox.setGravity(Gravity.CENTER_HORIZONTAL);
+						titleBox.setText(R.string.no_selected_crews);
+						titleBox.setPadding(5, 5, 5, 5);
+						layout.addView(titleBox);
+						
+						final EditText input = new EditText(getContext());
+						input.setGravity(Gravity.CENTER);
+					    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+					    input.setHint("number of boats"); 
+					    input.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+					    input.setMaxWidth(200);
+					    layout.addView(input);
+
+
+						alert.setView(layout);
+					    
+					    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					        public void onClick(DialogInterface dialog, int whichButton) {
+					            int value = Integer.parseInt(input.getText().toString());
+					            Intent displayTimersIntent = new Intent(getContext(), DisplayTimersActivity.class);
+								displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
+								displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), value); 
+								startActivity(displayTimersIntent);
+					        }
+					    });
+
+					    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					        public void onClick(DialogInterface dialog, int whichButton) {
+					            dialog.cancel();
+					        }
+					    });
+					    alert.show(); 
+					}
+					else {
+						SharedPreferences sharedPref = context.getSharedPreferences(
+						        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+						// add a piece
+						Piece firstPiece = new Piece(listLineupIDs, roster, boatList);
+						currentPractice.addPiece(firstPiece);
+						// write the practice to a file
+						DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+						// save the piece in shared prefs
+						SharedPreferences.Editor editor = sharedPref.edit();
+						editor.putLong(getString(R.string.CURRENT_PIECE_ID), firstPiece.getPieceID());
+						editor.apply();
+						ArrayList<Long> pieceIDs = new ArrayList<Long>();
+						pieceIDs.add(firstPiece.getPieceID());
+						DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);
+						if (fromstr.equals("recordTimes"))
+							launchPickDistTime();
+						else if (fromstr.equals("changeLineups"))
+							changeLineups();
+					}
 				}
 			}
 		});
@@ -173,6 +233,10 @@ public class CrewSelectorActivity extends Activity {
 		Intent pickDistTimeIntent = new Intent(this, PickDistTimeActivity.class);
 		pickDistTimeIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 		startActivity(pickDistTimeIntent);
+	}
+	
+	private Context getContext(){
+		return this;
 	}
 
 	@Override

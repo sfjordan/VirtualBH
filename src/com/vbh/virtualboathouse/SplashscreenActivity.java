@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class SplashscreenActivity extends Activity {
 	
 	private TextView lastUpdated;
 	private Context context;
+	private SharedPreferences sharedPref;
 	
 	public final static String SPLASH_SCREEN_ACTIVITY = "SplashscreenActivity";
 
@@ -33,6 +35,7 @@ public class SplashscreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splashscreenactivity);
+		sharedPref = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
 		context = this;
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -41,19 +44,22 @@ public class SplashscreenActivity extends Activity {
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button updateData = (Button) findViewById(R.id.update_data_button);
-		Button stroke = (Button) findViewById(R.id.stroke_button);
+		//Button stroke = (Button) findViewById(R.id.stroke_button);
 		
 		Log.i("splashscreen","in splashscreen");
 		
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
-		Bundle b = getIntent().getExtras();
-		if (b!=null){
-			Log.i("splashscreen","b is not null:");
-			Boolean success = b.getBoolean("UPDATE_SUCCESS");
-			Log.i("splashscreen","update string: "+success);
-			if (success){
-				lastUpdated.setText(getString(R.string.just_now));
-			}
+		//if sharedpref is false, leave blank? else make red "unsynced data" or something
+		Boolean dataChanged = sharedPref.getBoolean("DATA_SET_CHANGED", true);
+		Log.i("splashscreen","datachanged: "+dataChanged);
+		if (dataChanged){
+			//make red and notify user
+			lastUpdated.setTextColor(Color.RED);
+			lastUpdated.setText(getString(R.string.need_to_sync));
+		}
+		else {
+			lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
+			lastUpdated.setText(getString(R.string.last_updated_text) + getString(R.string.just_now));
 		}
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
@@ -81,14 +87,16 @@ public class SplashscreenActivity extends Activity {
 					//launchDataUpdater();
 					boolean success = updateData();
 					if (success) {
-						lastUpdated.setText(currentDateString());
-						System.out.println("date: "+currentDateString());
+						sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
+						//lastUpdatedStub.setText(getString(R.string.last_updated_text));
+						lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
+						lastUpdated.setText(getString(R.string.last_updated_text) + currentDateString());
 					}
 				}
 			}
 		});
 		
-		stroke.setOnClickListener(new OnClickListener() {
+		/*stroke.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (v==findViewById(R.id.stroke_button)) {
@@ -98,7 +106,7 @@ public class SplashscreenActivity extends Activity {
 					startActivity(displayTimersIntent);
 				}
 			}
-		});
+		});*/
 		
 		
 		SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);

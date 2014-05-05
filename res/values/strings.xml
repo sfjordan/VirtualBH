@@ -50,7 +50,7 @@
     <string name="title_activity_pick_boats">Set Up Number of Boats</string>
     <string name="title_activity_crew_selector">Select Crews</string>
     <string name="select_crews_text">Select Crews</string>
-    <string name="update_text">Update data</string>
+    <string name="update_text">Sync data</string>
     <string name="last_updated_text">"last updated: "</string>
     <string name="save_piece">save piece</string>
     <string name="notes">Enter notes on piece&#8230;</string>
@@ -59,18 +59,30 @@
     <string name="finish_practice">Finish Practice</string>
     <string name="get_stroke_rate">Get Stroke Rate</string>
     <string name="dragging_explanation">To make a swap, hold and drag the athletes to their new locations</string>
+<<<<<<< HEAD
     <string name="done">Done</string>
     <string name="just_now">just now</string>
     <string name="strokes_per_minute">SPM</string>
     <string name="then_text">Then</string>
     <string name="and_text">and</string>
     <string name="cancel_text">Cancel</string>
+=======
+	<string name="done">Done</string>
+	<string name="just_now">just now</string>
+	<string name="strokes_per_minute">SPM</string>
+	<string name="then_text">Then</string>
+	<string name="and_text">and</string>
+	<string name="cancel_text">Cancel</string>
+	<string name="need_to_sync">Changes to be synced</string>
+	<string name="no_selected_crews">There are no crews selected. To get stroke rates and times for unsaved boats, enter the number of boats below:</string>
+>>>>>>> 3bd76c08f316982003e45f78cb8ce2fdb01ca8a8
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
     <string name="CURRENT_PRACTICE_ID">CURRENT_PRACTICE_ID</string>
     <string name="CURRENT_PIECE_ID">CURRENT_PIECE_ID</string>
     <string name="PRACTICE_TO_UPLOAD_ID">PRACTICE_TO_UPLOAD_ID</string>
+    <string name="DATA_SET_CHANGED">DATA_SET_CHANGED</string>
     <string name="ROSTER_FILE">com.vbh.virtualboathouse.RosterData</string>
     <string name="BOATS_FILE">com.vbh.virtualboathouse.BoatData</string>
     <string name="PIECE_ID_FILE">com.vbh.virtualboathouse.PieceIDData</string>

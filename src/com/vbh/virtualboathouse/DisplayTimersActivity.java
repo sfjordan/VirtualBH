@@ -64,7 +64,8 @@ public class DisplayTimersActivity extends Activity {
 				j++;
 			}
 		}	
-		else if (activityFrom.equals(SplashscreenActivity.SPLASH_SCREEN_ACTIVITY)) {
+		else if (activityFrom.equals(SplashscreenActivity.SPLASH_SCREEN_ACTIVITY) 
+				|| activityFrom.equals(CrewSelectorActivity.CREW_SELECTOR_ACTIVITY)) {
 			LinearLayout timer_list = (LinearLayout)findViewById(R.id.timers_list);
 			int j = 0;
 			for (j = 0; j < timers.length; j++) {
