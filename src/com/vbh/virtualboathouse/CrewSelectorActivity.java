@@ -164,6 +164,7 @@ public class CrewSelectorActivity extends Activity {
 					            int value = Integer.parseInt(input.getText().toString());
 					            Intent displayTimersIntent = new Intent(getContext(), DisplayTimersActivity.class);
 								displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
+								displayTimersIntent.putExtra("GENERIC_MODE", true);
 								displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), value); 
 								startActivity(displayTimersIntent);
 					        }

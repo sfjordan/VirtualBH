@@ -44,6 +44,7 @@ public class DisplayTimersActivity extends Activity {
 		timers = new Timer[numTimers];
 		Log.i("DisplayTimersActivity", "number of timers is " + numTimers);
 		String activityFrom = intent.getStringExtra(getString(R.string.ACTIVITY_FROM));
+		boolean genericMode = intent.getBooleanExtra("GENERIC_MODE", true);
 		
 		if (activityFrom.equals(PickDistTimeActivity.PICK_DIST_ACTIVITY)) {
 		// get data 
@@ -76,7 +77,7 @@ public class DisplayTimersActivity extends Activity {
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
 		save_times = (Button)findViewById(R.id.save_times_button);
-		TimerControlsHandler tch = new TimerControlsHandler(timers, stop_all, this);
+		TimerControlsHandler tch = new TimerControlsHandler(timers, stop_all, this, genericMode);
 		start_all.setOnClickListener(tch);
 		stop_all.setOnClickListener(tch);
 		save_times.setOnClickListener(tch);
