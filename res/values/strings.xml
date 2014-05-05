@@ -59,12 +59,12 @@
     <string name="finish_practice">Finish Practice</string>
     <string name="get_stroke_rate">Get Stroke Rate</string>
     <string name="dragging_explanation">To make a swap, hold and drag the athletes to their new locations</string>
-	<string name="done">Done</string>
-	<string name="just_now">just now</string>
-	<string name="strokes_per_minute">SPM</string>
-	<string name="then_text">Then</string>
-	<string name="and_text">and</string>
-	<string name="cancel_text">Cancel</string>
+    <string name="done">Done</string>
+    <string name="just_now">just now</string>
+    <string name="strokes_per_minute">SPM</string>
+    <string name="then_text">Then</string>
+    <string name="and_text">and</string>
+    <string name="cancel_text">Cancel</string>
 
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
@@ -82,5 +82,6 @@
     <string name="title_activity_pick_new_piece">Enter piece details</string>
     <string name="title_activity_pick_type_of_swap">PickTypeOfSwap</string>
     <string name="ACTIVITY_FROM">activity_from</string>
-    
+    <string name="title_activity_practice_view">PracticeViewActivity</string>
+
 </resources>

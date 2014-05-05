@@ -1,6 +1,7 @@
 package com.vbh.virtualboathouse;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,8 @@ public class Piece implements Serializable {
 	private long msCountdownTime;
 	private final long msTime;
 	private final Date date;
+	private boolean hasDirection = false;
+	private String name;
 	
 	public Piece (Lineup[] lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
@@ -43,6 +46,8 @@ public class Piece implements Serializable {
 		date = new Date(msTime);
 		notes = new ArrayList<String>();
 		strokeRatingNotes = new ArrayList<String>();
+		generateName();
+		
 	}
 	public Piece (ArrayList<Long> lineups, Roster roster, Map<Integer, Boat> boats) {
 		pieceID = UUID.randomUUID().getLeastSignificantBits();
@@ -55,6 +60,7 @@ public class Piece implements Serializable {
 		date = new Date(msTime);
 		notes = new ArrayList<String>();
 		strokeRatingNotes = new ArrayList<String>();
+		generateName();
 	}
 	
 	
@@ -66,7 +72,49 @@ public class Piece implements Serializable {
 		date = new Date(msTime);
 		notes = oldPiece.getNotes();
 		strokeRatingNotes = oldPiece.getStrokeRatingNotes();
+		hasDirection = oldPiece.hasDirection();
+		direction = oldPiece.getDirection();
+		name = oldPiece.getName();
+		
 	}
+	
+	public static String msTimeToString(long time, boolean countdown) {
+		if (time < 0) {
+			return null;
+		}
+		else {
+			int hours = (int)(time / (3600 * 1000));
+		    int remaining = (int)(time % (3600 * 1000));
+			int minutes = (int)(remaining / (60 * 1000));
+		    remaining = (int)(remaining % (60 * 1000));
+		    int seconds = (int)(remaining / 1000);
+		    remaining = (int)(remaining % (1000));
+	        int hundredths = (int)(((int)time % 1000) / 10);
+
+		    DecimalFormat df = new DecimalFormat("00");
+		    String countdownStr = "";
+		    
+		    if (hours != 0) countdownStr += hours + ":";
+		    countdownStr += df.format(minutes) + ":" + df.format(seconds); 
+		    if (!countdown) countdownStr += "." + df.format(hundredths);
+		    
+		    return countdownStr;
+		}
+	}
+	
+	private void generateName() {
+		if (countdown) {
+			
+		}
+		else {
+			
+		}
+	}
+	
+	public void setName(String newName) {
+		name = newName;
+	}
+	
 	public long getMsTime() {
 		return msTime;
 	}
@@ -76,6 +124,14 @@ public class Piece implements Serializable {
 	public long getDateSeconds() {
 		return msTime/1000;
 	}
+	public String getName() {
+		return name;
+	}
+	
+	public boolean hasDirection() {
+		return hasDirection;
+	}
+	
 	
 	public int getNumBoats() {
 		return lineups.size();

@@ -69,14 +69,14 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsActivity"
-            android:label="@string/title_activity_change_linups">
+            android:label="@string/title_activity_change_linups" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickBoatsActivity"
-            android:label="@string/title_activity_pick_boats">
+            android:label="@string/title_activity_pick_boats" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.CrewSelectorActivity" />
@@ -95,7 +95,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsList"
-            android:label="@string/title_activity_change_linups">
+            android:label="@string/title_activity_change_linups" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.Splashscreenactivity" />
@@ -107,6 +107,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vbh.virtualboathouse.CrewSelectorActivity" />
+        </activity>
+        <activity
+            android:name="com.vbh.virtualboathouse.PracticeViewActivity"
+            android:label="@string/title_activity_practice_view" >
         </activity>
     </application>
 
