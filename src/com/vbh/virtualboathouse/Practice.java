@@ -84,6 +84,9 @@ public class Practice implements Serializable {
 	public Piece getPiece(long pieceID) {
 		return pieces.get(pieceID);
 	}
+	public Map<Long, Piece> getAllPieces(){
+		return pieces;
+	}
 	
 	public void addNote(String note) {
 		notes.add(note);

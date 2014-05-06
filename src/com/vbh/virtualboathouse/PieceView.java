@@ -16,6 +16,7 @@ public class PieceView {
 		this.piece = p;
 		this.practice = prac;
 		mainLayout = new LinearLayout(c);
+		mainLayout.setPadding(10, 10, 10, 10);
 		mainLayout.setOrientation(LinearLayout.VERTICAL);
 		addTitle();
 		// for each boat

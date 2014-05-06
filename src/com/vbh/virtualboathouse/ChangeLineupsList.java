@@ -141,41 +141,6 @@ public class ChangeLineupsList extends Activity {
 			        	AlertDialog invalidLineupDialog = builder.create();
 			        	invalidLineupDialog.show();
 					}
-					/*else {
-						Log.i("changelineupslist","invalid lineup");
-			        	
-			        	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-			        	    @Override
-			        	    public void onClick(DialogInterface dialog, int which) {
-			        	        switch (which){
-			        	        case DialogInterface.BUTTON_POSITIVE:
-			        	            //Yes button clicked
-			        	        	saveData();
-			        	        	Iterator<Entry<Long, Lineup>> allLineups = currentPractice.getCurrentLineups().entrySet().iterator();
-			        		    	while(allLineups.hasNext()){
-			        		    		allLineups.next().getValue().printLineup();			        		    		
-			        		    	}
-			        	        	//continue to wherever you need to go
-			        		    	if(fromstr.equals("PickNewPieceActivity")){
-			        		    		launchPickNewPiece();        		    		
-			        		    	}
-			        		    	else if(fromstr.equals("CrewSelectorActivity")){
-			        		    		launchSplashscreen();
-			        		    	}
-			        	        	
-			        	            break;
-
-			        	        case DialogInterface.BUTTON_NEGATIVE:
-			        	            //No button clicked
-			        	            break;
-			        	        }
-			        	    }
-			        	};
-
-			        	AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-			        	builder.setMessage(R.string.invalid_lineup_error_message).setPositiveButton("Yes", dialogClickListener)
-			        	    .setNegativeButton("No", dialogClickListener).show();
-					}*/
 				}
 			}
 		});

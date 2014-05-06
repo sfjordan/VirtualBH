@@ -120,19 +120,7 @@ public class SplashscreenActivity extends Activity {
 	private boolean updateData() {
 		boolean success = true;
 		DataRetriever dr = new DataRetriever(this);
-		//dr.getAthletes();
-		//dr.getBoats();
 		dr.getAthletesAndBoats();
-
-		// get the id of most recent practice then get practice
-		// save id to sharedPrefs
-//		SharedPreferences sharedPref = this.getSharedPreferences(
-//		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-//		SharedPreferences.Editor editor = sharedPref.edit();
-//		editor.putInt(getString(R.string.CURRENT_PRACTICE_ID), rm.getPracticeID());
-//		editor.apply();
-		
-		//PracticeLineupsModel[] plm = DataSaver.readObjectArray(dr.LINEUP_DATA_FILENAME + rm.getPracticeID(), this);
 
 		return success;
 	}

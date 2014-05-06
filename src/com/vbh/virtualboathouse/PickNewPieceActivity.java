@@ -121,7 +121,7 @@ public class PickNewPieceActivity extends Activity {
     	sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
 		//TODO confirmation dialog
 	
-		Intent finishPracticeIntent = new Intent(this, SplashscreenActivity.class);
+		Intent finishPracticeIntent = new Intent(this, PracticeViewActivity.class);
 		startActivity(finishPracticeIntent);
 	}
 	
