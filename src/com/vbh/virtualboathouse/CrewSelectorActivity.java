@@ -138,49 +138,8 @@ public class CrewSelectorActivity extends Activity {
 					}
 					if (numChecked == 0 && fromstr.equals("recordTimes")){
 						//dialog to get number of boats, continue straight to timers
-						final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-						LinearLayout layout = new LinearLayout(getContext());
-						layout.setOrientation(LinearLayout.VERTICAL);
-
-						final TextView titleBox = new TextView(getContext());
-						titleBox.setGravity(Gravity.CENTER_HORIZONTAL);
-						titleBox.setText(R.string.no_selected_crews);
-						titleBox.setPadding(5, 5, 5, 5);
-						layout.addView(titleBox);
+						showGenericDialog();
 						
-						final EditText input = new EditText(getContext());
-						input.setGravity(Gravity.CENTER);
-					    input.setInputType(InputType.TYPE_CLASS_NUMBER);
-					    input.setHint("number of boats");
-					    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					    	     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-					    params.setMargins(170, 0, 170, 0);
-					    input.setLayoutParams(params);
-					    layout.addView(input);
-
-
-						alert.setView(layout);
-					    
-					    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					        public void onClick(DialogInterface dialog, int whichButton) {
-					            int value;
-					            if (input.getText().length() == 0)
-					            	value = 3;
-					            else value = Integer.parseInt(input.getText().toString());
-					            Intent displayTimersIntent = new Intent(getContext(), DisplayTimersActivity.class);
-								displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
-								displayTimersIntent.putExtra("GENERIC_MODE", true);
-								displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), value); 
-								startActivity(displayTimersIntent);
-					        }
-					    });
-
-					    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					        public void onClick(DialogInterface dialog, int whichButton) {
-					            dialog.cancel();
-					        }
-					    });
-					    alert.show(); 
 					}
 					else {
 						SharedPreferences sharedPref = context.getSharedPreferences(
@@ -205,6 +164,57 @@ public class CrewSelectorActivity extends Activity {
 				}
 			}
 		});
+	}
+	
+	private void showGenericDialog(){
+		final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+		LinearLayout layout = new LinearLayout(getContext());
+		layout.setOrientation(LinearLayout.VERTICAL);
+
+		final TextView titleBox = new TextView(getContext());
+		titleBox.setGravity(Gravity.CENTER_HORIZONTAL);
+		titleBox.setText(R.string.no_selected_crews);
+		titleBox.setPadding(5, 5, 5, 5);
+		layout.addView(titleBox);
+		
+		final EditText input = new EditText(getContext());
+		input.setGravity(Gravity.CENTER);
+	    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+	    input.setHint(R.string.num_generic_boats_hint);
+	    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+	    	     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+	    params.setMargins(230, 0, 230, 0);
+	    input.setLayoutParams(params);
+	    layout.addView(input);
+
+
+		alert.setView(layout);
+		alert.setCancelable(false);
+	    
+	    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int whichButton) {
+	            int value;
+	            if (input.getText().length() == 0)
+	            	value = 3;
+	            else value = Integer.parseInt(input.getText().toString());
+	            if (value > 0 && value < 51){
+		            Intent displayTimersIntent = new Intent(getContext(), DisplayTimersActivity.class);
+					displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
+					displayTimersIntent.putExtra("GENERIC_MODE", true);
+					displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), value); 
+					startActivity(displayTimersIntent);
+	            }
+	            else showGenericDialog();
+	        }
+	    });
+
+	    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int whichButton) {
+	            dialog.cancel();
+	            //validInput = true;
+	        }
+	    });
+	    alert.show();
 	}
 	
 	@Override

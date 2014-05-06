@@ -67,7 +67,8 @@
 	<string name="cancel_text">Cancel</string>
 	<string name="need_to_sync">Changes to be synced</string>
 	<string name="no_selected_crews">There are no crews selected. To get stroke rates and times for unsaved boats, enter the number of boats below (default is 3):</string>
-	<string name ="error_save_times_generic">You cannot save times for generic crews</string>
+	<string name="error_save_times_generic">You cannot save times for generic crews</string>
+	<string name="num_generic_boats_hint">1 &#8211; 50</string>
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>
     <string name="CURRENT_PRACTICE_ID">CURRENT_PRACTICE_ID</string>
