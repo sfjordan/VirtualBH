@@ -151,9 +151,11 @@ public class CrewSelectorActivity extends Activity {
 						final EditText input = new EditText(getContext());
 						input.setGravity(Gravity.CENTER);
 					    input.setInputType(InputType.TYPE_CLASS_NUMBER);
-					    input.setHint("number of boats"); 
-					    input.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-					    input.setMaxWidth(200);
+					    input.setHint("number of boats");
+					    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					    	     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+					    params.setMargins(170, 0, 170, 0);
+					    input.setLayoutParams(params);
 					    layout.addView(input);
 
 
@@ -161,7 +163,10 @@ public class CrewSelectorActivity extends Activity {
 					    
 					    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					        public void onClick(DialogInterface dialog, int whichButton) {
-					            int value = Integer.parseInt(input.getText().toString());
+					            int value;
+					            if (input.getText().length() == 0)
+					            	value = 3;
+					            else value = Integer.parseInt(input.getText().toString());
 					            Intent displayTimersIntent = new Intent(getContext(), DisplayTimersActivity.class);
 								displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 								displayTimersIntent.putExtra("GENERIC_MODE", true);
