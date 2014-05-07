@@ -60,6 +60,7 @@ public class PracticeViewActivity extends Activity {
 		Iterator<Entry<Long, Piece>> allPieces = currentPractice.getAllPieces().entrySet().iterator();
     	while(allPieces.hasNext()){
     		Piece p = allPieces.next().getValue();
+    		if (p.getDistance()==0) continue;
     		PieceView pv = new PieceView(context, piece_list, currentPractice, p);
     		j++;
     	}
