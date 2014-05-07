@@ -69,6 +69,7 @@
 	<string name="no_selected_crews">There are no crews selected. To get stroke rates and times for unsaved boats, enter the number of boats below (default is 3):</string>
 	<string name="error_save_times_generic">You cannot save times for generic crews. Return to home screen?</string>
 	<string name="num_generic_boats_hint">1 &#8211; 50</string>
+	<string name="confirm_finish_practice">Do you really want to finish this practice and return to the home screen?</string>
 	
     <!-- These strings are used for accessing resources -->
     <string name="SHARED_PREFS_FILE">com.vbh.virtualboathouse.DATA_STRUCTURES_IDS</string>

@@ -1,8 +1,10 @@
 package com.vbh.virtualboathouse;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -120,13 +122,31 @@ public class PickNewPieceActivity extends Activity {
     	sharedPref.edit().putInt(this.getString(R.string.PRACTICE_TO_UPLOAD_ID), currentPracticeID).apply();
     	sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
 		//TODO confirmation dialog
-	
-		Intent finishPracticeIntent = new Intent(this, PracticeViewActivity.class);
-		startActivity(finishPracticeIntent);
+    	AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+		alert.setTitle("Are you sure?");
+		alert.setMessage(R.string.confirm_finish_practice);
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int whichButton) {
+		     //Do something here where "ok" clicked
+		    	Intent finishPracticeIntent = new Intent(getContext(), PracticeViewActivity.class);
+				startActivity(finishPracticeIntent);
+		    }
+		});
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int whichButton) {
+		    //Do something here when "cancel" clicked.
+		    }
+		});
+		alert.show();
+		
 	}
 	
 	
 
+	private Context getContext(){
+		return this;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
