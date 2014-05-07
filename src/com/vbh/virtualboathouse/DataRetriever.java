@@ -37,13 +37,14 @@ import android.widget.CheckBox;
 
 public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	
-	private final String ATHLETE_URL = "https://cos333.herokuapp.com/json/athletes/";
-	private final String BOATS_URL   = "https://cos333.herokuapp.com/json/boats/";
+	private final String ATHLETE_URL  = "https://cos333.herokuapp.com/json/athletes/";
+	private final String BOATS_URL    = "https://cos333.herokuapp.com/json/boats/";
 	private final String PRACTICE_URL = "https://cos333.herokuapp.com/json/practices/";
 	private final String SINGLE_PRACTICE_URL = "https://cos333.herokuapp.com/json/practice/";
 	private final String LINEUP_URL   = "/lineups/";
 	private final String RECENT_PRACTICE_URL = "https://cos333.herokuapp.com/json/practice/recent";
 	private final String RECENT_LINEUPS_URL  = "https://cos333.herokuapp.com/json/lineups/recent";
+	private final String ATHLETE_LINEUP_URL  = "https://cos333.herokuapp.com/json/lineup/athletes";
 	private final String PIECE_URL       = "https://cos333.herokuapp.com/json/pieces/add";
 	private final String SAVE_LINEUP_URL = "https://cos333.herokuapp.com/json/lineups/add";
 	private final String SAVE_RESULT_URL = "https://cos333.herokuapp.com/json/results/add";
@@ -78,6 +79,9 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	private PracticeLineupsModel[] plm;
 	private RecentModel rm;
 	private LineupModel[] lm;
+	private LineupArrayModel lam;
+	
+	private Map<Integer, LineupArrayModel> lineupArrayModels;
 	
 	private Map<Integer, Boat> boatList;
 	private Roster roster;
@@ -128,6 +132,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
         SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
         username = sp.getString(CurrentUser.USERNAME, "admin");
         apiKey = sp.getString(CurrentUser.API_KEY, "fail");
+        Log.i("DataRetriever", "apiKey = " + apiKey);
         if (apiKey == "fail") {
         	return null;
         }
@@ -151,9 +156,17 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    currentPracticeID = rm.getPracticeID();
 		    dataReturned = performHTTPRequest(RECENT_LINEUPS_URL);
 		    data.add(dataReturned);
-//		    dataReturned = performHTTPRequest(SINGLE_PRACTICE_URL + rm.getPracticeID() + LINEUP_URL);
-//		    if (dataReturned == null) return null;
-//		    data.add(dataReturned);
+		    Log.i("DataRetriever", "lineup json = "+ dataReturned);
+		    lm = gson.fromJson(data.get(3), LineupModel[].class);
+			Log.i("DataRetriever", "recent lineup data successfully converted from JSON ");
+			lineupArrayModels = new HashMap<Integer, LineupArrayModel>();
+			for (LineupModel singleLM : lm) {
+				int lineupID = singleLM.getPrivateKey();
+				dataReturned = performHTTPRequest(ATHLETE_LINEUP_URL, "id", gson.toJson(new ReturnedPieceModel(lineupID)));
+				Log.i("DataRetriever", dataReturned + ", " + lineupID);
+				lineupArrayModels.put(lineupID, gson.fromJson(dataReturned, LineupArrayModel.class));	
+				
+			}
 		    Log.i("DataRetriever", "all data successfully pulled ");
 		    // save data
 		    // TODO check if there is data to upload from a file (aka support multiple practices)
@@ -253,6 +266,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		HttpPost httpPost = new HttpPost(url);
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
         nameValuePairs.add(new BasicNameValuePair("api_key", apiKey));
+        Log.i("DataRetriever", dataIdentifier + " : " + dataToPost);
         nameValuePairs.add(new BasicNameValuePair(dataIdentifier, dataToPost));
         try {
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -315,14 +329,11 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    			editor.putInt(context.getString(R.string.CURRENT_PRACTICE_ID), currentPracticeID);
 	    			editor.apply();
 	    			Log.i("DataRetriever", "recent practice ID put in sharedPrefs");
-	    			lm = gson.fromJson(data.get(3), LineupModel[].class);
-	    			//plm = gson.fromJson(data.get(3), PracticeLineupsModel[].class);
-	    			Log.i("DataRetriever", "recent lineup data successfully converted from JSON ");
-	    			
 	    	}
 	    	Log.i("DataRetriever", "buildpractice about to be launched");
-	    	buildPractice(am, bm, lm);
+	    	buildPractice(am, bm, lm, lineupArrayModels);
 	    	saveData();
+	    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
 	    } catch (Exception e) {
 	    	try {
 	    		 Log.e("DataRetriever", "data is an error message ");
@@ -341,10 +352,11 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    	// Display error message as a toast and log the problem
 	    	
 	    }
+	    
     }
     
     @SuppressLint("UseSparseArrays")
-	private void buildPractice(AthleteModel[] am, BoatModel[] bm, LineupModel[] lm) {
+	private void buildPractice(AthleteModel[] am, BoatModel[] bm, LineupModel[] lm, Map<Integer, LineupArrayModel> lam) {
     	// build boat list
 		boatList = new HashMap<Integer, Boat>(bm.length);
 		for (BoatModel boatModel : bm) {
@@ -357,7 +369,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		practice = new Practice(currentPracticeID);
 		Log.i("DataRetriever", "practice object has been created");
 		for (LineupModel lineupModel : lm) {
-			Lineup l = new Lineup(lineupModel, roster, boatList);
+			Lineup l = new Lineup(lineupModel, roster, boatList, lam.get(lineupModel.getPrivateKey()));
 			practice.addCurrentLineup(l);
 		}
 	}

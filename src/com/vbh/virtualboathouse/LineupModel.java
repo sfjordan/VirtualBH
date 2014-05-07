@@ -43,8 +43,7 @@ public class LineupModel implements Serializable {
 		private String position;
 		@SerializedName("piece")
 		private int piece;
-		@SerializedName("athletes")
-		private int[] athleteIDs;
+
 		@SerializedName("boat")
 		private int boatID;
 		
@@ -59,9 +58,7 @@ public class LineupModel implements Serializable {
 		private int getPiece() {
 			return piece;
 		}
-		public int[] getAthleteIDs() {
-			return athleteIDs;
-		}
+
 		public int getBoatID() {
 			return boatID;
 		}
