@@ -59,7 +59,7 @@ public class SplashscreenActivity extends Activity {
 		}
 		else {
 			lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
-			lastUpdated.setText(getString(R.string.last_updated_text) + getString(R.string.just_now));
+			lastUpdated.setText(getString(R.string.last_updated_text) + sharedPref.getString("LAST_UPDATED", "just now"));
 		}
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
@@ -89,8 +89,10 @@ public class SplashscreenActivity extends Activity {
 					if (success) {
 						sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
 						//lastUpdatedStub.setText(getString(R.string.last_updated_text));
+						sharedPref.edit().putString("LAST_UPDATED", currentDateString()).apply();
 						lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
-						lastUpdated.setText(getString(R.string.last_updated_text) + currentDateString());
+						lastUpdated.setText(getString(R.string.last_updated_text) + sharedPref.getString("LAST_UPDATED", "just now"));
+						//lastUpdated.setText(getString(R.string.last_updated_text) + currentDateString());
 					}
 				}
 			}
@@ -129,24 +131,6 @@ public class SplashscreenActivity extends Activity {
 		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
 		displayBoatPickersIntent.putExtra(getString(R.string.ACTIVITY_FROM),"recordTimes");
 		startActivity(displayBoatPickersIntent);
-	}
-	private void testTimers(){
-		System.out.println("testing timers...");
-		Intent testTimersIntent = new Intent(this, DisplayTimersActivity.class);
-		startActivity(testTimersIntent);
-	}
-	
-	private void testChangeLineups(){
-		System.out.println("testing changeLineups...");
-		Intent testChangeLineups = new Intent(this, ChangeLineupsList.class);
-		startActivity(testChangeLineups);
-	}
-	
-	@SuppressWarnings("unused")
-	private void testPickNewPiece(){
-		Intent displayPickNewPiece = new Intent(this, PickNewPieceActivity.class);
-		displayPickNewPiece.putExtra("FROM","timers");
-		startActivity(displayPickNewPiece);
 	}
 	
 	private void launchChangeLineups(){

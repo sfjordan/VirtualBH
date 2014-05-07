@@ -38,19 +38,32 @@ public class Lineup implements Serializable, Parcelable {
 		this.allAthleteID = new int[lam.getAthleteIDs().length];
 		int k = 0;
 		for(int id : lam.getAthleteIDs()) {
+			Log.i("lam lineup","lam.getAthleteIDs: "+id+", k = "+k);
 			this.allAthleteID[k] = id;
 			k++;
 		}
 		this.position = lmf.getPosition();
 		this.boat = boats.get(lmf.getBoatID());
 		Log.i("Lineup", boat.getName() + " is coxed = " + boat.isCoxed());
-		if (boat.isCoxed()) {
+		if(boat.isCoxed() && roster.getAthlete(allAthleteID[0]).isCoxswain()){
+			Log.i("lineup","allAthleteID[0].iscox: "+roster.getAthlete(allAthleteID[0]).isCoxswain());
 			this.coxswain = roster.getAthlete(allAthleteID[0]);
 			this.athleteNames = new String[allAthleteID.length - 1];
 			this.athleteID = new int[allAthleteID.length - 1];
 		    for (int i = 1; i < allAthleteID.length; i++) {
 		    	this.athleteID[i-1] = allAthleteID[i];
 		    	this.athleteNames[i-1] = roster.getAthlete(allAthleteID[i]).getFirstInitLastName();
+		    }
+		}
+		else if (boat.isCoxed() && roster.getAthlete(allAthleteID[allAthleteID.length-1]).isCoxswain()){
+			Log.i("lineup","allAthleteID[0] is not cox or does not have cox");
+			Log.i("lineup","allAthleteID[length-1].iscox: "+roster.getAthlete(allAthleteID[allAthleteID.length-1]).isCoxswain());
+			this.coxswain = roster.getAthlete(allAthleteID[allAthleteID.length-1]);
+			this.athleteNames = new String[allAthleteID.length - 1];
+			this.athleteID = new int[allAthleteID.length - 1];
+		    for (int i = 0; i < athleteID.length; i++) {
+		    	this.athleteID[i] = allAthleteID[allAthleteID.length-2-i];
+		    	this.athleteNames[i] = roster.getAthlete(allAthleteID[allAthleteID.length-2-i]).getFirstInitLastName();
 		    }
 		}
 		else {
@@ -64,6 +77,28 @@ public class Lineup implements Serializable, Parcelable {
 		    	i++;
 		    }
 		}
+		/*else{
+			Log.i("lineup","allAthleteID[0] is not cox or does not have cox");
+			if (boat.isCoxed()) {
+				Log.i("lineup","allAthleteID[length-1].iscox: "+roster.getAthlete(allAthleteID[allAthleteID.length-1]).isCoxswain());
+				this.coxswain = roster.getAthlete(allAthleteID[allAthleteID.length-1]);
+				this.athleteNames = new String[allAthleteID.length - 1];
+				this.athleteID = new int[allAthleteID.length - 1];
+			    for (int i = 0; i < athleteID.length; i++) {
+			    	this.athleteID[i] = allAthleteID[allAthleteID.length-2-i];
+			    	this.athleteNames[i] = roster.getAthlete(allAthleteID[allAthleteID.length-2-i]).getFirstInitLastName();
+			    }
+			}
+			else {
+				coxswain = null;
+				this.athleteNames = new String[allAthleteID.length];
+				this.athleteID = new int[allAthleteID.length];
+				for (int i = 0; i < athleteID.length; i++) {
+			    	this.athleteID[i] = allAthleteID[allAthleteID.length-1-i];
+			    	this.athleteNames[i] = roster.getAthlete(allAthleteID[allAthleteID.length-1-i]).getFirstInitLastName();
+			    }
+			}
+		}*/
 	}
 	
 	public Lineup(LinkedList<AthleteListName> lineup, Roster roster,Map<Integer,Boat> boats){
@@ -126,7 +161,7 @@ public class Lineup implements Serializable, Parcelable {
 	public void printLineup(){
 		Log.i("printLineup","Boat: "+boat.getName());
 		if(coxswain!=null)
-			Log.i("printLineup","Cox: "+coxswain.getFirstInitLastName());
+			Log.i("printLineup","Cox: "+coxswain.getFirstInitLastName()+", id: "+coxswain.getAthleteID());
 		int n = 0;
 		for(int id : athleteID){
 			/*Log.i("printLineup","athleteID: "+id);
