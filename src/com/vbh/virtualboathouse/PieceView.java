@@ -25,6 +25,7 @@ public class PieceView {
 		}
 		addStrokeRatings();
 		addNotes();
+		ll.addView(mainLayout);
 	}
 	
 	private void addTitle() {
@@ -35,8 +36,8 @@ public class PieceView {
 		pieceName.setText(piece.getName());
 		mainLayout.addView(pieceName);
 		if (piece.isCountdown()) 
-			typeOfPiece.setText("Timed");
-		else typeOfPiece.setText("Distance");
+			typeOfPiece.setText("Timed ");
+		else typeOfPiece.setText("Distance ");
 		llH.addView(typeOfPiece);
 		if (piece.isCountdown()) 
 			distanceOrTime.setText(Piece.msTimeToString(piece.getCountdownTime(), piece.isCountdown()));
@@ -57,6 +58,7 @@ public class PieceView {
 		TextView boatName = new TextView(context);
 		TextView underText = new TextView(context);
 		boatName.setText(practice.getLineup(lineupID).getBoatName()); // name of boat
+		boatName.setTextSize(R.dimen.boat_name_text_size);
 		underText.setText(practice.getLineup(lineupID).getStrokeInitLast()); //stroke
 		LinearLayout llH = new LinearLayout(context);
 		LinearLayout llV = new LinearLayout(context);
@@ -69,9 +71,11 @@ public class PieceView {
 		}
 		else {
 			TextView result = new TextView(context);
+			result.setTextSize(R.dimen.result_text_size);
 			result.setText(Piece.msTimeToString(piece.getTime(lineupID), false));
 			llH.addView(result);
 		}
+		mainLayout.addView(llH);
 	}
 	
 	private void addStrokeRatings() {

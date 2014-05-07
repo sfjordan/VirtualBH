@@ -4,27 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.vbh.virtualboathouse.PracticeViewActivity" >
+
     <Button
         android:id="@+id/button_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:text="@string/done"
         android:textColor="@android:color/white" />
-    <ScrollView android:id="@+id/pieces_list_scroll"
+
+    <TextView
+        android:id="@+id/practiceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/practiceDateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/practiceName"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ScrollView
+        android:id="@+id/pieces_list_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="50dp">
-        <LinearLayout android:id="@+id/pieces_list"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical"
-	        android:divider="?android:dividerHorizontal"
-	        android:showDividers="middle">
-	    </LinearLayout>
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/practiceDateView"
+        android:paddingBottom="50dp" >
+
+        <LinearLayout
+            android:id="@+id/piece_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+        </LinearLayout>
+
     </ScrollView>
+
 </RelativeLayout>
 

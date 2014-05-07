@@ -95,7 +95,6 @@ public class CrewSelectorActivity extends Activity {
 				Log.i("CrewSelector", "Stroke's name is " + name);
 				lineupBoxes[i] = new CheckBox(this);
 				lineupBoxes[i].setText(name);
-				//lineupBoxes[i].setText(l.getAthleteFromSeat(l.getNumOfSeats(), roster).getFirstInitLastName());
 				lineupBoxes[i].setTag(l);
 				lineups_checklist.addView(lineupBoxes[i]);
 				i++;

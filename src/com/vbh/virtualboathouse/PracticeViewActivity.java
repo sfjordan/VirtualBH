@@ -1,5 +1,7 @@
 package com.vbh.virtualboathouse;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.os.Build;
 
 public class PracticeViewActivity extends Activity {
@@ -43,13 +46,21 @@ public class PracticeViewActivity extends Activity {
 		context = this;
 		//get data
 		getData();
+		// put the title in
+		TextView practice_name = (TextView) findViewById(R.id.practiceName);
+		TextView practice_date_time = (TextView) findViewById(R.id.practiceDateView);
+		practice_name.setText("Today's Workout");
+		Date d = currentPractice.getDate();
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+		practice_date_time.setText(sdf.format(d));
+		
 		//for each piece, display pieceview
-		LinearLayout pieces_list = (LinearLayout)findViewById(R.id.pieces_list);
+		LinearLayout piece_list = (LinearLayout)findViewById(R.id.piece_list);
 		int j = 0;
 		Iterator<Entry<Long, Piece>> allPieces = currentPractice.getAllPieces().entrySet().iterator();
     	while(allPieces.hasNext()){
     		Piece p = allPieces.next().getValue();
-    		PieceView PV = new PieceView(context, pieces_list, currentPractice, p);
+    		PieceView pv = new PieceView(context, piece_list, currentPractice, p);
     		j++;
     	}
 		//done button tries to update data, returns to splashscreen
