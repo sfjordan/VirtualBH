@@ -6,10 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.util.SparseArray;
 
 @SuppressLint("UseSparseArrays")
@@ -187,7 +190,16 @@ public class Piece implements Serializable {
 		return times;
 	}
 	public long getTime(long lineupID) {
-		return times.get(lineupID);
+		Log.i("piece","times is null: "+(times==null));
+		Log.i("piece","lineupID: "+(lineupID));
+		Log.i("piece","times.get(lineupID) is null: "+(times.get(lineupID)==null));
+		Iterator<Long> allTimes = times.keySet().iterator();
+    	while(allTimes.hasNext()){
+    		Long l = allTimes.next();
+    		Log.i("piece","times map contains long: "+l);
+    	}
+    	if (times.get(lineupID) == null) return 0L;
+    	else return times.get(lineupID);
 	}
 
 	public void setTime(long lineupID, long time) {

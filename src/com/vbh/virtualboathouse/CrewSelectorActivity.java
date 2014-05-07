@@ -134,6 +134,7 @@ public class CrewSelectorActivity extends Activity {
 							l.printLineup();
 							currentPractice.addCurrentLineup(l);
 							listLineupIDs.add(l.getLineupID());
+							Log.i("crewselector", "l.getLineupID: "+l.getLineupID());
 						}
 					}
 					if (numChecked == 0 && fromstr.equals("recordTimes")){

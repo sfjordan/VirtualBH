@@ -67,7 +67,7 @@ public class PieceView {
 		if(piece.isCountdown()) {
 			
 		}
-		else {
+		else if (piece.getTime(lineupID) != 0L) {
 			TextView result = new TextView(context);
 			result.setText(Piece.msTimeToString(piece.getTime(lineupID), false));
 			llH.addView(result);
