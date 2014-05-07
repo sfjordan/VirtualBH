@@ -32,6 +32,8 @@ public class PickNewPieceActivity extends Activity {
 	private SharedPreferences sharedPref;
 	private Roster roster;
 	private Map<Integer, Boat> boatList;
+	private EditText notes;
+	private EditText directionText;
 	
 	public final static String PICK_NEW_PIECE_ACTIVITY = "PickNewPieceActivity";
 	
@@ -49,6 +51,8 @@ public class PickNewPieceActivity extends Activity {
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button newPiece = (Button) findViewById(R.id.new_piece_button);
 		Button finishPractice = (Button) findViewById(R.id.finish_practice_button);
+		notes = (EditText) findViewById(R.id.notes_text);
+		directionText = (EditText) findViewById(R.id.direction_text);
 		
 		// pull information about the current practice/last piece
 		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE); // TODO make sure this is saved on flip or recreated
@@ -63,6 +67,11 @@ public class PickNewPieceActivity extends Activity {
 		roster = DataSaver.readObject(getContext().getString(R.string.ROSTER_FILE), getContext());
 		// TODO check for null
 		Log.i("picknewpiece", "roster is currently null: " + (roster==null));
+		
+		if(currentPiece.hasDirection())
+			directionText.setText(currentPiece.getDirection());
+		if(currentPiece.hasNotes())
+			notes.setText(currentPiece.getNotes().get(0));
 	
         if (currentPiece.isTimed()) {
         	//nothing, apparently
@@ -102,13 +111,20 @@ public class PickNewPieceActivity extends Activity {
 	}
 	
 	private void ChangeLineups() {
-		//TODO: make actually do something other than return to splashscreen
+		if(!notes.getText().toString().isEmpty())
+    		currentPiece.addNotes(notes.getText().toString());
+		if(!directionText.getText().toString().isEmpty())
+    		currentPiece.setDirection(directionText.getText().toString());
 		Intent changeLineupsIntent = new Intent(this, ChangeLineupsList.class);
 		changeLineupsIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_NEW_PIECE_ACTIVITY);
 		startActivity(changeLineupsIntent);
 	}
 	
 	private void NewPiece() {
+		if(!notes.getText().toString().isEmpty())
+    		currentPiece.addNotes(notes.getText().toString());
+		if(!directionText.getText().toString().isEmpty())
+    		currentPiece.setDirection(directionText.getText().toString());
 		// save current piece to practice
     	currentPractice.addPiece(currentPiece);
     	// make new piece
@@ -128,6 +144,10 @@ public class PickNewPieceActivity extends Activity {
 	}
 	
 	private void FinishPractice() {
+		if(!notes.getText().toString().isEmpty())
+    		currentPiece.addNotes(notes.getText().toString());
+		if(!directionText.getText().toString().isEmpty())
+    		currentPiece.setDirection(directionText.getText().toString());
 		// save current piece to practice
     	currentPractice.addPiece(currentPiece);
     	// write practice to file

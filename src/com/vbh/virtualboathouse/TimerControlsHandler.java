@@ -72,7 +72,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         	}
         }*/
         else if(DisplayTimersActivity.save_times == v){
-        	if (genericMode){
+        	if (allStopped() && genericMode){
         		AlertDialog.Builder alert = new AlertDialog.Builder(context);
         		alert.setTitle("Generic Timers");
         		alert.setMessage(R.string.error_save_times_generic);

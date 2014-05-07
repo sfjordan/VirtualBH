@@ -36,6 +36,7 @@ public class Piece implements Serializable {
 	private final long msTime;
 	private final Date date;
 	private boolean hasDirection = false;
+	private boolean hasNotes = false;
 	private String name;
 	
 	public Piece (Lineup[] lineups, Roster roster, Map<Integer, Boat> boats) {
@@ -136,7 +137,9 @@ public class Piece implements Serializable {
 	public boolean hasDirection() {
 		return hasDirection;
 	}
-	
+	public boolean hasNotes(){
+		return hasNotes;
+	}
 	
 	public int getNumBoats() {
 		return lineups.size();
@@ -187,6 +190,7 @@ public class Piece implements Serializable {
 
 	public void setDirection(String direction) {
 		this.direction = direction;
+		this.hasDirection = true;
 	}
 
 	public Map<Long, Long> getTimes() {
@@ -218,6 +222,7 @@ public class Piece implements Serializable {
 
 	public void addNotes(String note) {
 		this.notes.add(note);
+		this.hasNotes = true;
 	}
 	public void addStrokeRatingNotes(String note) {
 		this.strokeRatingNotes.add(note);
