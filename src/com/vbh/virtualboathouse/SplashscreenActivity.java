@@ -26,10 +26,11 @@ import android.widget.TextView;
 
 public class SplashscreenActivity extends Activity {
 	
-	private TextView lastUpdated;
+	private static TextView lastUpdated;
 	private Context context;
 	private SharedPreferences sharedPref;
-	private Thread thread;   
+	private String fromstr;   
+	
 	
 	public final static String SPLASH_SCREEN_ACTIVITY = "SplashscreenActivity";
 
@@ -50,19 +51,28 @@ public class SplashscreenActivity extends Activity {
 		//Button stroke = (Button) findViewById(R.id.stroke_button);		
 		Log.i("splashscreen","in splashscreen");       
 
-		
-		//if sharedpref is false, leave blank? else make red "unsynced data" or something
+		Bundle b = getIntent().getExtras();
+		if (b!=null){
+			fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
+		}
 		Boolean dataChanged = sharedPref.getBoolean("DATA_SET_CHANGED", true);
-		Log.i("splashscreen","datachanged: "+dataChanged);
-		if (dataChanged){
-			//make red and notify user
-			lastUpdated.setTextColor(Color.RED);
-			lastUpdated.setText(getString(R.string.need_to_sync));
+		
+		if (fromstr!=null &&fromstr.equals("LaunchActivity")){
+			//syncing...
+			updateSyncTextInProgress();
+		}
+		else if(dataChanged){
+			//data needs syncing
+			updateSyncTextNeedSync();
 		}
 		else {
-			lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
-			lastUpdated.setText(getString(R.string.last_updated_text) + sharedPref.getString("LAST_UPDATED", "just now"));
+			//display last time synced
+			updateSyncTextFinishSync();
 		}
+		
+		//if sharedpref is false, leave blank? else make red "unsynced data" or something
+		
+		Log.i("splashscreen","datachanged: "+dataChanged);
 		//icons are 35dp, 5dp padding
 		recordTimes.setOnClickListener(new OnClickListener() {
 			@Override
@@ -87,13 +97,10 @@ public class SplashscreenActivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.update_data_button)){
 					//launchDataUpdater();
+					updateSyncTextInProgress();
 					boolean success = updateData();
 					if (success) {
 						sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
-						//lastUpdatedStub.setText(getString(R.string.last_updated_text));
-						sharedPref.edit().putString("LAST_UPDATED", currentDateString()).apply();
-						lastUpdated.setTextColor(getResources().getColor(R.color.text_gray));
-						lastUpdated.setText(getString(R.string.last_updated_text) + sharedPref.getString("LAST_UPDATED", "just now"));
 						//lastUpdated.setText(getString(R.string.last_updated_text) + currentDateString());
 					}
 				}
@@ -113,9 +120,9 @@ public class SplashscreenActivity extends Activity {
 		});*/
 		
 		
-		SharedPreferences sp = getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
+
 		TextView tv = (TextView) findViewById(R.id.username_text);
-		tv.setText(sp.getString(CurrentUser.USERNAME, "admin"));
+		tv.setText(sharedPref.getString(CurrentUser.USERNAME, "admin"));
 		//enable for debugging only, displays API key
 //		TextView tv1 = (TextView) findViewById(R.id.textView2);
 //		tv1.setText(sp.getString(CurrentUser.API_KEY, "failed"));
@@ -143,28 +150,36 @@ public class SplashscreenActivity extends Activity {
 	}
 	
 	
-	private String currentDateString(){
+	public static String currentDateString(){
 		Time now = new Time();
 		now.setToNow();
 		return now.format("%l:%M%P %a, %d %b");
 	}
 	
-	public void updateThing(){
+	public static void updateSyncTextInProgress(){
 		//todo: update textview? maybe call in dataretriever?
+		lastUpdated.setTextColor(Color.GRAY);
+		lastUpdated.setText("Sync in progress...");	
+	}
+	
+	public static void updateSyncTextNeedSync(){
+		lastUpdated.setTextColor(Color.RED);
+		lastUpdated.setText("Changes to be synced");
 		
 	}
 	
-	@Override
-	public boolean onTouchEvent(MotionEvent evt)
-	{
-	    if(evt.getAction() == MotionEvent.ACTION_DOWN)
-	    {
-	        synchronized(thread){
-	            thread.notifyAll();
-	        }
-	    }
-	    return true;
-	}  
+	public static void updateSyncTextFinishSync(){
+		lastUpdated.setTextColor(Color.GRAY);
+		lastUpdated.setText("last updated: "+ currentDateString());
+		
+	}
+	
+	private void updateSyncTextLastSync(){
+		String lastupdated = sharedPref.getString("LAST_UPDATED", "");
+		lastUpdated.setTextColor(Color.GRAY);
+		lastUpdated.setText("last updated: "+ lastupdated);
+		
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

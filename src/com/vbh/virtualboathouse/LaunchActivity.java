@@ -52,6 +52,7 @@ public class LaunchActivity extends Activity {
 	        			spEditor.commit();
 	        			// launch the main menu activity
 	        			Intent splashscreenIntent = new Intent(getApplicationContext(), SplashscreenActivity.class);
+	        			splashscreenIntent.putExtra(getString(R.string.ACTIVITY_FROM), "LaunchActivity");
 	        			//TODO check if user is already logged in/already have API key
 	        			if(updateData()) {
 	        				

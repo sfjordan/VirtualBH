@@ -122,7 +122,6 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     }
     @Override
     protected ArrayList<String> doInBackground(String... urls) {
-    	System.out.println("in background");
         ArrayList<String> data = new ArrayList<String>();
         
         if (!isNetworkConnected(context)) {
@@ -334,7 +333,9 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    	Log.i("DataRetriever", "buildpractice about to be launched");
 	    	buildPractice(am, bm, lm, lineupArrayModels);
 	    	saveData();
-	    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
+	    	SplashscreenActivity.updateSyncTextFinishSync();;
+	    	sharedPref.edit().putString("LAST_UPDATED", SplashscreenActivity.currentDateString()).apply();
+	    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
 	    } catch (Exception e) {
 	    	try {
 	    		 Log.e("DataRetriever", "data is an error message ");
