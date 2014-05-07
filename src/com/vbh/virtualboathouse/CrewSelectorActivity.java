@@ -25,6 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -38,6 +41,7 @@ import android.os.Build;
 public class CrewSelectorActivity extends Activity {
 	
 	private Button go_button;
+	private TextView instructions;
 	private LinearLayout lineups_checklist;
 	private String fromstr;
 
@@ -115,8 +119,11 @@ public class CrewSelectorActivity extends Activity {
 			fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
 		}
 
-	    
+	    instructions = (TextView) findViewById(R.id.crew_selector_instructions_text);
 	    go_button = (Button) findViewById(R.id.go_button);
+	    instructions.setVisibility(View.INVISIBLE);
+	    fadeSwap();
+	    
 	    go_button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v){
@@ -253,6 +260,38 @@ public class CrewSelectorActivity extends Activity {
 		pickDistTimeIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 		startActivity(pickDistTimeIntent);
 	}
+	
+	private void fadeSwap(){
+    	// fade out instructions view nicely after 5 seconds
+		AlphaAnimation alphaAnim = new AlphaAnimation(1.0f,0.0f);
+		alphaAnim.setStartOffset(3000);                        // start in 3 seconds
+		alphaAnim.setDuration(400);
+		alphaAnim.setAnimationListener(new AnimationListener()
+		{
+			 public void onAnimationEnd(Animation animation)
+			 {
+			   // make invisible when animation completes, you could also remove the view from the layout
+				 instructions.setVisibility(View.INVISIBLE);
+				 go_button.setVisibility(View.VISIBLE);
+				 
+			 }
+	
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				//do nothing
+				
+			}
+	
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		instructions.setAnimation(alphaAnim);
+    }
 	
 	private Context getContext(){
 		return this;

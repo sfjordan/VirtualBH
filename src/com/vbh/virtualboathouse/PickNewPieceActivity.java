@@ -172,7 +172,9 @@ public class PickNewPieceActivity extends Activity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int whichButton) {
 		     //Do something here where "ok" clicked
-		    	Intent finishPracticeIntent = new Intent(getContext(), PracticeViewActivity.class);
+		    	updateData();
+		    	SplashscreenActivity.updateSyncTextInProgress();
+		    	Intent finishPracticeIntent = new Intent(getContext(), SplashscreenActivity.class);
 				startActivity(finishPracticeIntent);
 		    }
 		});
@@ -183,6 +185,14 @@ public class PickNewPieceActivity extends Activity {
 		});
 		alert.show();
 		
+	}
+	
+	private boolean updateData() {
+		boolean success = true;
+		DataRetriever dr = new DataRetriever(this);
+		dr.getAthletesAndBoats();
+
+		return success;
 	}
 	
 	private Context getContext(){

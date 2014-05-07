@@ -56,18 +56,22 @@ public class SplashscreenActivity extends Activity {
 			fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
 		}
 		Boolean dataChanged = sharedPref.getBoolean("DATA_SET_CHANGED", true);
+		Log.i("splashscreen","syncInProgress: "+syncInProgress());
 		
 		if (fromstr!=null &&fromstr.equals("LaunchActivity")){
 			//syncing...
+			updateSyncTextInProgress();
+		}
+		else if(syncInProgress()){
 			updateSyncTextInProgress();
 		}
 		else if(dataChanged){
 			//data needs syncing
 			updateSyncTextNeedSync();
 		}
-		else {
+		else{
 			//display last time synced
-			updateSyncTextFinishSync();
+			updateSyncTextLastSync();
 		}
 		
 		//if sharedpref is false, leave blank? else make red "unsynced data" or something
@@ -149,6 +153,10 @@ public class SplashscreenActivity extends Activity {
 		
 	}
 	
+	private boolean syncInProgress(){
+		return sharedPref.getBoolean("SYNC_IN_PROGRESS", false);
+	}
+	
 	
 	public static String currentDateString(){
 		Time now = new Time();
@@ -158,23 +166,31 @@ public class SplashscreenActivity extends Activity {
 	
 	public static void updateSyncTextInProgress(){
 		//todo: update textview? maybe call in dataretriever?
+		if (lastUpdated == null)
+			return;
 		lastUpdated.setTextColor(Color.GRAY);
 		lastUpdated.setText("Sync in progress...");	
 	}
 	
 	public static void updateSyncTextNeedSync(){
+		if (lastUpdated == null)
+			return;
 		lastUpdated.setTextColor(Color.RED);
 		lastUpdated.setText("Changes to be synced");
 		
 	}
 	
 	public static void updateSyncTextFinishSync(){
+		if (lastUpdated == null)
+			return;
 		lastUpdated.setTextColor(Color.GRAY);
 		lastUpdated.setText("last updated: "+ currentDateString());
 		
 	}
 	
 	private void updateSyncTextLastSync(){
+		if (lastUpdated == null)
+			return;
 		String lastupdated = sharedPref.getString("LAST_UPDATED", "");
 		lastUpdated.setTextColor(Color.GRAY);
 		lastUpdated.setText("last updated: "+ lastupdated);

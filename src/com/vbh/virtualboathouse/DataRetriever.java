@@ -129,6 +129,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
         }
         // get the user info from shared preferences
         SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
+        sp.edit().putBoolean("SYNC_IN_PROGRESS", true).apply();
         username = sp.getString(CurrentUser.USERNAME, "admin");
         apiKey = sp.getString(CurrentUser.API_KEY, "fail");
         Log.i("DataRetriever", "apiKey = " + apiKey);
@@ -298,6 +299,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	boolean seenError = false;
     	Gson gson = new Gson(); 
     	Log.i("DataRetriever", "entered onPostExecute ");
+    	SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
     	if (data == null) {
     		seenError = true;
     		// display could not get data 
@@ -305,8 +308,6 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	}
 	    try {
 	    	Log.i("DataRetriever", "entered try statement " + currentData);
-	    	SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = sharedPref.edit();
 	    	switch(currentData) {
 	    		case ATHLETE: am = gson.fromJson(data.get(0), AthleteModel[].class); // deserializes jsonResponse into athlete models
 	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
@@ -336,9 +337,12 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    	SplashscreenActivity.updateSyncTextFinishSync();;
 	    	sharedPref.edit().putString("LAST_UPDATED", SplashscreenActivity.currentDateString()).apply();
 	    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
+	    	sharedPref.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
 	    } catch (Exception e) {
 	    	try {
 	    		 Log.e("DataRetriever", "data is an error message ");
+	    		 SplashscreenActivity.updateSyncTextNeedSync();
+	    		 sharedPref.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
 	    		 this.em = gson.fromJson(data.get(0), ErrorModel.class); // deserializes jsonResponse into error message 
 				 seenError = true;
 				 Log.e("DataRetriever", "Error: " +  em.getError());
@@ -346,6 +350,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			catch (Exception e2) {
 				// log and return
 				saveData();
+				SplashscreenActivity.updateSyncTextNeedSync();
+				sharedPref.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
 				return;
 			}
 	    }

@@ -317,7 +317,7 @@ public class ChangeLineupsList extends Activity {
     private void fadeSwap(){
     	// fade out instructions view nicely after 5 seconds
 		AlphaAnimation alphaAnim = new AlphaAnimation(1.0f,0.0f);
-		alphaAnim.setStartOffset(5000);                        // start in 5 seconds
+		alphaAnim.setStartOffset(3000);                        // start in 3 seconds
 		alphaAnim.setDuration(400);
 		alphaAnim.setAnimationListener(new AnimationListener()
 		{
