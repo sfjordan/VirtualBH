@@ -34,6 +34,8 @@ public class PickNewPieceActivity extends Activity {
 	private Map<Integer, Boat> boatList;
 	private EditText notes;
 	private EditText directionText;
+	private String noteString = null;
+	private String directionString = null;
 	
 	public final static String PICK_NEW_PIECE_ACTIVITY = "PickNewPieceActivity";
 	
@@ -54,6 +56,7 @@ public class PickNewPieceActivity extends Activity {
 		notes = (EditText) findViewById(R.id.notes_text);
 		directionText = (EditText) findViewById(R.id.direction_text);
 		
+		
 		// pull information about the current practice/last piece
 		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE); // TODO make sure this is saved on flip or recreated
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
@@ -61,17 +64,15 @@ public class PickNewPieceActivity extends Activity {
 		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
 		currentPiece = currentPractice.getPiece(currentPieceID);
 		
+		notes.setText(sharedPref.getString("NOTES", ""));
+		directionText.setText(sharedPref.getString("DIRECTION",""));
+		
 		boatList = DataSaver.readObject(getContext().getString(R.string.BOATS_FILE), getContext());
 		// TODO check for null
 		Log.i("picknewpiece", "boatList is currently null: " + (boatList==null));
 		roster = DataSaver.readObject(getContext().getString(R.string.ROSTER_FILE), getContext());
 		// TODO check for null
 		Log.i("picknewpiece", "roster is currently null: " + (roster==null));
-		
-		if(currentPiece.hasDirection())
-			directionText.setText(currentPiece.getDirection());
-		if(currentPiece.hasNotes())
-			notes.setText(currentPiece.getNotes().get(0));
 	
         if (currentPiece.isTimed()) {
         	//nothing, apparently
@@ -112,9 +113,11 @@ public class PickNewPieceActivity extends Activity {
 	
 	private void ChangeLineups() {
 		if(!notes.getText().toString().isEmpty())
-    		currentPiece.addNotes(notes.getText().toString());
+    		noteString = notes.getText().toString();
 		if(!directionText.getText().toString().isEmpty())
-    		currentPiece.setDirection(directionText.getText().toString());
+    		directionString = directionText.getText().toString();
+		sharedPref.edit().putString("NOTES", noteString).apply();
+		sharedPref.edit().putString("DIRECTION", directionString).apply();
 		Intent changeLineupsIntent = new Intent(this, ChangeLineupsList.class);
 		changeLineupsIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_NEW_PIECE_ACTIVITY);
 		startActivity(changeLineupsIntent);
@@ -125,6 +128,10 @@ public class PickNewPieceActivity extends Activity {
     		currentPiece.addNotes(notes.getText().toString());
 		if(!directionText.getText().toString().isEmpty())
     		currentPiece.setDirection(directionText.getText().toString());
+		noteString = null;
+		directionString = null;
+		sharedPref.edit().putString("NOTES", "").apply();
+		sharedPref.edit().putString("DIRECTION", "").apply();
 		// save current piece to practice
     	currentPractice.addPiece(currentPiece);
     	// make new piece
@@ -148,6 +155,10 @@ public class PickNewPieceActivity extends Activity {
     		currentPiece.addNotes(notes.getText().toString());
 		if(!directionText.getText().toString().isEmpty())
     		currentPiece.setDirection(directionText.getText().toString());
+		noteString = null;
+		directionString = null;
+		sharedPref.edit().putString("NOTES", "").apply();
+		sharedPref.edit().putString("DIRECTION", "").apply();
 		// save current piece to practice
     	currentPractice.addPiece(currentPiece);
     	// write practice to file
@@ -174,8 +185,6 @@ public class PickNewPieceActivity extends Activity {
 		
 	}
 	
-	
-
 	private Context getContext(){
 		return this;
 	}
