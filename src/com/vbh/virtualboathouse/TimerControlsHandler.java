@@ -77,7 +77,7 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 	        	AlertDialog genericModeDialog = builder.create();
 	        	genericModeDialog.show();
         	}
-        	else {
+        	else if(allStopped()){
         		// get data 
 	        	SharedPreferences sharedPref = context.getSharedPreferences(
 				        context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
@@ -133,7 +133,6 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 			if (!t.isStopped())
 				allstopped = false;
 		}
-		System.out.println("allstopped: "+allstopped);
 		return allstopped;
 	}
 
