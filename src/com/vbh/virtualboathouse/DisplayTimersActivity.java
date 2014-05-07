@@ -44,7 +44,8 @@ public class DisplayTimersActivity extends Activity {
 		timers = new Timer[numTimers];
 		Log.i("DisplayTimersActivity", "number of timers is " + numTimers);
 		String activityFrom = intent.getStringExtra(getString(R.string.ACTIVITY_FROM));
-		boolean genericMode = intent.getBooleanExtra("GENERIC_MODE", true);
+		boolean genericMode = intent.getBooleanExtra("GENERIC_MODE", false);
+		Log.i("displaytimersactivity","genericMode: "+genericMode);
 		
 		if (activityFrom.equals(PickDistTimeActivity.PICK_DIST_ACTIVITY)) {
 		// get data 

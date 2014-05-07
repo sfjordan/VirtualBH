@@ -54,6 +54,7 @@ public class LaunchActivity extends Activity {
 	        			Intent splashscreenIntent = new Intent(getApplicationContext(), SplashscreenActivity.class);
 	        			//TODO check if user is already logged in/already have API key
 	        			if(updateData()) {
+	        				
 	        				spEditor.putBoolean("DATA_SET_CHANGED", false).apply();
 	        			}
 	        			else {

@@ -213,7 +213,7 @@ public class ChangeLineupsList extends Activity {
     	Log.i("saveData",n+" new lineups to save");
     	for (Lineup l: lineupsToSave)
     		currentPractice.addCurrentLineup(l);
-    	if (n > 0)
+    	if (n > 0 && fromstr.equals("PickNewPieceActivity"))
     		sharedPref.edit().putBoolean("DATA_SET_CHANGED", true).apply();
     	// write practice to file
     	DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);

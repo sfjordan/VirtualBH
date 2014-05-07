@@ -78,9 +78,9 @@ public class CrewSelectorActivity extends Activity {
 	    		currentLineups.next().getValue().printLineup();			        		    		
 	    	}
     		
-    		currentPractice.clearCurrentLineups();
+    		//currentPractice.clearCurrentLineups();
 			
-			lineups = currentPractice.getLineups();
+			lineups = currentPractice.getCurrentLineups();
 			String[] lineupNames = new String[lineups.size()];
 			int[] lineupIDs = new int[lineups.size()];
 			int i = 0;
@@ -240,6 +240,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	public void changeLineups(){
 		Intent changeLineupsIntent = new Intent(this, ChangeLineupsList.class);
+		changeLineupsIntent.putExtra("GENERIC_MODE", false);
 		changeLineupsIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 		startActivity(changeLineupsIntent);
 		
@@ -247,6 +248,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	private void launchPickDistTime(){
 		Intent pickDistTimeIntent = new Intent(this, PickDistTimeActivity.class);
+		pickDistTimeIntent.putExtra("GENERIC_MODE", false);
 		pickDistTimeIntent.putExtra(getString(R.string.ACTIVITY_FROM), CREW_SELECTOR_ACTIVITY);
 		startActivity(pickDistTimeIntent);
 	}
