@@ -6,6 +6,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -72,10 +73,26 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
         }*/
         else if(DisplayTimersActivity.save_times == v){
         	if (genericMode){
-        		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        		AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        		alert.setTitle("Generic Timers");
+        		alert.setMessage(R.string.error_save_times_generic);
+        		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        		    public void onClick(DialogInterface dialog, int whichButton) {
+        		     //Do something here where "ok" clicked
+        		    	Intent splashscreenIntent = new Intent(context, SplashscreenActivity.class);
+        				context.startActivity(splashscreenIntent);
+        		    }
+        		});
+        		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        		    public void onClick(DialogInterface dialog, int whichButton) {
+        		    //Do something here when "cancel" clicked.
+        		    }
+        		});
+        		alert.show();
+        		/*AlertDialog.Builder builder = new AlertDialog.Builder(context);
 	        	builder.setMessage(R.string.error_save_times_generic);
 	        	AlertDialog genericModeDialog = builder.create();
-	        	genericModeDialog.show();
+	        	genericModeDialog.show();*/
         	}
         	else if(allStopped()){
         		// get data 

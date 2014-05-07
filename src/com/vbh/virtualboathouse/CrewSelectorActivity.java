@@ -168,6 +168,7 @@ public class CrewSelectorActivity extends Activity {
 	
 	private void showGenericDialog(){
 		final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+		alert.setTitle("Generic Timers");
 		LinearLayout layout = new LinearLayout(getContext());
 		layout.setOrientation(LinearLayout.VERTICAL);
 
