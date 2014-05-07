@@ -17,6 +17,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class SplashscreenActivity extends Activity {
 	private TextView lastUpdated;
 	private Context context;
 	private SharedPreferences sharedPref;
+	private Thread thread;   
 	
 	public final static String SPLASH_SCREEN_ACTIVITY = "SplashscreenActivity";
 
@@ -44,11 +46,11 @@ public class SplashscreenActivity extends Activity {
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button updateData = (Button) findViewById(R.id.update_data_button);
-		//Button stroke = (Button) findViewById(R.id.stroke_button);
-		
-		Log.i("splashscreen","in splashscreen");
-		
 		lastUpdated = (TextView) findViewById(R.id.date_textstub);
+		//Button stroke = (Button) findViewById(R.id.stroke_button);		
+		Log.i("splashscreen","in splashscreen");       
+
+		
 		//if sharedpref is false, leave blank? else make red "unsynced data" or something
 		Boolean dataChanged = sharedPref.getBoolean("DATA_SET_CHANGED", true);
 		Log.i("splashscreen","datachanged: "+dataChanged);
@@ -146,6 +148,24 @@ public class SplashscreenActivity extends Activity {
 		now.setToNow();
 		return now.format("%l:%M%P %a, %d %b");
 	}
+	
+	public void updateThing(){
+		//todo: update textview? maybe call in dataretriever?
+		
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent evt)
+	{
+	    if(evt.getAction() == MotionEvent.ACTION_DOWN)
+	    {
+	        synchronized(thread){
+	            thread.notifyAll();
+	        }
+	    }
+	    return true;
+	}  
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
