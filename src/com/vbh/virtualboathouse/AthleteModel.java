@@ -42,8 +42,6 @@ public class AthleteModel implements Serializable  {
 		private String year;
 		@SerializedName("side")
 		private String side;
-		@SerializedName("api_key")
-		private String apiKey;
 		@SerializedName("role")
 		private String role;
 		@SerializedName("status")
@@ -61,9 +59,6 @@ public class AthleteModel implements Serializable  {
 		}
 		public String getSide() {
 			return side;
-		}
-		public String getApiKey() {
-			return apiKey;
 		}
 		public String getRole() {
 			return role;
