@@ -106,12 +106,14 @@ public class Piece implements Serializable {
 	}
 	
 	private void generateName() {
+		String name = "";
 		if (countdown) {
-			
+			name += msTimeToString(this.msCountdownTime, countdown) + " Piece";
 		}
 		else {
-			
+			name += distance + "m Piece";
 		}
+		this.name = name;
 	}
 	
 	public void setName(String newName) {
