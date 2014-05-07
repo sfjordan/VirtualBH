@@ -178,7 +178,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    	Map<Long, Piece> pieces = uploadPractice.getPieces();
 		    	for (Long pID : pieces.keySet()) {
 		    		Piece p = pieces.get(pID);
-		    		PieceModel pm = new PieceModel(uploadID, p.getPieceID(), p.getDateSeconds());
+		    		PieceModel pm = new PieceModel(uploadID, p.getName(), p.getDateSeconds());
 		    		String pieceStr = gson.toJson(pm);
 		    		String gsonReturned = performHTTPRequest(PIECE_URL, "piece", pieceStr);
 		    		Log.i("DataRetriever", gsonReturned);

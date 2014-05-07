@@ -13,9 +13,9 @@ public class PieceModel {
 	private long dateTime;
 
 	
-	public PieceModel(int practiceID, long pieceID, long dateTime) {
+	public PieceModel(int practiceID, String pieceName, long dateTime) {
 		this.practiceID = practiceID;
-		name = Long.toString(pieceID);
+		name = pieceName;
 		this.dateTime = dateTime;
 	}
 	public int getPracticeID() {
