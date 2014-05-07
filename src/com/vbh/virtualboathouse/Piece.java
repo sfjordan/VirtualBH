@@ -175,6 +175,7 @@ public class Piece implements Serializable {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+		generateName();
 	}
 
 	public String getDirection() {

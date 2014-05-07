@@ -35,6 +35,7 @@ public class DisplayTimersActivity extends Activity {
 	private Practice currentPractice;
 	private int currentPracticeID;
 	
+	private boolean genericMode; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class DisplayTimersActivity extends Activity {
 		timers = new Timer[numTimers];
 		Log.i("DisplayTimersActivity", "number of timers is " + numTimers);
 		String activityFrom = intent.getStringExtra(getString(R.string.ACTIVITY_FROM));
-		boolean genericMode = intent.getBooleanExtra("GENERIC_MODE", false);
+		genericMode = intent.getBooleanExtra("GENERIC_MODE", false);
 		Log.i("displaytimersactivity","genericMode: "+genericMode);
 		
 		if (activityFrom.equals(PickDistTimeActivity.PICK_DIST_ACTIVITY)) {
@@ -78,6 +79,7 @@ public class DisplayTimersActivity extends Activity {
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
 		save_times = (Button)findViewById(R.id.save_times_button);
+		if (genericMode) save_times.setText("Done");
 		TimerControlsHandler tch = new TimerControlsHandler(timers, stop_all, this, genericMode);
 		start_all.setOnClickListener(tch);
 		stop_all.setOnClickListener(tch);
