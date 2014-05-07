@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.vbh.virtualboathouse.*;
 
 public class PickDistTimeActivity extends Activity {
 	
@@ -94,11 +97,9 @@ public class PickDistTimeActivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if(v==findViewById(R.id.cancel_button)){
-					if (activityFrom != null){
-						if (activityFrom.equals("PickNewPieceActivity")){
-							//go to picknewpiece
-							pickNewPiece();
-						}
+					if (activityFrom != null && activityFrom.equals("PickNewPieceActivity")){
+						//go to picknewpiece
+						pickNewPiece();
 					}
 					else{
 						//go to crew selector
@@ -164,10 +165,12 @@ public class PickDistTimeActivity extends Activity {
 		}
 	}
 	private void saveData() {
+		Log.i("pickdisttime","in saveData()");
 		currentPractice.addPiece(currentPiece);
 		DataSaver.writeObject(currentPractice, getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 	}
 	private void displayTimers() {
+		Log.i("pickdisttime","in displayTimers()");
 		Intent displayTimersIntent = new Intent(this, DisplayTimersActivity.class);
 		displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), PICK_DIST_ACTIVITY);
 		displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), currentPiece.getNumBoats()); 
@@ -175,13 +178,14 @@ public class PickDistTimeActivity extends Activity {
 	}
 	
 	private void selectCrews(){
-		Intent crewSelectorIntent = new Intent(this, CrewSelectorActivity.class);
-		crewSelectorIntent.putExtra(getString(R.string.ACTIVITY_FROM),"recordTimes");
-		startActivity(crewSelectorIntent);
-		
+		Log.i("pickdisttime","in displayTimers()");
+		Intent displayBoatPickersIntent = new Intent(this, CrewSelectorActivity.class);
+		displayBoatPickersIntent.putExtra(getString(R.string.ACTIVITY_FROM),"recordTimes");
+		startActivity(displayBoatPickersIntent);
 	}
 	
 	private void pickNewPiece(){
+		Log.i("pickdisttime","in pickNewPiece()");
 		Intent pickNewPieceIntent = new Intent(this, PickNewPieceActivity.class);
 		startActivity(pickNewPieceIntent);
 		
