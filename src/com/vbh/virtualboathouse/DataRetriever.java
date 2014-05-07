@@ -134,6 +134,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
         apiKey = sp.getString(CurrentUser.API_KEY, "fail");
         Log.i("DataRetriever", "apiKey = " + apiKey);
         if (apiKey == "fail") {
+        	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
         	return null;
         }
         // Create a new HttpClient and Post Header
@@ -143,12 +144,18 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	   
 		if (currentData == ATHLETES_BOATS) {
 		    dataReturned = performHTTPRequest(BOATS_URL);
-		    if (dataReturned == null) return null;
+		    if (dataReturned == null){
+		    	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+		    	return null;
+		    }
 		    Log.i("DataRetriever", "boatModel = "+ dataReturned);
 		    // TODO remove
 		    data.add(dataReturned);
 		    dataReturned = performHTTPRequest(RECENT_PRACTICE_URL);
-		    if (dataReturned == null) return null;
+		    if (dataReturned == null){
+		    	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+		    	return null;
+		    }
 		    data.add(dataReturned);
 		    Gson gson = new Gson();
 		    Log.i("DataRetriever", "recentModel = "+ data.get(2));
@@ -230,6 +237,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    }
 		}
 		
+		sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
 	    return data;
 	}
     

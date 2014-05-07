@@ -100,6 +100,10 @@ public class CrewSelectorActivity extends Activity {
 				lineupBoxes[i] = new CheckBox(this);
 				lineupBoxes[i].setText(name);
 				lineupBoxes[i].setTag(l);
+				lineupBoxes[i].setPadding(5, 5, 5, 5);
+				lineupBoxes[i].setTextSize(24f);
+				//lineupBoxes[i].setScaleY(1.1f);
+				//lineupBoxes[i].setGravity(Gravity.CENTER_HORIZONTAL);
 				lineups_checklist.addView(lineupBoxes[i]);
 				i++;
 			}
