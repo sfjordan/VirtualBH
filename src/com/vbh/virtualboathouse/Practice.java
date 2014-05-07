@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -63,6 +65,23 @@ public class Practice implements Serializable {
 	}
 	public Lineup getCurrentLineup(long id) {
 		return currentLineups.get(id);
+	}
+	
+	public ArrayList<Lineup> getCurrentLineupsList(){
+		ArrayList<Lineup> lineups = new ArrayList<Lineup>();
+		Iterator<Entry<Long, Lineup>> currentLineups = getCurrentLineups().entrySet().iterator();
+    	while(currentLineups.hasNext()){
+    		lineups.add(currentLineups.next().getValue());			        		    		
+    	}
+    	return lineups;
+	}
+	
+	public ArrayList<Long> getCurrentLineupIDList(){
+		ArrayList<Long> lineupIDs = new ArrayList<Long>();
+		for (Lineup l:getCurrentLineupsList()){
+			lineupIDs.add(l.getLineupID());
+		}
+		return lineupIDs;
 	}
 	
 	

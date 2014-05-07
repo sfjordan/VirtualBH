@@ -1,5 +1,7 @@
 package com.vbh.virtualboathouse;
 
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -8,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +30,8 @@ public class PickNewPieceActivity extends Activity {
 	private Practice currentPractice;
 	private int currentPracticeID;
 	private SharedPreferences sharedPref;
+	private Roster roster;
+	private Map<Integer, Boat> boatList;
 	
 	public final static String PICK_NEW_PIECE_ACTIVITY = "PickNewPieceActivity";
 	
@@ -51,6 +56,13 @@ public class PickNewPieceActivity extends Activity {
 		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
 		currentPiece = currentPractice.getPiece(currentPieceID);
+		
+		boatList = DataSaver.readObject(getContext().getString(R.string.BOATS_FILE), getContext());
+		// TODO check for null
+		Log.i("picknewpiece", "boatList is currently null: " + (boatList==null));
+		roster = DataSaver.readObject(getContext().getString(R.string.ROSTER_FILE), getContext());
+		// TODO check for null
+		Log.i("picknewpiece", "roster is currently null: " + (roster==null));
 	
         if (currentPiece.isTimed()) {
         	//nothing, apparently
@@ -100,7 +112,8 @@ public class PickNewPieceActivity extends Activity {
 		// save current piece to practice
     	currentPractice.addPiece(currentPiece);
     	// make new piece
-    	Piece newPiece = new Piece(currentPiece);
+    	//Piece newPiece = new Piece(currentPiece);
+    	Piece newPiece = new Piece(currentPractice.getCurrentLineupIDList(), roster, boatList);
     	currentPieceID = newPiece.getPieceID();
     	currentPractice.addPiece(newPiece);
     	// write practice to file

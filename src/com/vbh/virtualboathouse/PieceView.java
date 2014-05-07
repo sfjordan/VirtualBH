@@ -88,7 +88,8 @@ public class PieceView {
 			for (String note : piece.getStrokeRatingNotes()) {
 				strokeRatingNotes += note + "\n";
 			}
-			strokeRatingNotes = strokeRatingNotes.substring(0, strokeRatingNotes.length()-1);
+			if (strokeRatingNotes.length()!=0)
+				strokeRatingNotes = strokeRatingNotes.substring(0, strokeRatingNotes.length()-1);
 			strokeRatingsText.setText(strokeRatingNotes);
 			mainLayout.addView(strokeRatingsText);
 		}
@@ -104,7 +105,8 @@ public class PieceView {
 			for (String note : piece.getStrokeRatingNotes()) {
 				notes += note + "\n";
 			}
-			notes = notes.substring(0, notes.length()-1);
+			if (notes.length() !=0)
+				notes = notes.substring(0, notes.length()-1);
 			notesText.setText(notes);
 			mainLayout.addView(notesText);
 		}
