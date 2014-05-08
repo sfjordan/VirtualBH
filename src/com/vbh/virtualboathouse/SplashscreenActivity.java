@@ -191,7 +191,7 @@ public class SplashscreenActivity extends Activity {
 	public static void updateSyncTextLastSync(){
 		if (lastUpdated == null)
 			return;
-		String lastupdated = sharedPref.getString("LAST_UPDATED", "");
+		String lastupdated = sharedPref.getString("LAST_UPDATED", "just now");
 		lastUpdated.setTextColor(Color.GRAY);
 		lastUpdated.setText("last updated: "+ lastupdated);
 		
