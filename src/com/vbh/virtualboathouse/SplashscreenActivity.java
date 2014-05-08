@@ -28,7 +28,7 @@ public class SplashscreenActivity extends Activity {
 	
 	private static TextView lastUpdated;
 	private Context context;
-	private SharedPreferences sharedPref;
+	private static SharedPreferences sharedPref;
 	private String fromstr;   
 	
 	
@@ -188,7 +188,7 @@ public class SplashscreenActivity extends Activity {
 		
 	}
 	
-	private void updateSyncTextLastSync(){
+	public static void updateSyncTextLastSync(){
 		if (lastUpdated == null)
 			return;
 		String lastupdated = sharedPref.getString("LAST_UPDATED", "");

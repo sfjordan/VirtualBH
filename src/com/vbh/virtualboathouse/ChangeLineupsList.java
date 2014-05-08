@@ -361,6 +361,7 @@ public class ChangeLineupsList extends Activity {
     }
     
     private void launchSplashscreen(){
+    	SplashscreenActivity.updateSyncTextLastSync();
     	Intent splashscreenIntent = new Intent(this, SplashscreenActivity.class);
 		startActivity(splashscreenIntent);
     } 
