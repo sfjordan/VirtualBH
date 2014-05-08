@@ -120,11 +120,11 @@ public class PieceView {
 			mainLayout.addView(notesTitle);
 			TextView notesText = new TextView(context);
 			String notes = "";
-			for (String note : piece.getStrokeRatingNotes()) {
+			for (String note : piece.getNotes()) {
 				notes += note + "\n";
 			}
-			if (notes.length() !=0)
-				notes = notes.substring(0, notes.length()-1);
+//			if (notes.length() !=0)
+//				notes = notes.substring(0, notes.length()-1);
 			notesText.setText(notes);
 			mainLayout.addView(notesText);
 		}

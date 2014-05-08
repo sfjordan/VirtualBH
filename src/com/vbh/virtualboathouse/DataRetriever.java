@@ -159,7 +159,14 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    data.add(dataReturned);
 		    Gson gson = new Gson();
 		    Log.i("DataRetriever", "recentModel = "+ data.get(2));
-		    rm = gson.fromJson(data.get(2), RecentModel.class);
+		    boolean seenError = false;
+		    try {
+		    	rm = gson.fromJson(data.get(2), RecentModel.class);
+			} catch (Exception e) {
+				catchError(data.get(2));
+				return null;
+			}
+			
 		    currentPracticeID = rm.getPracticeID();
 		    dataReturned = performHTTPRequest(RECENT_LINEUPS_URL);
 		    data.add(dataReturned);
@@ -302,18 +309,38 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		} catch (IOException e1) {
 			return null; }
     }
+    
+    private boolean catchError(String error) {
+    	boolean errorMessageCaught = false;
+    	try {
+			Log.e("DataRetriever", "data is an error message ");
+			SplashscreenActivity.updateSyncTextNeedSync();
+			SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
+			sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+			Gson gson = new Gson();
+			this.em = gson.fromJson(error, ErrorModel.class); // deserializes jsonResponse into error message 
+			errorMessageCaught = true;
+			Log.e("DataRetriever", "Error: " +  em.getError());
+		}
+		catch (Exception e) {
+			return errorMessageCaught;
+		}
+    	return errorMessageCaught;
+    }
+    
     @Override
     protected void onPostExecute(ArrayList<String> data) {
     	boolean seenError = false;
-    	Gson gson = new Gson(); 
-    	Log.i("DataRetriever", "entered onPostExecute ");
-    	SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
     	if (data == null) {
     		seenError = true;
     		// display could not get data 
     		 Log.e("DataRetriever", "data is null ");
+    		return;
     	}
+    	Gson gson = new Gson(); 
+    	Log.i("DataRetriever", "entered onPostExecute ");
+    	SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
 	    try {
 	    	Log.i("DataRetriever", "entered try statement " + currentData);
 	    	switch(currentData) {
