@@ -174,7 +174,7 @@ public class PickNewPieceActivity extends Activity {
 		     //Do something here where "ok" clicked
 		    	updateData();
 		    	SplashscreenActivity.updateSyncTextInProgress();
-		    	Intent finishPracticeIntent = new Intent(getContext(), PracticeViewActivity.class); //SplashscreenActivity.class);
+		    	Intent finishPracticeIntent = new Intent(getContext(), SplashscreenActivity.class); //SplashscreenActivity.class);
 				startActivity(finishPracticeIntent);
 		    }
 		});
