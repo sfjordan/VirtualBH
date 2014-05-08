@@ -95,7 +95,7 @@ public class CrewSelectorActivity extends Activity {
 				// TODO implement adjustable setting
 				int numSeats = l.getNumOfSeats();
 				Log.i("CrewSelector", "number of seats is " + numSeats);
-				String name = l.getName();
+				String name = l.getPosition()+" - "+l.getBoatName()+" \n("+l.getCoxswainName()+", "+l.getStrokeInitLast()+")";
 				Log.i("CrewSelector", "Stroke's name is " + name);
 				lineupBoxes[i] = new CheckBox(this);
 				lineupBoxes[i].setText(name);
@@ -268,7 +268,7 @@ public class CrewSelectorActivity extends Activity {
 	private void fadeSwap(){
     	// fade out instructions view nicely after 5 seconds
 		AlphaAnimation alphaAnim = new AlphaAnimation(1.0f,0.0f);
-		alphaAnim.setStartOffset(3000);                        // start in 3 seconds
+		alphaAnim.setStartOffset(5000);                        // start in 5 seconds
 		alphaAnim.setDuration(400);
 		alphaAnim.setAnimationListener(new AnimationListener()
 		{

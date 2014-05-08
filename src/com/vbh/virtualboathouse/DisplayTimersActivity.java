@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class DisplayTimersActivity extends Activity {
 
@@ -47,6 +48,8 @@ public class DisplayTimersActivity extends Activity {
 		String activityFrom = intent.getStringExtra(getString(R.string.ACTIVITY_FROM));
 		genericMode = intent.getBooleanExtra("GENERIC_MODE", false);
 		Log.i("displaytimersactivity","genericMode: "+genericMode);
+		Toast.makeText(getApplicationContext(), "Tap stroke name 3 times for SPM",
+				   Toast.LENGTH_LONG).show();
 		
 		if (activityFrom.equals(PickDistTimeActivity.PICK_DIST_ACTIVITY)) {
 		// get data 
@@ -79,6 +82,7 @@ public class DisplayTimersActivity extends Activity {
 		start_all = (Button)findViewById(R.id.start_all_button);
 		stop_all = (Button)findViewById(R.id.stop_all_button);
 		save_times = (Button)findViewById(R.id.save_times_button);
+		
 		if (genericMode) save_times.setText("Done");
 		TimerControlsHandler tch = new TimerControlsHandler(timers, stop_all, this, genericMode);
 		start_all.setOnClickListener(tch);

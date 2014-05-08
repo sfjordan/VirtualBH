@@ -195,7 +195,7 @@ public class Lineup implements Serializable, Parcelable {
 		return boat.getName();
 	}
 	public String getCoxswainName(){
-		if (coxswain == null) return null;
+		if (coxswain == null) return "None";
 		else return coxswain.getName();
 	}
 	

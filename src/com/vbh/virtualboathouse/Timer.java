@@ -32,6 +32,7 @@ public class Timer {
 		addComponents();
 		setHandlers();
 	}
+	
 	public ArrayList<String> getStrokeNotes() {
 		return th.getNotes();
 	}
