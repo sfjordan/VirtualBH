@@ -43,10 +43,10 @@ public class PickNewPieceActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pick_new_piece);
-
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE); 
+		
+		if (savedInstanceState != null) {
+			
 		}
 		
 		RelativeLayout rl = (RelativeLayout)findViewById(R.id.container);
@@ -58,7 +58,7 @@ public class PickNewPieceActivity extends Activity {
 		
 		
 		// pull information about the current practice/last piece
-		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE); // TODO make sure this is saved on flip or recreated
+		// TODO make sure this is saved on flip or recreated
 		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
 		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
 		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
@@ -72,7 +72,7 @@ public class PickNewPieceActivity extends Activity {
 		Log.i("picknewpiece", "boatList is currently null: " + (boatList==null));
 		roster = DataSaver.readObject(getContext().getString(R.string.ROSTER_FILE), getContext());
 		// TODO check for null
-		Log.i("picknewpiece", "roster is currently null: " + (roster==null));
+		Log.i("PickNewPiece", "roster is currently null: " + (roster==null));
 	
         if (currentPiece.isTimed()) {
         	//nothing, apparently
@@ -127,7 +127,7 @@ public class PickNewPieceActivity extends Activity {
 		if(!notes.getText().toString().isEmpty())
     		currentPiece.addNotes(notes.getText().toString());
 		if(!directionText.getText().toString().isEmpty())
-    		currentPiece.setDirection(directionText.getText().toString());
+    		currentPiece.setName(directionText.getText().toString());
 		noteString = null;
 		directionString = null;
 		sharedPref.edit().putString("NOTES", "").apply();
@@ -154,7 +154,7 @@ public class PickNewPieceActivity extends Activity {
 		if(!notes.getText().toString().isEmpty())
     		currentPiece.addNotes(notes.getText().toString());
 		if(!directionText.getText().toString().isEmpty())
-    		currentPiece.setDirection(directionText.getText().toString());
+    		currentPiece.setName(directionText.getText().toString());
 		noteString = null;
 		directionString = null;
 		sharedPref.edit().putString("NOTES", "").apply();

@@ -54,7 +54,7 @@
     <string name="last_updated_text">"last updated: "</string>
     <string name="save_piece">save piece</string>
     <string name="notes">Enter notes on piece&#8230;</string>
-    <string name="direction">Enter direction/name of piece</string>
+    <string name="direction">Enter name of piece</string>
     <string name="new_piece">New Piece</string>
     <string name="finish_practice">Finish Practice</string>
     <string name="get_stroke_rate">Get Stroke Rate</string>
