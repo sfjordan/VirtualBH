@@ -31,6 +31,7 @@
         <activity
             android:name="com.vbh.virtualboathouse.LoginActivity"
             android:label="@string/login"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,6 +39,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.SplashscreenActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_splashscreenactivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -45,14 +47,17 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickDistTimeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_pick_dist_time" >
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickNumBoatsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.DisplayTimersActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_display_timers"
             android:parentActivityName="com.vbh.virtualboathouse.PickNumBoatsActivity" >
             <meta-data
@@ -61,6 +66,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.CountdownActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_countdown"
             android:parentActivityName="com.vbh.virtualboathouse.PickDistTimeActivity" >
             <meta-data
@@ -69,6 +75,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_change_linups" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -76,6 +83,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickBoatsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_pick_boats" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -83,6 +91,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.CrewSelectorActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_crew_selector"
             android:parentActivityName="com.vbh.virtualboathouse.SplashscreenActivity" >
             <meta-data
@@ -91,10 +100,12 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickNewPieceActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_pick_new_piece" >
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsList"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_change_linups" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -102,6 +113,7 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickTypeOfSwap"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_pick_type_of_swap"
             android:parentActivityName="com.vbh.virtualboathouse.CrewSelectorActivity" >
             <meta-data
