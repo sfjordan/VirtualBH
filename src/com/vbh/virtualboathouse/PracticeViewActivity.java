@@ -13,6 +13,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,6 +64,10 @@ public class PracticeViewActivity extends Activity {
     		Piece p = allPieces.next().getValue();
     		if (p.getDistance()==0) continue;
     		PieceView pv = new PieceView(context, piece_list, currentPractice, p);
+    		View view = new View(this);
+    	    view.setLayoutParams(new LayoutParams(2,LayoutParams.MATCH_PARENT));
+    		view.setBackgroundColor(Color.BLACK);
+    		piece_list.addView(view);
     		j++;
     	}
 		//done button tries to update data, returns to splashscreen
