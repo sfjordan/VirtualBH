@@ -171,14 +171,26 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    dataReturned = performHTTPRequest(RECENT_LINEUPS_URL);
 		    data.add(dataReturned);
 		    Log.i("DataRetriever", "lineup json = "+ dataReturned);
-		    lm = gson.fromJson(data.get(3), LineupModel[].class);
+		    try {
+		    	lm = gson.fromJson(data.get(3), LineupModel[].class);
+			} catch (Exception e) {
+				catchError(data.get(3));
+				return null;
+			}
 			Log.i("DataRetriever", "recent lineup data successfully converted from JSON ");
 			lineupArrayModels = new HashMap<Integer, LineupArrayModel>();
 			for (LineupModel singleLM : lm) {
 				int lineupID = singleLM.getPrivateKey();
 				dataReturned = performHTTPRequest(ATHLETE_LINEUP_URL, "id", gson.toJson(new ReturnedPieceModel(lineupID)));
 				Log.i("DataRetriever", dataReturned + ", " + lineupID);
-				lineupArrayModels.put(lineupID, gson.fromJson(dataReturned, LineupArrayModel.class));	
+				LineupArrayModel lam;
+				try {
+			    	lam = gson.fromJson(dataReturned, LineupArrayModel.class);
+				} catch (Exception e) {
+					catchError(dataReturned);
+					return null;
+				}
+				lineupArrayModels.put(lineupID, lam);	
 				
 			}
 		    Log.i("DataRetriever", "all data successfully pulled ");
@@ -344,23 +356,34 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    try {
 	    	Log.i("DataRetriever", "entered try statement " + currentData);
 	    	switch(currentData) {
-	    		case ATHLETE: am = gson.fromJson(data.get(0), AthleteModel[].class); // deserializes jsonResponse into athlete models
-	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
-	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel[].class); // deserializes jsonResponse into practice models
-	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineups
-	    		case RECENT_PRACTICE: 
-	    			rm = gson.fromJson(data.get(0), RecentModel.class); // deserializes jsonResponse into id - should only have one value
-	    			editor.putInt(context.getString(R.string.CURRENT_PRACTICE_ID), currentPracticeID);
-	    			editor.apply();
-	    			this.getPractice(rm.getPracticeID());
-	    			currentData = RECENT_PRACTICE;
+//	    		case ATHLETE: am = gson.fromJson(data.get(0), AthleteModel[].class); // deserializes jsonResponse into athlete models
+//	    		case BOATS: bm = gson.fromJson(data.get(0), BoatModel[].class); // deserializes jsonResponse into boat models
+//	    		case PRACTICE: pm = gson.fromJson(data.get(0), PracticeModel[].class); // deserializes jsonResponse into practice models
+//	    		case PRACTICE_LINEUP: plm = gson.fromJson(data.get(0), PracticeLineupsModel[].class); // deserializes jsonResponse into lineups
+//	    		case RECENT_PRACTICE: 
+//	    			rm = gson.fromJson(data.get(0), RecentModel.class); // deserializes jsonResponse into id - should only have one value
+//	    			editor.putInt(context.getString(R.string.CURRENT_PRACTICE_ID), currentPracticeID);
+//	    			editor.apply();
+//	    			this.getPractice(rm.getPracticeID());
+//	    			currentData = RECENT_PRACTICE;
 	    		case ATHLETES_BOATS:  
 	    			Log.i("DataRetriever", "athleteModel = " + data.get(0));
-	    			am = gson.fromJson(data.get(0), AthleteModel[].class);
+	    			try {
+	    				am = gson.fromJson(data.get(0), AthleteModel[].class);
+					} catch (Exception e) {
+						catchError(data.get(0));
+						return;
+					}
+	    			
 	    			Log.i("DataRetriever", "athlete data successfully converted from JSON ");
 	    			Log.i("DataRetriever", "boatModel = " + data.get(1));
 	    			Log.i("DataRetriever", "LineupsModel = " + data.get(3));
-	    			bm = gson.fromJson(data.get(1), BoatModel[].class);
+	    			try {
+	    				bm = gson.fromJson(data.get(1), BoatModel[].class);
+					} catch (Exception e) {
+						catchError(data.get(1));
+						return;
+					}
 	    			Log.i("DataRetriever", "boat data successfully converted from JSON ");
 	    			editor.putInt(context.getString(R.string.CURRENT_PRACTICE_ID), currentPracticeID);
 	    			editor.apply();
