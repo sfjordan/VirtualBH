@@ -326,9 +326,10 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	boolean errorMessageCaught = false;
     	try {
 			Log.e("DataRetriever", "data is an error message ");
-			SplashscreenActivity.updateSyncTextNeedSync();
+			
 			SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
 			sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+			SplashscreenActivity.updateSyncTextNeedSync();
 			Gson gson = new Gson();
 			this.em = gson.fromJson(error, ErrorModel.class); // deserializes jsonResponse into error message 
 			errorMessageCaught = true;
