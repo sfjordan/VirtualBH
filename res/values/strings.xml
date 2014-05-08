@@ -78,6 +78,8 @@
     <string name="CURRENT_PIECE_ID">CURRENT_PIECE_ID</string>
     <string name="PRACTICE_TO_UPLOAD_ID">PRACTICE_TO_UPLOAD_ID</string>
     <string name="DATA_SET_CHANGED">DATA_SET_CHANGED</string>
+    <string name="DIRECTION_TEXT">DIRECTION_TEXT_BUNDLE</string>
+    <string name="NOTES_TEXT">NOTES_TEXT_BUNDLE</string>
     <string name="ROSTER_FILE">com.vbh.virtualboathouse.RosterData</string>
     <string name="BOATS_FILE">com.vbh.virtualboathouse.BoatData</string>
     <string name="PIECE_ID_FILE">com.vbh.virtualboathouse.PieceIDData</string>
@@ -90,5 +92,6 @@
     <string name="title_activity_pick_type_of_swap">PickTypeOfSwap</string>
     <string name="ACTIVITY_FROM">activity_from</string>
     <string name="title_activity_practice_view">PracticeViewActivity</string>
+    
 
 </resources>

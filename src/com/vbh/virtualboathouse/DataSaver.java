@@ -23,6 +23,8 @@ public class DataSaver {
 	static final String STATE_BOATS = "boats";
 	static final String STATE_LINEUPS = "lineups";
 	
+	static final int NOTES_TEXT = 123;
+	static final int DIRECTION_TEXT = 124;
 	
 	public static <E> boolean writeObject(E cu, String filename, Context context) {
 		FileOutputStream fos;

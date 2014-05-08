@@ -45,27 +45,37 @@ public class PickNewPieceActivity extends Activity {
 		setContentView(R.layout.activity_pick_new_piece);
 		sharedPref = this.getSharedPreferences(getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE); 
 		
+		notes = (EditText) findViewById(R.id.notes_text);
+		directionText = (EditText) findViewById(R.id.direction_text);
+		
 		if (savedInstanceState != null) {
-			
+		    // Reset the current practice state
+			currentPieceID = savedInstanceState.getLong(DataSaver.STATE_PIECE_ID, -1);
+		    currentPracticeID = savedInstanceState.getInt(DataSaver.STATE_PRACTICE_ID, -1);
+		    currentPractice = (Practice)savedInstanceState.getSerializable(DataSaver.STATE_PRACTICE);
+		    currentPiece = (Piece)savedInstanceState.getSerializable(DataSaver.STATE_PIECE);
+		    
+		    // Reset info to fields
+		    notes.setText(savedInstanceState.getString(getString(R.string.NOTES_TEXT), ""));
+		    directionText.setText(savedInstanceState.getString(getString(R.string.DIRECTION_TEXT), ""));
+		}
+		else {
+			// pull information about the current practice/last piece
+			// TODO make sure this is saved on flip or recreated
+			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
+			currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
+			currentPiece = currentPractice.getPiece(currentPieceID);
+
+			notes.setText(sharedPref.getString("NOTES", ""));
+			directionText.setText(sharedPref.getString("DIRECTION",""));
 		}
 		
 		RelativeLayout rl = (RelativeLayout)findViewById(R.id.container);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button newPiece = (Button) findViewById(R.id.new_piece_button);
 		Button finishPractice = (Button) findViewById(R.id.finish_practice_button);
-		notes = (EditText) findViewById(R.id.notes_text);
-		directionText = (EditText) findViewById(R.id.direction_text);
-		
-		
-		// pull information about the current practice/last piece
-		// TODO make sure this is saved on flip or recreated
-		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
-		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, this);
-		currentPieceID = sharedPref.getLong(getString(R.string.CURRENT_PIECE_ID), 8);
-		currentPiece = currentPractice.getPiece(currentPieceID);
-		
-		notes.setText(sharedPref.getString("NOTES", ""));
-		directionText.setText(sharedPref.getString("DIRECTION",""));
+	
 		
 		boatList = DataSaver.readObject(getContext().getString(R.string.BOATS_FILE), getContext());
 		// TODO check for null
@@ -234,6 +244,21 @@ public class PickNewPieceActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+	}
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	    // Always call the superclass so it can save the view hierarchy state
+	    super.onSaveInstanceState(savedInstanceState);
+	    
+	    // Save the current practice state
+	    savedInstanceState.putLong(DataSaver.STATE_PIECE_ID, currentPieceID);
+	    savedInstanceState.putInt(DataSaver.STATE_PRACTICE_ID, currentPracticeID);
+	    savedInstanceState.putSerializable(DataSaver.STATE_PRACTICE, currentPractice);
+	    savedInstanceState.putSerializable(DataSaver.STATE_PIECE, currentPiece);
+	    
+	    // save info from fields
+	    savedInstanceState.putString(getString(R.string.NOTES_TEXT), notes.getText().toString());
+	    savedInstanceState.putString(getString(R.string.DIRECTION_TEXT), directionText.getText().toString());
 	}
 
 }
