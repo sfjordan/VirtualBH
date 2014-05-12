@@ -85,67 +85,108 @@ public class ChangeLineupsList extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_list_view);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        context = this;
-		if (savedInstanceState == null) {
-//			getFragmentManager().beginTransaction()
-//					.add(R.id.container, new PlaceholderFragment()).commit();
-			getData();
-			
-		}
-		button_done = (Button) findViewById(R.id.button_done);
+        button_done = (Button) findViewById(R.id.button_done);
 		button_done.setVisibility(View.INVISIBLE);
 		instructions = (TextView) findViewById(R.id.explanation_text);
+		DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
+		
 		fadeSwap();
-		
-		
-        
-        
-		Bundle b = getIntent().getExtras();
-		if (b!=null){
-			fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
-		}
-        
-        LayoutInflater inflater = LayoutInflater.from(this);
-        athleteList = buildList(new ArrayList<AthleteListName>());
-        adapter = new StableArrayAdapter(this, inflater, athleteList);
-        DynamicListView listView = (DynamicListView) findViewById(R.id.listview);
-        
-
-        listView.setList(athleteList);
-        listView.setAdapter(adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        
-        button_done.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v){
-				if (v==findViewById(R.id.button_done)){
-					if (isValidLineup()){
-						saveData();
-						Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
-        		    	while(currentLineups.hasNext()){
-        		    		currentLineups.next().getValue().printLineup();			        		    		
-        		    	}
-        		    	//continue to wherever you need to go
-        		    	if(fromstr.equals("PickNewPieceActivity")){
-        		    		launchPickNewPiece();        		    		
-        		    	}
-        		    	else if(fromstr.equals("CrewSelectorActivity")){
-        		    		launchSplashscreen();
-        		    	}
-        		    	
-					}
-					else {
-						Log.i("changelineupslist","invalid lineup");
-						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-			        	builder.setMessage(R.string.invalid_lineup_error_message);
-			        	AlertDialog invalidLineupDialog = builder.create();
-			        	invalidLineupDialog.show();
+        //setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        context = this;
+		if (savedInstanceState != null) {
+//			getFragmentManager().beginTransaction()
+//					.add(R.id.container, new PlaceholderFragment()).commit();
+			fromstr = savedInstanceState.getString("FROM_STR");
+			getData();
+	        LayoutInflater inflater = LayoutInflater.from(this);
+	        athleteList = buildList(new ArrayList<AthleteListName>());
+	        adapter = new StableArrayAdapter(this, inflater, athleteList);
+	        
+	        
+	
+	        listView.setList(athleteList);
+	        listView.setAdapter(adapter);
+	        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	        
+	        button_done.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v){
+					if (v==findViewById(R.id.button_done)){
+						if (isValidLineup()){
+							saveData();
+							Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+	        		    	while(currentLineups.hasNext()){
+	        		    		currentLineups.next().getValue().printLineup();			        		    		
+	        		    	}
+	        		    	//continue to wherever you need to go
+	        		    	if(fromstr.equals("PickNewPieceActivity")){
+	        		    		launchPickNewPiece();        		    		
+	        		    	}
+	        		    	else if(fromstr.equals("CrewSelectorActivity")){
+	        		    		launchSplashscreen();
+	        		    	}
+	        		    	
+						}
+						else {
+							Log.i("changelineupslist","invalid lineup");
+							AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				        	builder.setMessage(R.string.invalid_lineup_error_message);
+				        	AlertDialog invalidLineupDialog = builder.create();
+				        	invalidLineupDialog.show();
+						}
 					}
 				}
+			});
+			
+		}
+		else {
+			Bundle b = getIntent().getExtras();
+			if (b!=null){
+				fromstr = b.getString(getString(R.string.ACTIVITY_FROM));
 			}
-		});
+	        getData();
+	        LayoutInflater inflater = LayoutInflater.from(this);
+	        athleteList = buildList(new ArrayList<AthleteListName>());
+	        adapter = new StableArrayAdapter(this, inflater, athleteList);
+	        
+	        
+	
+	        listView.setList(athleteList);
+	        listView.setAdapter(adapter);
+	        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	        
+	        button_done.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v){
+					if (v==findViewById(R.id.button_done)){
+						if (isValidLineup()){
+							saveData();
+							Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+	        		    	while(currentLineups.hasNext()){
+	        		    		currentLineups.next().getValue().printLineup();			        		    		
+	        		    	}
+	        		    	//continue to wherever you need to go
+	        		    	if(fromstr.equals("PickNewPieceActivity")){
+	        		    		launchPickNewPiece();        		    		
+	        		    	}
+	        		    	else if(fromstr.equals("CrewSelectorActivity")){
+	        		    		launchSplashscreen();
+	        		    	}
+	        		    	
+						}
+						else {
+							Log.i("changelineupslist","invalid lineup");
+							AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				        	builder.setMessage(R.string.invalid_lineup_error_message);
+				        	AlertDialog invalidLineupDialog = builder.create();
+				        	invalidLineupDialog.show();
+						}
+					}
+				}
+			});
+	    }
     }
     
     private void getData(){
@@ -366,5 +407,16 @@ public class ChangeLineupsList extends Activity {
     	SplashscreenActivity.updateSyncTextLastSync();
     	Intent splashscreenIntent = new Intent(this, SplashscreenActivity.class);
 		startActivity(splashscreenIntent);
-    } 
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+    	if (getIntent().getExtras() != null)
+    		savedInstanceState.putString("FROM_STR", getIntent().getExtras().getString(getString(R.string.ACTIVITY_FROM)));
+    	
+        
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
 }

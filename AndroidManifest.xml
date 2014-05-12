@@ -105,7 +105,6 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.ChangeLineupsList"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_change_linups" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

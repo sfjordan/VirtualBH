@@ -123,18 +123,21 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     @Override
     protected ArrayList<String> doInBackground(String... urls) {
         ArrayList<String> data = new ArrayList<String>();
+        SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
         
         if (!isNetworkConnected(context)) {
+        	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+        	SplashscreenActivity.updateSyncTextNeedSync();
         	return null;
         }
         // get the user info from shared preferences
-        SharedPreferences sp = context.getSharedPreferences(CurrentUser.USER_DATA_PREFS, Context.MODE_PRIVATE);
         sp.edit().putBoolean("SYNC_IN_PROGRESS", true).apply();
         username = sp.getString(CurrentUser.USERNAME, "admin");
         apiKey = sp.getString(CurrentUser.API_KEY, "fail");
         Log.i("DataRetriever", "apiKey = " + apiKey);
         if (apiKey == "fail") {
         	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+        	SplashscreenActivity.updateSyncTextNeedSync();
         	return null;
         }
         // Create a new HttpClient and Post Header
@@ -146,6 +149,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    dataReturned = performHTTPRequest(BOATS_URL);
 		    if (dataReturned == null){
 		    	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+		    	SplashscreenActivity.updateSyncTextNeedSync();
 		    	return null;
 		    }
 		    Log.i("DataRetriever", "boatModel = "+ dataReturned);
@@ -154,6 +158,7 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    dataReturned = performHTTPRequest(RECENT_PRACTICE_URL);
 		    if (dataReturned == null){
 		    	sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+		    	SplashscreenActivity.updateSyncTextNeedSync();
 		    	return null;
 		    }
 		    data.add(dataReturned);
@@ -164,6 +169,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    	rm = gson.fromJson(data.get(2), RecentModel.class);
 			} catch (Exception e) {
 				catchError(data.get(2));
+				sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+		    	SplashscreenActivity.updateSyncTextNeedSync();
 				return null;
 			}
 			
@@ -175,6 +182,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 		    	lm = gson.fromJson(data.get(3), LineupModel[].class);
 			} catch (Exception e) {
 				catchError(data.get(3));
+				sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+		    	SplashscreenActivity.updateSyncTextNeedSync();
 				return null;
 			}
 			Log.i("DataRetriever", "recent lineup data successfully converted from JSON ");
@@ -188,6 +197,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 			    	lam = gson.fromJson(dataReturned, LineupArrayModel.class);
 				} catch (Exception e) {
 					catchError(dataReturned);
+					sp.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+			    	SplashscreenActivity.updateSyncTextNeedSync();
 					return null;
 				}
 				lineupArrayModels.put(lineupID, lam);	
@@ -343,17 +354,20 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     
     @Override
     protected void onPostExecute(ArrayList<String> data) {
+    	SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		
     	boolean seenError = false;
     	if (data == null) {
     		seenError = true;
     		// display could not get data 
     		 Log.e("DataRetriever", "data is null ");
+    		 sharedPref.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+    		 SplashscreenActivity.updateSyncTextNeedSync();
     		return;
     	}
     	Gson gson = new Gson(); 
     	Log.i("DataRetriever", "entered onPostExecute ");
-    	SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
 	    try {
 	    	Log.i("DataRetriever", "entered try statement " + currentData);
 	    	switch(currentData) {
@@ -383,6 +397,8 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
 	    				bm = gson.fromJson(data.get(1), BoatModel[].class);
 					} catch (Exception e) {
 						catchError(data.get(1));
+						sharedPref.edit().putBoolean("SYNC_IN_PROGRESS", false).apply();
+						SplashscreenActivity.updateSyncTextNeedSync();
 						return;
 					}
 	    			Log.i("DataRetriever", "boat data successfully converted from JSON ");
