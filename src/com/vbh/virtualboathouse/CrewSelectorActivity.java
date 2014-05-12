@@ -107,6 +107,14 @@ public class CrewSelectorActivity extends Activity {
 			lineups_checklist.addView(lineupBoxes[i]);
 			i++;
 		}
+		// display a message if there are no boats to display
+		if (lineupBoxes.length == 0) {
+			TextView noBoatsText = new TextView(this);
+			noBoatsText.setText(getString(R.string.noLineups));
+			noBoatsText.setGravity(Gravity.CENTER);
+			lineups_checklist.addView(noBoatsText);
+		}
+		
 		if (savedInstanceState != null) {
 			// TODO ensure check boxes are kept in the right state
 			boolean[] checkboxStates = savedInstanceState.getBooleanArray(getString(R.string.CHECKBOX_STATES));
