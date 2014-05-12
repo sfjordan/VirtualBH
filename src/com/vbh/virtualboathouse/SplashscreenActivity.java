@@ -47,8 +47,7 @@ public class SplashscreenActivity extends Activity {
 		Button recordTimes = (Button) findViewById(R.id.record_times_button);
 		Button changeLineups = (Button) findViewById(R.id.change_lineups_button);
 		Button updateData = (Button) findViewById(R.id.update_data_button);
-		lastUpdated = (TextView) findViewById(R.id.date_textstub);
-		//Button stroke = (Button) findViewById(R.id.stroke_button);		
+		lastUpdated = (TextView) findViewById(R.id.date_textstub);		
 		Log.i("splashscreen","in splashscreen");       
 
 		Bundle b = getIntent().getExtras();
@@ -110,19 +109,6 @@ public class SplashscreenActivity extends Activity {
 				}
 			}
 		});
-		
-		/*stroke.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (v==findViewById(R.id.stroke_button)) {
-					Intent displayTimersIntent = new Intent(context, DisplayTimersActivity.class);
-					displayTimersIntent.putExtra(getString(R.string.ACTIVITY_FROM), SPLASH_SCREEN_ACTIVITY);
-					displayTimersIntent.putExtra(getString(R.string.CURRENT_NUM_BOATS), 3); 
-					startActivity(displayTimersIntent);
-				}
-			}
-		});*/
-		
 		
 
 		TextView tv = (TextView) findViewById(R.id.username_text);
