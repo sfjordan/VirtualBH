@@ -109,11 +109,12 @@ public class TimerControlsHandler extends Activity implements OnClickListener {
 	    		for (Long lineupID : lineups) {
 	    			currentPiece.setTime(lineupID, timers[j].getElapsedTime());
 	    			StringBuilder strokeRateNote = new StringBuilder();
-	    			boolean first = true;
-	    			strokeRateNote.append(timers[j].getBoatNameString() + ": ");
-	    			for (String note : timers[j].getStrokeNotes()) {
-	    				if (!first)
-	        				strokeRateNote.append(", ");
+		    		boolean first = true;
+		    		for (String note : timers[j].getStrokeNotes()) {
+		    			if (!first)
+		        			strokeRateNote.append(", ");
+		    			else 
+		    				strokeRateNote.append(timers[j].getBoatNameString() + ": ");
 	    				first = false;
 	    				strokeRateNote.append(note);
 	    			}

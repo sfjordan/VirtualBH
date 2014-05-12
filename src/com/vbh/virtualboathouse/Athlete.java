@@ -31,7 +31,7 @@ public class Athlete implements Serializable {
 		this.status    = fields.getStatus();
 		if (name.contains(" ")) {
 			String firstInit = name.substring(0, 1);
-			String lastName = name.substring(name.lastIndexOf(" ")+1);
+			String lastName = name.substring(name.indexOf(" ")+1);
 			firstInitLastName = firstInit + ". " + lastName;
 		}
 		else {

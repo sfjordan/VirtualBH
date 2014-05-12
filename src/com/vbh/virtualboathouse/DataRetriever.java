@@ -486,10 +486,6 @@ public class DataRetriever extends AsyncTask<String, Void, ArrayList<String>>{
     	this.execute(RECENT_PRACTICE_URL);
     }
     
-    public void uploadPractice() {
-    	
-    	
-    }
     
     public void getPractices() {
     	currentData = PRACTICE;

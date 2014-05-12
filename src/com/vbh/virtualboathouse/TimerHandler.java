@@ -125,7 +125,7 @@ public class TimerHandler extends Activity implements OnClickListener {
 				};
 				h.postDelayed(name, 4000);
 				long timeElapsed = clock.getElapsedTime();
-				String note = timeToString(timeElapsed) + " @ " + strStrokeRate +"spm";
+				String note = strStrokeRate +"spm @ " + timeToString(timeElapsed) ;
 				notes.add(note);
 			}
         }
