@@ -93,5 +93,10 @@
     <string name="ACTIVITY_FROM">activity_from</string>
     <string name="title_activity_practice_view">PracticeViewActivity</string>
     
+    <!-- For bundling -->
+    <string name="DISTANCE_TEXT">distanceTextPDTA</string>
+    <string name="TIME_MIN_TEXT">timeMinTextPDTA</string>
+    <string name="TIME_SEC_TEXT">timeSecTextPDTA</string>
+    <string name="CHECKBOX_STATES">checkboxStatesCSA</string>
 
 </resources>

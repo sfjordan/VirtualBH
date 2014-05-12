@@ -45,10 +45,18 @@ public class PickDistTimeActivity extends Activity {
 		
 		activityFrom = getIntent().getStringExtra(getString(R.string.ACTIVITY_FROM));
 
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+		
+		goPickPiece = (Button) findViewById(R.id.goPickPiece);
+		Button cancelButton = (Button) findViewById(R.id.cancel_button);
+		distanceEdit = (EditText) findViewById(R.id.enter_distance);
+		timeMinEdit = (EditText) findViewById(R.id.enter_min_time);
+		timeSecEdit = (EditText) findViewById(R.id.enter_sec_time);
+		distanceEdit.setGravity(Gravity.CENTER);
+		timeMinEdit.setGravity(Gravity.CENTER);
+		timeSecEdit.setGravity(Gravity.CENTER);
+		
 
+		if (savedInstanceState == null) {
 			SharedPreferences sharedPref = this.getSharedPreferences(
 			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
 			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
@@ -61,17 +69,11 @@ public class PickDistTimeActivity extends Activity {
 	        currentPractice   = (Practice) savedInstanceState.getSerializable(DataSaver.STATE_PRACTICE);
 	        currentPieceID    = savedInstanceState.getLong(DataSaver.STATE_PIECE_ID);
 	        currentPiece      = (Piece) savedInstanceState.getSerializable(DataSaver.STATE_PIECE);
-	        // TODO reinstantiate values in the fields for time or distance
+	        // reinstantiate values in the fields for time or distance
+	        distanceEdit.setText(savedInstanceState.getString(getString(R.string.DISTANCE_TEXT), ""));
+	        timeMinEdit.setText(savedInstanceState.getString(getString(R.string.TIME_MIN_TEXT), ""));
+	        timeSecEdit.setText(savedInstanceState.getString(getString(R.string.TIME_SEC_TEXT), ""));
 		}
-		
-		goPickPiece = (Button) findViewById(R.id.goPickPiece);
-		Button cancelButton = (Button) findViewById(R.id.cancel_button);
-		distanceEdit = (EditText) findViewById(R.id.enter_distance);
-		timeMinEdit = (EditText) findViewById(R.id.enter_min_time);
-		timeSecEdit = (EditText) findViewById(R.id.enter_sec_time);
-		distanceEdit.setGravity(Gravity.CENTER);
-		timeMinEdit.setGravity(Gravity.CENTER);
-		timeSecEdit.setGravity(Gravity.CENTER);
 		
 		goPickPiece.setOnClickListener(new OnClickListener() {
 			@Override
@@ -118,8 +120,10 @@ public class PickDistTimeActivity extends Activity {
 	    savedInstanceState.putInt(DataSaver.STATE_PRACTICE_ID, currentPracticeID);
 	    savedInstanceState.putSerializable(DataSaver.STATE_PRACTICE, currentPractice);
 	    savedInstanceState.putSerializable(DataSaver.STATE_PIECE, currentPiece);
-	    
-	    
+	    // save current values in the fields
+	    savedInstanceState.putString(getString(R.string.DISTANCE_TEXT), distanceEdit.getText().toString());
+	    savedInstanceState.putString(getString(R.string.TIME_MIN_TEXT), timeMinEdit.getText().toString());
+	    savedInstanceState.putString(getString(R.string.TIME_SEC_TEXT), timeSecEdit.getText().toString());
 	    // Always call the superclass so it can save the view hierarchy state
 	    super.onSaveInstanceState(savedInstanceState);
 	}

@@ -63,59 +63,58 @@ public class CrewSelectorActivity extends Activity {
 		setContentView(R.layout.activity_crew_selector);
 		context = this;
 		lineups_checklist = (LinearLayout) findViewById(R.id.lineup_checklist);
-		if (savedInstanceState == null) {
-			// get the practice ID
-			SharedPreferences sharedPref = context.getSharedPreferences(
-			        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
-			currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
-			// get the current practice from a file
-			currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
-			// get the roster and boatlist
-			boatList = DataSaver.readObject(context.getString(R.string.BOATS_FILE), context);
-			// TODO check for null
-    		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
-    		// TODO check for null
-    		
-    		Log.i("crewselector","current lineups are:");
-    		Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
-	    	while(currentLineups.hasNext()){
-	    		currentLineups.next().getValue().printLineup();			        		    		
-	    	}
-    		
-    		//currentPractice.clearCurrentLineups();
-			
-			lineups = currentPractice.getCurrentLineups();
-			String[] lineupNames = new String[lineups.size()];
-			int[] lineupIDs = new int[lineups.size()];
-			int i = 0;
-			lineupBoxes = new CheckBox[lineupNames.length];
-			for (Long id : lineups.keySet()) {
-				Lineup l = lineups.get(id);
-				// uses stroke seat by default here
-				// TODO implement adjustable setting
-				int numSeats = l.getNumOfSeats();
-				Log.i("CrewSelector", "number of seats is " + numSeats);
-				String name = l.getPosition()+" - "+l.getBoatName()+" \n("+l.getCoxswainName()+", "+l.getStrokeInitLast()+")";
-				Log.i("CrewSelector", "Stroke's name is " + name);
-				lineupBoxes[i] = new CheckBox(this);
-				lineupBoxes[i].setText(name);
-				lineupBoxes[i].setTag(l);
-				lineupBoxes[i].setPadding(5, 5, 5, 5);
-				lineupBoxes[i].setTextSize(24f);
-				//lineupBoxes[i].setScaleY(1.1f);
-				//lineupBoxes[i].setGravity(Gravity.CENTER_HORIZONTAL);
-				lineups_checklist.addView(lineupBoxes[i]);
+		
+		// get the practice ID
+		SharedPreferences sharedPref = context.getSharedPreferences(
+		        getString(R.string.SHARED_PREFS_FILE), Context.MODE_PRIVATE);
+		currentPracticeID = sharedPref.getInt(getString(R.string.CURRENT_PRACTICE_ID), 8);
+		// get the current practice from a file
+		currentPractice = DataSaver.readObject(getString(R.string.PRACTICE_FILE) + currentPracticeID, context);
+		// get the roster and boatlist
+		boatList = DataSaver.readObject(context.getString(R.string.BOATS_FILE), context);
+		// TODO check for null
+		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
+		// TODO check for null
+		
+		Log.i("crewselector","current lineups are:");
+		Iterator<Entry<Long, Lineup>> currentLineups = currentPractice.getCurrentLineups().entrySet().iterator();
+    	while(currentLineups.hasNext()){
+    		currentLineups.next().getValue().printLineup();			        		    		
+    	}
+		
+		//currentPractice.clearCurrentLineups();
+		
+		lineups = currentPractice.getCurrentLineups();
+		String[] lineupNames = new String[lineups.size()];
+		int[] lineupIDs = new int[lineups.size()];
+		int i = 0;
+		lineupBoxes = new CheckBox[lineupNames.length];
+		for (Long id : lineups.keySet()) {
+			Lineup l = lineups.get(id);
+			// uses stroke seat by default here
+			// TODO implement adjustable setting
+			int numSeats = l.getNumOfSeats();
+			Log.i("CrewSelector", "number of seats is " + numSeats);
+			String name = l.getPosition()+" - "+l.getBoatName()+" \n("+l.getCoxswainName()+", "+l.getStrokeInitLast()+")";
+			Log.i("CrewSelector", "Stroke's name is " + name);
+			lineupBoxes[i] = new CheckBox(this);
+			lineupBoxes[i].setText(name);
+			lineupBoxes[i].setTag(l);
+			lineupBoxes[i].setPadding(5, 5, 5, 5);
+			lineupBoxes[i].setTextSize(24f);
+			//lineupBoxes[i].setScaleY(1.1f);
+			//lineupBoxes[i].setGravity(Gravity.CENTER_HORIZONTAL);
+			lineups_checklist.addView(lineupBoxes[i]);
+			i++;
+		}
+		if (savedInstanceState != null) {
+			// TODO ensure check boxes are kept in the right state
+			boolean[] checkboxStates = savedInstanceState.getBooleanArray(getString(R.string.CHECKBOX_STATES));
+			i = 0;
+			for (boolean checked : checkboxStates) {
+				lineupBoxes[i].setChecked(checked);
 				i++;
 			}
-		}
-		else {
-			// TODO bundling!!!!
-			// reinstantiate data structures
-			roster      = (Roster) savedInstanceState.getSerializable(DataSaver.STATE_ROSTER);
-	        boatList = (HashMap<Integer, Boat>) savedInstanceState.getSerializable(DataSaver.STATE_BOATS);
-	      //  lineups     = savedInstanceState.getSparseParcelableArray(DataSaver.STATE_LINEUPS);
-	        lineupBoxes = (CheckBox[]) savedInstanceState.getSerializable(DataSaver.STATE_LINEUPS_CHECKBOXES);
-			// TODO ensure check boxes are kept in the right state
 		}
 		
 		Bundle b = getIntent().getExtras();
@@ -231,12 +230,12 @@ public class CrewSelectorActivity extends Activity {
 	
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
-	    // Save the current practice state TODO
-		savedInstanceState.putSerializable(DataSaver.STATE_ROSTER, roster);
-        //savedInstanceState.putSparseParcelableArray(DataSaver.STATE_BOATS, boatList);
-        //savedInstanceState.putSparseParcelableArray(DataSaver.STATE_LINEUPS_ARRAY, lineups);
-        //savedInstanceState.putSerializable(DataSaver.STATE_LINEUPS_CHECKBOXES, lineupBoxes);
-	    
+	    // Save the currently selected crews
+		boolean[] checkedStates = new boolean[lineupBoxes.length];
+	    for (int i = 0; i < checkedStates.length; i++) {
+	    	checkedStates[i] = lineupBoxes[i].isChecked();
+	    }
+	    savedInstanceState.putBooleanArray(getString(R.string.CHECKBOX_STATES), checkedStates);
 	    // Always call the superclass so it can save the view hierarchy state
 	    super.onSaveInstanceState(savedInstanceState);
 	}
