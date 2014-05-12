@@ -47,7 +47,6 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickDistTimeActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_pick_dist_time" >
         </activity>
         <activity
@@ -83,7 +82,6 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.PickBoatsActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_pick_boats" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -91,7 +89,6 @@
         </activity>
         <activity
             android:name="com.vbh.virtualboathouse.CrewSelectorActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_crew_selector"
             android:parentActivityName="com.vbh.virtualboathouse.SplashscreenActivity" >
             <meta-data

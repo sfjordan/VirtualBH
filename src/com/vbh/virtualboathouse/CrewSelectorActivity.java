@@ -112,7 +112,8 @@ public class CrewSelectorActivity extends Activity {
 			boolean[] checkboxStates = savedInstanceState.getBooleanArray(getString(R.string.CHECKBOX_STATES));
 			i = 0;
 			for (boolean checked : checkboxStates) {
-				lineupBoxes[i].setChecked(checked);
+				if(lineupBoxes[i]!=null)
+					lineupBoxes[i].setChecked(checked);
 				i++;
 			}
 		}
