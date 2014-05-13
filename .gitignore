@@ -25,3 +25,6 @@ proguard/
 # .DS_STORE and classpath
 .DS_STORE
 .classpath
+
+#.zip files
+*.zip
