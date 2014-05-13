@@ -203,6 +203,11 @@ public class ChangeLineupsList extends Activity {
 		roster = DataSaver.readObject(context.getString(R.string.ROSTER_FILE), context);
 		// TODO check for null
 		Log.i("changelineuplist", "roster is currently null: " + (roster==null));
+		Log.i("getData","currentLineups START:");
+		for (Lineup l : currentPractice.getCurrentLineupsList()){
+			l.printLineup();
+		}
+		Log.i("getData","currentLineups END:");
     }
     
     private ArrayList<AthleteListName> buildList(ArrayList<AthleteListName> athleteList){

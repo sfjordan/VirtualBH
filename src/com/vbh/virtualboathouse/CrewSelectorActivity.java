@@ -84,7 +84,8 @@ public class CrewSelectorActivity extends Activity {
 		
 		//currentPractice.clearCurrentLineups();
 		
-		lineups = currentPractice.getCurrentLineups();
+		lineups = currentPractice.getLineups();
+		
 		String[] lineupNames = new String[lineups.size()];
 		int[] lineupIDs = new int[lineups.size()];
 		int i = 0;
@@ -141,6 +142,7 @@ public class CrewSelectorActivity extends Activity {
 			public void onClick(View v){
 				if (v==findViewById(R.id.go_button)){
 					// get the selected IDs
+					currentPractice.clearCurrentLineups();
 					ArrayList<Long> listLineupIDs = new ArrayList<Long>();
 					int numChecked = 0;
 					for (int i = 0; i < lineupBoxes.length; i++) {
@@ -175,6 +177,11 @@ public class CrewSelectorActivity extends Activity {
 						ArrayList<Long> pieceIDs = new ArrayList<Long>();
 						pieceIDs.add(firstPiece.getPieceID());
 						DataSaver.writeObject(pieceIDs, getString(R.string.PIECE_ID_FILE), context);
+						Log.i("leaving crewselector","current lineups START");
+						for (Lineup l: currentPractice.getCurrentLineupsList()){
+							l.printLineup();
+						}
+						Log.i("leaving crewselector","current lineups END");
 						if (fromstr.equals("recordTimes"))
 							launchPickDistTime();
 						else if (fromstr.equals("changeLineups"))
