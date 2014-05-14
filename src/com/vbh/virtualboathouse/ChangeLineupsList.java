@@ -410,7 +410,9 @@ public class ChangeLineupsList extends Activity {
     
     private void launchSplashscreen(){
     	SplashscreenActivity.updateSyncTextLastSync();
+    	sharedPref.edit().putBoolean("DATA_SET_CHANGED", false).apply();
     	Intent splashscreenIntent = new Intent(this, SplashscreenActivity.class);
+    	splashscreenIntent.putExtra(getString(R.string.ACTIVITY_FROM),"changeLineupList");
 		startActivity(splashscreenIntent);
     }
     

@@ -61,6 +61,9 @@ public class SplashscreenActivity extends Activity {
 			//syncing...
 			updateSyncTextInProgress();
 		}
+		else if(fromstr !=null && fromstr.equals("changeLineupList")){
+			updateSyncTextLastSync();
+		}
 		else if(syncInProgress()){
 			updateSyncTextInProgress();
 		}

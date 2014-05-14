@@ -26,6 +26,7 @@ public class Practice implements Serializable {
 	private final int practiceID;
 	private final long msTime;
 	private final Date date;
+	private boolean hasCurrentLineup;
 	private Map<Long, Lineup> practiceLineups; // all the lineups that have been used during this practice
 	private Map<Long, Lineup> currentLineups; // the current lineups on the water
 	
@@ -35,6 +36,7 @@ public class Practice implements Serializable {
 		msTime = System.currentTimeMillis();
 		date = new Date(msTime);
 		pieces = new HashMap<Long, Piece>();
+		hasCurrentLineup = false;
 		practiceLineups = new HashMap<Long, Lineup>();
 		currentLineups = new HashMap<Long, Lineup>();
 	}
@@ -57,11 +59,17 @@ public class Practice implements Serializable {
 		currentLineups = new HashMap<Long, Lineup>();
 	}
 	public void addCurrentLineup(Lineup l) {
+		hasCurrentLineup = true;
 		practiceLineups.put(l.getLineupID(), l);
 		currentLineups.put(l.getLineupID(), l);
 	}
 	public Map<Long, Lineup> getCurrentLineups() {
+		hasCurrentLineup = false;
 		return currentLineups;
+	}
+	
+	public boolean hasCurrentLineup(){
+		return hasCurrentLineup;
 	}
 	public Lineup getCurrentLineup(long id) {
 		return currentLineups.get(id);

@@ -84,7 +84,7 @@ public class CrewSelectorActivity extends Activity {
 		
 		//currentPractice.clearCurrentLineups();
 		
-		lineups = currentPractice.getLineups();
+		lineups = currentPractice.getCurrentLineups();
 		
 		String[] lineupNames = new String[lineups.size()];
 		int[] lineupIDs = new int[lineups.size()];
@@ -135,7 +135,10 @@ public class CrewSelectorActivity extends Activity {
 	    instructions = (TextView) findViewById(R.id.crew_selector_instructions_text);
 	    go_button = (Button) findViewById(R.id.go_button);
 	    instructions.setVisibility(View.INVISIBLE);
-	    fadeSwap();
+	    if (fromstr !=null && fromstr.equals("recordTimes")){
+	    	fadeSwap();
+	    }
+	    
 	    
 	    go_button.setOnClickListener(new OnClickListener() {
 			@Override
@@ -283,7 +286,7 @@ public class CrewSelectorActivity extends Activity {
 	private void fadeSwap(){
     	// fade out instructions view nicely after 5 seconds
 		AlphaAnimation alphaAnim = new AlphaAnimation(1.0f,0.0f);
-		alphaAnim.setStartOffset(5000);                        // start in 5 seconds
+		alphaAnim.setStartOffset(8000);                        // start in 8 seconds
 		alphaAnim.setDuration(400);
 		alphaAnim.setAnimationListener(new AnimationListener()
 		{
