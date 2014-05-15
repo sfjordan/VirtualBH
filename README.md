@@ -5,8 +5,8 @@ This is a companion android app to the Virtual Boathouse Web App, visible at www
 
 It can: 
 1. Download/upload data in the form of lineups
-2. Make changes to lineups, for use in seat racing
-3. Record piece times for downloaded lineups or generic boats, saving distance, time, and stroke rating metadata.
+- Make changes to lineups, for use in seat racing
+- Record piece times for downloaded lineups or generic boats, saving distance, time, and stroke rating metadata.
 
 Written primarily by Matt Drabick and Sam Jordan.
 
