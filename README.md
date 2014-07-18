@@ -3,6 +3,8 @@ VirtualBH
 
 This is a companion android app to the Virtual Boathouse Web App, visible at www.cos333.herokuapp.com. 
 
+![]VB_logo.png
+
 It can: 
 
 1. Download/upload data in the form of lineups
