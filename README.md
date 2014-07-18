@@ -1,4 +1,5 @@
 VirtualBH  ![](VB_logo.png)
+
 =========
 
 This is a companion android app to the Virtual Boathouse Web App, visible at www.cos333.herokuapp.com. 
